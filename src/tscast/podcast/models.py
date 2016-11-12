@@ -72,7 +72,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['-dt_updated', 'slug']
+        ordering = ['-dt_updated', 'id', 'slug']
 
 
 # class PodcastOrganization(BaseModel):

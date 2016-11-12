@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^admin/jet', include('jet.urls', 'jet')),
     url(r'^admin/jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
+    url(r'^', include('podcast.urls')),
 ]

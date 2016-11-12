@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'podcast',
 ]
 
@@ -195,3 +196,25 @@ JET_SIDE_MENU_CUSTOM_APPS = [
 
 JET_SIDE_MENU_COMPAT = True
 JET_INDEX_DASHBOARD = 'tscast.dashboard.CustomIndexDashboard'
+
+
+
+# REST FRAMEWORK
+REST_FRAMEWORK = {
+        'DEFAULT_FILTER_BACKENDS': (
+            'rest_framework.filters.DjangoFilterBackend',
+            'rest_framework.filters.SearchFilter',
+            'rest_framework.filters.OrderingFilter',
+            ),
+        'SEARCH_PARAM': 'search',
+        'DEFAULT_PAGINATION_CLASS': 'tscast.utils.pagination.CommonPageNumberPagination',
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+            ) if DEBUG else (
+            'rest_framework.renderers.JSONRenderer',
+            ),
+        'DEFAULT_PERMISSION_CLASSES': (
+            'tscast.utils.permissions.ReadOnly',
+            ),
+        }
