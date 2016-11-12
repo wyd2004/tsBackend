@@ -37,7 +37,7 @@ EXPLICIT_CHOICES = (
 
 STATUS_CHOICES = (
     ('draft', _('Draft')),
-    ('public', _('Public')),
+    ('publish', _('Publish')),
     ('private', _('Private')),
 )
 
@@ -74,6 +74,10 @@ class BaseModel(models.Model):
         abstract = True
         ordering = ['-dt_updated', 'id', 'slug']
 
+    def delete(self):
+        self.is_deleted = True
+        self.save()
+
 
 # class PodcastOrganization(BaseModel):
 #     '''
@@ -105,6 +109,7 @@ class PodcastPeople(BaseModel):
     '''
     Podcast People
     '''
+    channel = models.ForeignKey('PodcastChannel', related_name='pople', verbose_name=_('channel'))
     name = models.CharField(max_length=128, verbose_name=_('people name'))
     image = models.ImageField(blank=True, upload_to=podcast_people_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
 
@@ -130,30 +135,29 @@ class PodcastHost(PodcastPeople):
         get_latest_by = 'dt_updated'
 
 
-# def podcast_channel_image_upload_to(instance, filename):
-#     args = (
-#         'podcast',
-#         'channel',
-#         'image',
-#         filename,
-#         )
-#     return path_join(args)
-# 
-# class PodcastChannel(BaseModel):
-#     '''
-#     Podcast Channel
-#     '''
-#     title = models.CharField(max_length=128, verbose_name=_('channel title'))
-#     image = models.ImageField(blank=True, upload_to=podcast_chennel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
-# 
-#     class Meta:
-#         app_label = 'podcast'
-#         verbose_name = _('channel')
-#         verbose_name_plural = _('channel')
-#         get_latest_by = 'dt_updated'
-# 
-# 
-# 
+def podcast_channel_image_upload_to(instance, filename):
+    args = (
+        'podcast',
+        'channel',
+        'image',
+        filename,
+        )
+    return path_join(args)
+
+class PodcastChannel(BaseModel):
+    '''
+    Podcast Channel
+    '''
+    title = models.CharField(max_length=128, verbose_name=_('channel title'))
+    image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
+
+    class Meta:
+        app_label = 'podcast'
+        verbose_name = _('channel')
+        verbose_name_plural = _('channel')
+        get_latest_by = 'dt_updated'
+
+
 # class PodcastCategory(BaseModel):
 #     '''
 #     Podcast Content Category
@@ -178,6 +182,7 @@ class PodcastAlbum(BaseModel):
     '''
     Podcast Album
     '''
+    channel = models.ForeignKey('PodcastChannel', related_name='albums', verbose_name=_('channel'))
     title = models.CharField(max_length=128, verbose_name=_('album title'))
     image = models.ImageField(blank=True, upload_to=podcast_album_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
     keywords = models.CharField(max_length=256, blank=True, default='', verbose_name=_('keywords'))
