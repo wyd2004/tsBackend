@@ -1,0 +1,221 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# SHENG PENGFEI, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-12 20:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: admin.py:80 models.py:184 models.py:214
+msgid "hosts"
+msgstr "主持人"
+
+#: apps.py:10
+msgid "podcast"
+msgstr "播客"
+
+#: models.py:32
+msgid "Explicit Yes"
+msgstr "成人内容"
+
+#: models.py:33
+msgid "Explicit No"
+msgstr "无脏标"
+
+#: models.py:34
+msgid "Explicit Clean"
+msgstr "无成人内容"
+
+#: models.py:39
+msgid "Draft"
+msgstr "草稿"
+
+#: models.py:40
+msgid "Public"
+msgstr "发布"
+
+#: models.py:41
+msgid "Private"
+msgstr "私有"
+
+#: models.py:47
+msgid "Unknown"
+msgstr "未知"
+
+#: models.py:48
+msgid "Hourly"
+msgstr "按小时"
+
+#: models.py:49
+msgid "Daily"
+msgstr "按天"
+
+#: models.py:50
+msgid "Weekly"
+msgstr "按周"
+
+#: models.py:51
+msgid "Monthly"
+msgstr "按月"
+
+#: models.py:52
+msgid "Yearly"
+msgstr "按年"
+
+#: models.py:64
+msgid "description type"
+msgstr "描述文本类型"
+
+#: models.py:65
+msgid "description"
+msgstr "描述"
+
+#: models.py:66
+msgid ""
+"a URL-friendly name. For example, a slug for \"Games & Hobbies\" is \"games-"
+"hobbies\"."
+msgstr "URL 友好的名字，例如 Games & Hobbies 的 SLUG 为 games-hobbies"
+
+#: models.py:67
+msgid "is deleted"
+msgstr "已删除"
+
+#: models.py:68
+msgid "created datetime"
+msgstr "创建时间"
+
+#: models.py:69
+msgid "updated datetime"
+msgstr "更新时间"
+
+#: models.py:108
+msgid "people name"
+msgstr "名称"
+
+#: models.py:109 models.py:182 models.py:216
+msgid "image"
+msgstr "图片"
+
+#: models.py:113 models.py:114
+msgid "podcast people"
+msgstr "人物"
+
+#: models.py:128
+msgid "podcast host"
+msgstr "播客主持人"
+
+#: models.py:129
+msgid "podcast hosts"
+msgstr "播客主持人"
+
+#: models.py:181
+msgid "album title"
+msgstr "栏目标题"
+
+#: models.py:183 models.py:217
+msgid "keywords"
+msgstr "关键字"
+
+#: models.py:185 models.py:218
+msgid "copyright"
+msgstr "版权"
+
+#: models.py:186 models.py:219
+msgid "explicit"
+msgstr "脏标"
+
+#: models.py:187
+msgid "frequency"
+msgstr "更新频率"
+
+#: models.py:188 models.py:220
+msgid "stauts"
+msgstr "状态"
+
+#: models.py:192
+msgid "podcast album"
+msgstr "播客栏目"
+
+#: models.py:193
+msgid "podcast albums"
+msgstr "播客栏目"
+
+#: models.py:213
+msgid "album"
+msgstr "栏目"
+
+#: models.py:215
+msgid "episode title"
+msgstr "节目标题"
+
+#: models.py:224
+msgid "podcast episode"
+msgstr "播客节目"
+
+#: models.py:225
+msgid "podcast episodes"
+msgstr "播客节目"
+
+#: models.py:246
+msgid "Preview"
+msgstr "预览"
+
+#: models.py:247
+msgid "Full"
+msgstr "完整"
+
+#: models.py:250
+msgid "episode"
+msgstr "节目"
+
+#: models.py:251
+msgid "title"
+msgstr "标题"
+
+#: models.py:252
+msgid "expression"
+msgstr "类型"
+
+#: models.py:253
+msgid "file"
+msgstr "文件"
+
+#: models.py:255
+msgid "length"
+msgstr "长度"
+
+#: models.py:256
+msgid "file size"
+msgstr "文件大小"
+
+#: models.py:260
+msgid "podcast enclosure"
+msgstr "播客文件"
+
+#: models.py:261
+msgid "podcast enclosures"
+msgstr "播客文件"
+
+#: utils/admin.py:26
+msgid "Waiting for full fill."
+msgstr "有待填充"
+
+#: utils/admin.py:52
+msgid "successfully deleted"
+msgstr "已删除"
+
+#: utils/admin.py:53
+msgid "delete selected"
+msgstr "删除已选条目"
