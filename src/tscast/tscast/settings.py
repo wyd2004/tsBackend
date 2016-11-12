@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'podcast',
+    'member',
+    'term',
 ]
 
 MIDDLEWARE = [
@@ -117,10 +119,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOCALE_PATHS = (
-        'tscast/locale',
-        'podcast/locale',
-        )
+# LOCALE_PATHS = (
+#         'tscast/locale',
+#         'podcast/locale',
+#         )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
