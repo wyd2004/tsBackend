@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-13 02:47+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: member/apps.py:10 member/models.py:45 member/models.py:58
+#: member/models.py:75
+msgid "member"
+msgstr "用户"
+
+#: member/models.py:11
+msgid "is deleted"
+msgstr "已删除"
+
+#: member/models.py:12
+msgid "created datetime"
+msgstr "创建时间"
+
+#: member/models.py:13
+msgid "updated datetime"
+msgstr "更新时间"
+
+#: member/models.py:24
+msgid "user"
+msgstr "用户"
+
+#: member/models.py:25
+msgid "token"
+msgstr "令牌"
+
+#: member/models.py:29
+msgid "member token"
+msgstr "用户令牌"
+
+#: member/models.py:30
+msgid "member tokens"
+msgstr "用户令牌"
+
+#: member/models.py:38
+msgid "uuid"
+msgstr "UUID"
+
+#: member/models.py:39
+msgid "username"
+msgstr "用户名"
+
+#: member/models.py:40 member/models.py:61
+msgid "nickname"
+msgstr "昵称"
+
+#: member/models.py:41 member/models.py:62
+msgid "avatar"
+msgstr "头像"
+
+#: member/models.py:46
+msgid "members"
+msgstr "用户"
+
+#: member/models.py:53
+msgid "Unknown"
+msgstr "未知"
+
+#: member/models.py:54
+msgid "Wechat"
+msgstr "微信"
+
+#: member/models.py:59
+msgid "sns"
+msgstr "社交网络站点"
+
+#: member/models.py:60
+msgid "identifier"
+msgstr "标识"
+
+#: member/models.py:66
+msgid "social network"
+msgstr "社交网络"
+
+#: member/models.py:67
+msgid "social networks"
+msgstr "社交网络"
+
+#: member/models.py:76
+msgid "album"
+msgstr "栏目"
+
+#: member/models.py:80
+msgid "podcast album subscription"
+msgstr "播客栏目订阅"
+
+#: member/models.py:81
+msgid "podcast album subscriptions"
+msgstr "播客栏目订阅"
