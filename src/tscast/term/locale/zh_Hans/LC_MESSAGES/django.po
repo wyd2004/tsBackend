@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-13 02:47+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: term/apps.py:9
+msgid "term"
+msgstr "合约"
+
+#: term/models.py:13
+msgid "is deleted"
+msgstr "已删除"
+
+#: term/models.py:14
+msgid "created datetime"
+msgstr "创建时间"
+
+#: term/models.py:15
+msgid "updated datetime"
+msgstr "更新时间"
+
+#: term/models.py:52
+msgid "Yearly"
+msgstr "年度"
+
+#: term/models.py:53
+msgid "Seasonally"
+msgstr "季度"
+
+#: term/models.py:54
+msgid "Monthly"
+msgstr "月度"
+
+#: term/models.py:55
+msgid "Single"
+msgstr "单次"
+
+#: term/models.py:59
+msgid "Channel"
+msgstr "频道"
+
+#: term/models.py:60
+msgid "Album"
+msgstr "栏目"
+
+#: term/models.py:61
+msgid "Episode"
+msgstr "节目"
+
+#: term/models.py:65 term/models.py:87 term/models.py:138
+msgid "tier scope"
+msgstr "范围"
+
+#: term/models.py:66 term/models.py:88 term/models.py:139
+msgid "tier package"
+msgstr "包"
+
+#: term/models.py:67 term/models.py:89 term/models.py:140
+msgid "tier price"
+msgstr "价格"
+
+#: term/models.py:68
+msgid "is published"
+msgstr "是否发布"
+
+#: term/models.py:72
+msgid "tier"
+msgstr "合约级别"
+
+#: term/models.py:73
+msgid "tiers"
+msgstr "合约级别"
+
+#: term/models.py:80 term/models.py:109
+msgid "Waiting purchase"
+msgstr "等待支付"
+
+#: term/models.py:81 term/models.py:110
+msgid "Succeeded"
+msgstr "成功"
+
+#: term/models.py:82 term/models.py:111
+msgid "Faield"
+msgstr "失败"
+
+#: term/models.py:86 term/models.py:115 term/models.py:137
+msgid "uuid"
+msgstr "UUID"
+
+#: term/models.py:90 term/models.py:145
+msgid "member"
+msgstr "用户"
+
+#: term/models.py:91
+msgid "payment value"
+msgstr "价值"
+
+#: term/models.py:92 term/models.py:119
+msgid "status"
+msgstr "状态"
+
+#: term/models.py:96 term/models.py:144
+msgid "order"
+msgstr "订单"
+
+#: term/models.py:97
+msgid "orders"
+msgstr "订单"
+
+#: term/models.py:104
+msgid "Wechat"
+msgstr "微信"
+
+#: term/models.py:116 term/models.py:123
+msgid "payment"
+msgstr "支付"
+
+#: term/models.py:117
+msgid "payment receipt"
+msgstr "凭证"
+
+#: term/models.py:118
+msgid "payment agent"
+msgstr "代理"
+
+#: term/models.py:124
+msgid "payments"
+msgstr "支付"
+
+#: term/models.py:141
+msgid "content_type"
+msgstr "内容类型"
+
+#: term/models.py:142
+msgid "object id"
+msgstr "内容 ID"
+
+#: term/models.py:149
+msgid "ticket"
+msgstr "票据"
+
+#: term/models.py:150
+msgid "tickets"
+msgstr "票据"
