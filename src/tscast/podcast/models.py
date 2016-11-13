@@ -10,7 +10,8 @@ from .managers import BaseManager
 def path_join(args):
     return '/'.join(args)
 
-PODCAST_ENCLOSURE_STORAGE= get_storage_class(getattr(settings, 'PODCAST_ENCLOSURE_STORAGE', None))()
+
+PODCAST_ENCLOSURE_STORAGE = get_storage_class(getattr(settings, 'PODCAST_ENCLOSURE_STORAGE', None))()
 
 
 PODCAST_IMAGE_STORAGE = get_storage_class(getattr(settings, 'PODCAST_IMAGE_STORAGE', None))()
@@ -63,7 +64,7 @@ TEXT_TYPE_CHOICES = (
 class BaseModel(models.Model):
     desc_type = models.CharField(max_length=32, default='plain', choices=TEXT_TYPE_CHOICES, verbose_name=_('description type'))
     description = models.TextField(blank=True, default='', verbose_name=_('description'))
-    slug = models.SlugField(blank=True, unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
+    slug = models.SlugField(null=True, unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
     is_deleted = models.BooleanField(default=False, verbose_name=_('is deleted'))
     dt_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created datetime'))
     dt_updated = models.DateTimeField(auto_now=True, verbose_name=_('updated datetime'))
@@ -148,7 +149,7 @@ class PodcastChannel(BaseModel):
     '''
     Podcast Channel
     '''
-    title = models.CharField(max_length=128, verbose_name=_('channel title'))
+    name = models.CharField(max_length=128, verbose_name=_('channel name'))
     image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
 
     class Meta:
@@ -156,6 +157,9 @@ class PodcastChannel(BaseModel):
         verbose_name = _('channel')
         verbose_name_plural = _('channel')
         get_latest_by = 'dt_updated'
+
+    def __unicode__(self):
+        return self.name
 
 
 # class PodcastCategory(BaseModel):
@@ -189,7 +193,9 @@ class PodcastAlbum(BaseModel):
     hosts = models.ManyToManyField('PodcastHost', related_name='albums', verbose_name=_('hosts'))
     copyright = models.CharField(max_length=256, default='All rights reserved', choices=COPYRIGHT_CHOICES, verbose_name=_('copyright'))
     explicit = models.CharField(max_length=32, default='no', choices=EXPLICIT_CHOICES, verbose_name=_('explicit'))
-    frequency = models.CharField(max_length=32, default='unknown', choices= FREQUENCY_CHOICES, verbose_name=_('frequency'))
+    # frequency = models.CharField(max_length=32, default='unknown', choices= FREQUENCY_CHOICES, verbose_name=_('frequency'))
+    frequency = models.CharField(max_length=32, blank=True, verbose_name=_('frequency'))
+    is_hot = models.BooleanField(default=False, verbose_name=_('is hot'))
     status = models.CharField(max_length=32, default='draft', choices=STATUS_CHOICES, verbose_name=_('stauts'))
 
     class Meta:
@@ -217,11 +223,14 @@ class PodcastEpisode(BaseModel):
     '''
     album = models.ForeignKey('PodcastAlbum', related_name='episodes', verbose_name=_('album'))
     hosts = models.ManyToManyField('PodcastHost', related_name='episodes', verbose_name=_('hosts'))
+    serial = models.CharField(max_length=128, blank=True, verbose_name=_('episode serial'))
     title = models.CharField(max_length=128, verbose_name=_('episode title'))
+    subtitle = models.CharField(max_length=128, blank=True, verbose_name=_('episode subtitle'))
     image = models.ImageField(blank=True, upload_to=podcast_episode_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
     keywords = models.CharField(max_length=256, blank=True, default='', verbose_name=_('keywords'))
     copyright = models.CharField(max_length=256, default='All rights reserved', choices=COPYRIGHT_CHOICES, verbose_name=_('copyright'))
     explicit = models.CharField(max_length=32, default='no', choices=EXPLICIT_CHOICES, verbose_name=_('explicit'))
+    is_hot = models.BooleanField(default=False, verbose_name=_('is hot'))
     status = models.CharField(max_length=32, default='draft', choices=STATUS_CHOICES, verbose_name=_('stauts'))
 
     class Meta:
@@ -257,7 +266,8 @@ class PodcastEnclosure(BaseModel):
     title = models.CharField(max_length=255, blank=True, verbose_name=_('title'))
     expression = models.CharField(max_length=32, default='full', choices=EXPRESSION_CHOICES, verbose_name=_('expression'))
     file = models.FileField(upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('file'))
-    hash = models.CharField(max_length=255, blank=True)
+    file_url = models.CharField(max_length=255, verbose_name=_('alter file url'))
+    hash = models.CharField(max_length=64, blank=True)
     length = models.IntegerField(blank=True, default=0,  verbose_name=_('length'))
     size = models.IntegerField(blank=True, default=0, verbose_name=_('file size'))
 
