@@ -22,6 +22,7 @@ class PodcastEnclosureInline(CompactInline):
 
 class PodcastEpisodeInline(CompactInline):
     model = PodcastEpisode
+    prepopulated_fields = {"slug": ("title",)}
     extra = 0
     readonly_fields = ('is_deleted', )
     fields = ('title', 'slug', 'image', 'copyright', 'status',
@@ -35,11 +36,12 @@ class PodcastAlbumInline(CompactInline):
 
 
 class PodcastHostAdmin(BaseModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'short_description', 'albums_count', 'episodes_count', 'dt_updated')
     search_fields = ('name',)
     fieldsets = (
         (None, {
-            'fields': ('name', 'slug', 'image', 'description',)
+            'fields': ('channel', 'name', 'slug', 'image', 'description',)
                 }),
         )
     ordering = ('name', 'dt_updated')
@@ -59,6 +61,7 @@ class PodcastHostAdmin(BaseModelAdmin):
 
 
 class PodcastAlbumAdmin(BaseModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
     list_display= ('id', 'title', 'frequency', 'keywords', 'explicit', 'status', 'dt_updated',)
     search_fields = ('title', 'hosts__name')
     readonly_fields = ('is_deleted',)
@@ -77,6 +80,7 @@ class PodcastAlbumAdmin(BaseModelAdmin):
     inlines = (PodcastEpisodeInline,)
 
 class PodcastEpisodeAdmin(BaseModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
     list_display = ('id', 'title', 'album', 'keywords', 'explicit', 'status', 'dt_updated',)
     fieldsets = (
         (None, {
