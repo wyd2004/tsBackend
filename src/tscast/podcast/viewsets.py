@@ -26,14 +26,14 @@ class PodcastHostViewSet(viewsets.ModelViewSet):
 class PodcastAlbumViewSet(viewsets.ModelViewSet):
     model = PodcastAlbum
     serializer_class = PodcastAlbumSerializer
-    search_fields = ('name',)
+    search_fields = ('title',)
     filter_fields = ('hosts__id',)
     ordering_fields = ('-dt_updated',)
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
                 is_deleted=False,
-                status='public',
+                status='publish',
                 )
         if 'hosts__id' in self.kwargs:
             queryset = queryset.filter(hosts__id=self.kwargs['hosts__id'])
@@ -48,7 +48,7 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.model.objects.filter(
                 is_deleted=False,
-                status='public',
+                status='publish',
                 )
         if 'hosts__id' in self.kwargs:
             queryset = queryset.filter(hosts__id=self.kwargs['hosts__id'])

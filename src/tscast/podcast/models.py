@@ -64,7 +64,7 @@ TEXT_TYPE_CHOICES = (
 class BaseModel(models.Model):
     desc_type = models.CharField(max_length=32, default='plain', choices=TEXT_TYPE_CHOICES, verbose_name=_('description type'))
     description = models.TextField(blank=True, default='', verbose_name=_('description'))
-    slug = models.SlugField(null=True, unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
+    slug = models.SlugField(null=True, blank=True, unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
     is_deleted = models.BooleanField(default=False, verbose_name=_('is deleted'))
     dt_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created datetime'))
     dt_updated = models.DateTimeField(auto_now=True, verbose_name=_('updated datetime'))
@@ -126,7 +126,11 @@ class PodcastChannel(BaseModel):
     @staticmethod
     def DEFAULT_CHANNEL():
         if not PodcastChannel._DEFAULT_CHANNEL:
-            PodcastChannel._DEFAULT_CHANNEL = PodcastChannel.objects.first()
+            try:
+                first = PodcastChannel.objects.first()
+                PodcastChannel._DEFAULT_CHANNEL = first.id if first else None
+            except Exception as error:
+                pass
         return PodcastChannel._DEFAULT_CHANNEL
 
 
@@ -198,7 +202,7 @@ class PodcastAlbum(BaseModel):
     title = models.CharField(max_length=128, verbose_name=_('album title'))
     image = models.ImageField(blank=True, upload_to=podcast_album_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
     keywords = models.CharField(max_length=256, blank=True, default='', verbose_name=_('keywords'))
-    hosts = models.ManyToManyField('PodcastHost', related_name='albums', verbose_name=_('hosts'))
+    hosts = models.ManyToManyField('PodcastHost', blank=True, related_name='albums', verbose_name=_('hosts'))
     copyright = models.CharField(max_length=256, default='All rights reserved', choices=COPYRIGHT_CHOICES, verbose_name=_('copyright'))
     explicit = models.CharField(max_length=32, default='no', choices=EXPLICIT_CHOICES, verbose_name=_('explicit'))
     # frequency = models.CharField(max_length=32, default='unknown', choices= FREQUENCY_CHOICES, verbose_name=_('frequency'))
@@ -230,10 +234,11 @@ class PodcastEpisode(BaseModel):
     Podcast Episode
     '''
     album = models.ForeignKey('PodcastAlbum', related_name='episodes', verbose_name=_('album'))
-    hosts = models.ManyToManyField('PodcastHost', related_name='episodes', verbose_name=_('hosts'))
+    hosts = models.ManyToManyField('PodcastHost', blank=True, related_name='episodes', verbose_name=_('hosts'))
     serial = models.CharField(max_length=128, blank=True, verbose_name=_('episode serial'))
     title = models.CharField(max_length=128, verbose_name=_('episode title'))
     subtitle = models.CharField(max_length=128, blank=True, verbose_name=_('episode subtitle'))
+    length = models.CharField(max_length=32, blank=True, verbose_name=_('length'))
     image = models.ImageField(blank=True, upload_to=podcast_episode_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
     keywords = models.CharField(max_length=256, blank=True, default='', verbose_name=_('keywords'))
     copyright = models.CharField(max_length=256, default='All rights reserved', choices=COPYRIGHT_CHOICES, verbose_name=_('copyright'))

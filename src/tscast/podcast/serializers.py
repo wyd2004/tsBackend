@@ -17,22 +17,56 @@ class PodcastHostSerializer(serializers.ModelSerializer):
 
 class PodcastAlbumSerializer(serializers.ModelSerializer):
     hosts = PodcastHostSerializer(many=True)
+    is_new = serializers.SerializerMethodField()
+    latest_update = serializers.SerializerMethodField()
+    episodes_count = serializers.SerializerMethodField()
+
     class Meta:
         model = PodcastAlbum
         fields = ('id', 'title', 'image', 'description',
                 'slug', 'keywords', 'copyright', 'explicit',
-                'frequency', 'hosts')
+                'frequency', 'hosts', 'is_new',
+                'latest_update', 'episodes_count')
+
+    def get_is_new(self, instance):
+        return False
+
+    def get_latest_update(self, instance):
+        last = instance.episodes.filter(
+                status='publish',
+                is_deleted=False,
+                )
+        if last:
+            last = last.latest('dt_updated')
+        return last.dt_updated if last else None
+
+    def get_episodes_count(self, instance):
+        return instance.episodes.filter(
+                status='publish',
+                is_deleted=False,
+                ).count()
 
 
 class PodcastEpisodeSerializer(serializers.ModelSerializer):
     hosts = PodcastHostSerializer(many=True)
     enclosures = serializers.SerializerMethodField()
+    price = serializers.SerializerMethodField()
+    album_title = serializers.SerializerMethodField()
+
 
     class Meta:
         model = PodcastEpisode
-        fields = ('id', 'title', 'image', 'description',
+        fields = ('id', 'album_title', 'serial', 'title',
+                'subtitle', 'image', 'description', 'length',
                 'slug', 'keywords', 'copyright', 'explicit',
-                'hosts', 'enclosures')
+                'hosts', 'enclosures', 'price', 'dt_updated',
+                )
+    
+    def get_album_title(self, instance):
+        return instance.album.title
+
+    def get_price(self, instance):
+        return 0
 
     def get_enclosures(self, instance):
         previews = instance.enclosures.filter(expression='preview')
