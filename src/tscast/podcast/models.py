@@ -198,6 +198,7 @@ class PodcastAlbum(BaseModel):
     '''
     Podcast Album
     '''
+    slug = None
     channel = models.ForeignKey('PodcastChannel', default=PodcastChannel.DEFAULT_CHANNEL(),  related_name='albums', verbose_name=_('channel'))
     title = models.CharField(max_length=128, verbose_name=_('album title'))
     image = models.ImageField(blank=True, upload_to=podcast_album_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
@@ -233,6 +234,7 @@ class PodcastEpisode(BaseModel):
     '''
     Podcast Episode
     '''
+    slug = None
     album = models.ForeignKey('PodcastAlbum', related_name='episodes', verbose_name=_('album'))
     hosts = models.ManyToManyField('PodcastHost', blank=True, related_name='episodes', verbose_name=_('hosts'))
     serial = models.CharField(max_length=128, blank=True, verbose_name=_('episode serial'))

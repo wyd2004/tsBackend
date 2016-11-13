@@ -22,10 +22,10 @@ class PodcastEnclosureInline(CompactInline):
 
 class PodcastEpisodeInline(CompactInline):
     model = PodcastEpisode
-    prepopulated_fields = {"slug": ("title",)}
+    # prepopulated_fields = {"slug": ("title",)}
     extra = 0
     readonly_fields = ('is_deleted', )
-    fields = ('title', 'subtitle', 'serial', 'slug', 'length', 'image', 'copyright', 'status',
+    fields = ('title', 'subtitle', 'serial', 'length', 'image', 'copyright', 'status',
             'hosts', 'explicit', 'keywords', 'description',
             )
 
@@ -61,14 +61,16 @@ class PodcastHostAdmin(BaseModelAdmin):
 
 
 class PodcastAlbumAdmin(BaseModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
-    list_display= ('id', 'title', 'slug', 'frequency', 'keywords', 'explicit', 'status', 'dt_updated',)
+    # prepopulated_fields = {"slug": ("title",)}
+    list_display= ('id', 'title', 'frequency', 'keywords', 'explicit', 'status', 'dt_updated',)
     search_fields = ('title', 'hosts__name')
     readonly_fields = ('is_deleted',)
     fieldsets = (
         (None, {
             'fields': (
-                'title', 'slug', 'image',
+                'title',
+                # 'slug',
+                'image',
                 'status',
                 'hosts',
                 'copyright', 'frequency', 'explicit',
@@ -90,12 +92,21 @@ class PodcastAlbumAdmin(BaseModelAdmin):
 
 
 class PodcastEpisodeAdmin(BaseModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
+    # prepopulated_fields = {"slug": ("title",)}
     list_display = ('id', 'title', 'album', 'keywords', 'explicit', 'status', 'dt_updated',)
     fieldsets = (
         (None, {
-            'fields': ('album', 'title', 'subtitle', 'slug', 'image','hosts', 
-                'copyright', 'status', 'explicit', 'keywords',
+            'fields': (
+                'album',
+                'title',
+                'subtitle',
+                # 'slug',
+                'image',
+                'hosts', 
+                'copyright',
+                'status',
+                'explicit',
+                'keywords',
                 'description',
                 )
             }),

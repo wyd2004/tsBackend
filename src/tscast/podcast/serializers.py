@@ -24,7 +24,7 @@ class PodcastAlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = PodcastAlbum
         fields = ('id', 'title', 'image', 'description',
-                'slug', 'keywords', 'copyright', 'explicit',
+                'keywords', 'copyright', 'explicit',
                 'frequency', 'hosts', 'is_new',
                 'latest_update', 'episodes_count')
 
@@ -58,7 +58,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         model = PodcastEpisode
         fields = ('id', 'album_title', 'serial', 'title',
                 'subtitle', 'image', 'description', 'length',
-                'slug', 'keywords', 'copyright', 'explicit',
+                'keywords', 'copyright', 'explicit',
                 'hosts', 'enclosures', 'price', 'dt_updated',
                 )
     
