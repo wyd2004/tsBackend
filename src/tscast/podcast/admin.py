@@ -41,7 +41,7 @@ class PodcastHostAdmin(BaseModelAdmin):
     search_fields = ('name',)
     fieldsets = (
         (None, {
-            'fields': ('channel', 'name', 'slug', 'image', 'description',)
+            'fields': ('name', 'slug', 'image', 'description',)
                 }),
         )
     ordering = ('name', 'dt_updated')

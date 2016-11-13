@@ -96,46 +96,6 @@ class BaseModel(models.Model):
 #         return self.name
 
 
-def podcast_people_image_upload_to(instance, filename):
-    args = (
-        'podcast',
-        'people',
-        'image',
-        filename,
-        )
-    return path_join(args)
-
-
-class PodcastPeople(BaseModel):
-    '''
-    Podcast People
-    '''
-    channel = models.ForeignKey('PodcastChannel', related_name='pople', verbose_name=_('channel'))
-    name = models.CharField(max_length=128, verbose_name=_('people name'))
-    image = models.ImageField(blank=True, upload_to=podcast_people_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
-
-    class Meta:
-        app_label = 'podcast'
-        verbose_name = _('podcast people')
-        verbose_name_plural = _('podcast people')
-        get_latest_by = 'dt_updated'
-    
-    def __unicode__(self):
-        return self.name
-
-
-class PodcastHost(PodcastPeople):
-    '''
-    Podcast Host
-    '''
-
-    class Meta:
-        app_label = 'podcast'
-        verbose_name = _('podcast host')
-        verbose_name_plural = _('podcast hosts')
-        get_latest_by = 'dt_updated'
-
-
 def podcast_channel_image_upload_to(instance, filename):
     args = (
         'podcast',
@@ -160,6 +120,54 @@ class PodcastChannel(BaseModel):
 
     def __unicode__(self):
         return self.name
+
+    _DEFAULT_CHANNEL = None 
+
+    @staticmethod
+    def DEFAULT_CHANNEL():
+        if not PodcastChannel._DEFAULT_CHANNEL:
+            PodcastChannel._DEFAULT_CHANNEL = PodcastChannel.objects.first()
+        return PodcastChannel._DEFAULT_CHANNEL
+
+
+def podcast_people_image_upload_to(instance, filename):
+    args = (
+        'podcast',
+        'people',
+        'image',
+        filename,
+        )
+    return path_join(args)
+
+
+class PodcastPeople(BaseModel):
+    '''
+    Podcast People
+    '''
+    channel = models.ForeignKey('PodcastChannel', default=PodcastChannel.DEFAULT_CHANNEL(),  related_name='pople', verbose_name=_('channel'))
+    name = models.CharField(max_length=128, verbose_name=_('people name'))
+    image = models.ImageField(blank=True, upload_to=podcast_people_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
+
+    class Meta:
+        app_label = 'podcast'
+        verbose_name = _('podcast people')
+        verbose_name_plural = _('podcast people')
+        get_latest_by = 'dt_updated'
+    
+    def __unicode__(self):
+        return self.name
+
+
+class PodcastHost(PodcastPeople):
+    '''
+    Podcast Host
+    '''
+
+    class Meta:
+        app_label = 'podcast'
+        verbose_name = _('podcast host')
+        verbose_name_plural = _('podcast hosts')
+        get_latest_by = 'dt_updated'
 
 
 # class PodcastCategory(BaseModel):
@@ -186,7 +194,7 @@ class PodcastAlbum(BaseModel):
     '''
     Podcast Album
     '''
-    channel = models.ForeignKey('PodcastChannel', related_name='albums', verbose_name=_('channel'))
+    channel = models.ForeignKey('PodcastChannel', default=PodcastChannel.DEFAULT_CHANNEL(),  related_name='albums', verbose_name=_('channel'))
     title = models.CharField(max_length=128, verbose_name=_('album title'))
     image = models.ImageField(blank=True, upload_to=podcast_album_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
     keywords = models.CharField(max_length=256, blank=True, default='', verbose_name=_('keywords'))
