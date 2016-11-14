@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-13 22:24+0800\n"
+"POT-Creation-Date: 2016-11-15 00:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: podcast/admin.py:50
+#: podcast/admin.py:52
 msgid "short description"
 msgstr "描述"
 
-#: podcast/admin.py:54
+#: podcast/admin.py:56
 msgid "album count"
 msgstr "栏目数量"
 
-#: podcast/admin.py:58
+#: podcast/admin.py:60
 msgid "episode count"
 msgstr "节目数量"
+
+#: podcast/admin.py:91
+msgid "episode updated datetime"
+msgstr "节目更新"
 
 #: podcast/apps.py:10
 msgid "podcast"
@@ -108,141 +112,141 @@ msgstr "创建时间"
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: podcast/models.py:113 podcast/models.py:157 podcast/models.py:158
-#: podcast/models.py:189
-msgid "channel"
-msgstr "频道"
-
-#: podcast/models.py:114
-msgid "people name"
-msgstr "名称"
-
-#: podcast/models.py:115 podcast/models.py:153 podcast/models.py:191
-#: podcast/models.py:229
-msgid "image"
-msgstr "图片"
-
-#: podcast/models.py:119 podcast/models.py:120
-msgid "podcast people"
-msgstr "人物"
-
-#: podcast/models.py:134
-msgid "podcast host"
-msgstr "播客主持人"
-
-#: podcast/models.py:135
-msgid "podcast hosts"
-msgstr "播客主持人"
-
-#: podcast/models.py:152
+#: podcast/models.py:112
 msgid "channel name"
 msgstr "名称"
 
-#: podcast/models.py:190
+#: podcast/models.py:113 podcast/models.py:153 podcast/models.py:204
+#: podcast/models.py:244
+msgid "image"
+msgstr "图片"
+
+#: podcast/models.py:117 podcast/models.py:118 podcast/models.py:151
+#: podcast/models.py:202
+msgid "channel"
+msgstr "频道"
+
+#: podcast/models.py:152
+msgid "people name"
+msgstr "名称"
+
+#: podcast/models.py:157 podcast/models.py:158
+msgid "podcast people"
+msgstr "人物"
+
+#: podcast/models.py:172
+msgid "podcast host"
+msgstr "播客主持人"
+
+#: podcast/models.py:173
+msgid "podcast hosts"
+msgstr "播客主持人"
+
+#: podcast/models.py:203
 msgid "album title"
 msgstr "栏目标题"
 
-#: podcast/models.py:192 podcast/models.py:230
+#: podcast/models.py:205 podcast/models.py:245
 msgid "keywords"
 msgstr "关键字"
 
-#: podcast/models.py:193 podcast/models.py:225
+#: podcast/models.py:206 podcast/models.py:239
 msgid "hosts"
 msgstr "主持人"
 
-#: podcast/models.py:194 podcast/models.py:231
+#: podcast/models.py:207 podcast/models.py:246
 msgid "copyright"
 msgstr "版权"
 
-#: podcast/models.py:195 podcast/models.py:232
+#: podcast/models.py:208 podcast/models.py:247
 msgid "explicit"
 msgstr "脏标"
 
-#: podcast/models.py:197
+#: podcast/models.py:210
 msgid "frequency"
 msgstr "更新频率"
 
-#: podcast/models.py:198 podcast/models.py:233
+#: podcast/models.py:211 podcast/models.py:248
 msgid "is hot"
 msgstr "推荐"
 
-#: podcast/models.py:199 podcast/models.py:234
+#: podcast/models.py:212 podcast/models.py:249
 msgid "stauts"
 msgstr "状态"
 
-#: podcast/models.py:203
+#: podcast/models.py:216
 msgid "podcast album"
 msgstr "播客栏目"
 
-#: podcast/models.py:204
+#: podcast/models.py:217
 msgid "podcast albums"
 msgstr "播客栏目"
 
-#: podcast/models.py:224
+#: podcast/models.py:238
 msgid "album"
 msgstr "栏目"
 
-#: podcast/models.py:226
+#: podcast/models.py:240
 msgid "episode serial"
 msgstr "节目编号"
 
-#: podcast/models.py:227
+#: podcast/models.py:241
 msgid "episode title"
 msgstr "节目标题"
 
-#: podcast/models.py:228
+#: podcast/models.py:242
 msgid "episode subtitle"
 msgstr "节目子标题"
 
-#: podcast/models.py:238
-msgid "podcast episode"
-msgstr "播客节目"
-
-#: podcast/models.py:239
-msgid "podcast episodes"
-msgstr "播客节目"
-
-#: podcast/models.py:260
-msgid "Preview"
-msgstr "预览"
-
-#: podcast/models.py:261
-msgid "Full"
-msgstr "完整"
-
-#: podcast/models.py:265
-msgid "episode"
-msgstr "节目"
-
-#: podcast/models.py:266
-msgid "title"
-msgstr "标题"
-
-#: podcast/models.py:267
-msgid "expression"
-msgstr "类型"
-
-#: podcast/models.py:268
-msgid "file"
-msgstr "文件"
-
-#: podcast/models.py:269
-msgid "alter file url"
-msgstr "备用文件链接"
-
-#: podcast/models.py:271
+#: podcast/models.py:243 podcast/models.py:286
 msgid "length"
 msgstr "长度"
 
-#: podcast/models.py:272
+#: podcast/models.py:253
+msgid "podcast episode"
+msgstr "播客节目"
+
+#: podcast/models.py:254
+msgid "podcast episodes"
+msgstr "播客节目"
+
+#: podcast/models.py:275
+msgid "Preview"
+msgstr "预览"
+
+#: podcast/models.py:276
+msgid "Full"
+msgstr "完整"
+
+#: podcast/models.py:280
+msgid "episode"
+msgstr "节目"
+
+#: podcast/models.py:281
+msgid "title"
+msgstr "标题"
+
+#: podcast/models.py:282
+msgid "expression"
+msgstr "类型"
+
+#: podcast/models.py:283
+msgid "file"
+msgstr "文件"
+
+#: podcast/models.py:284
+msgid "alter file url"
+msgstr "备用文件链接"
+
+#: podcast/models.py:287
 msgid "file size"
 msgstr "文件大小"
 
-#: podcast/models.py:276
+#: podcast/models.py:291
 msgid "podcast enclosure"
 msgstr "播客文件"
 
-#: podcast/models.py:277
+#: podcast/models.py:292
 msgid "podcast enclosures"
 msgstr "播客文件"
 

@@ -190,6 +190,10 @@ JET_SIDE_MENU_CUSTOM_APPS = [
             'PodcastEpisode',
             'PodcastEnclosure',
         ]),
+        ('member', [
+            'Member',
+            'PodcastAlbumSubscription',
+        ]),
         ('auth', [
             'User',
             'Group',
@@ -203,6 +207,9 @@ JET_INDEX_DASHBOARD = 'tscast.dashboard.CustomIndexDashboard'
 
 # REST FRAMEWORK
 REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'member.authentication.MemberTokenAuthentication',
+            ),
         'DEFAULT_FILTER_BACKENDS': (
             'rest_framework.filters.DjangoFilterBackend',
             'rest_framework.filters.SearchFilter',

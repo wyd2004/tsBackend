@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-13 22:24+0800\n"
+"POT-Creation-Date: 2016-11-15 00:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,10 @@ msgstr "最近动作"
 #: tscast/dashboard.py:18
 msgid "podcast data"
 msgstr "播客数据"
+
+#: tscast/dashboard.py:30
+msgid "member data"
+msgstr "会员数据"
 
 #: tscast/utils/admin.py:51
 msgid "successfully deleted"

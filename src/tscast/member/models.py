@@ -35,7 +35,7 @@ class MemberToken(models.Model):
 
 
 class Member(BaseModel):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, verbose_name=_('uuid'))
     username = models.CharField(max_length=32, unique=True, verbose_name=_('username'))
     nickname = models.CharField(max_length=32, null=True, unique=True, verbose_name=_('nickname'))
     avatar = models.ImageField(blank=True, verbose_name=_('avatar'))
@@ -81,5 +81,5 @@ class PodcastAlbumSubscription(BaseModel):
         verbose_name_plural = _('podcast album subscriptions')
     
     def __unicode__(self):
-        uname = '%s: %s' % (self.member.username, slf.album.name)
+        uname = '%s: %s' % (self.member.username, self.album.title)
         return uname

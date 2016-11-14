@@ -25,3 +25,13 @@ class CustomIndexDashboard(Dashboard):
             column=0,
             order=2
         ))
+
+        self.children.append(modules.AppList(
+            _('member data'),
+            models = [
+                'member.Member',
+                'member.PodcastAlbumSubscription',
+                ],
+            column=1,
+            order=0
+        ))
