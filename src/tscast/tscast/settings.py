@@ -194,6 +194,12 @@ JET_SIDE_MENU_CUSTOM_APPS = [
             'Member',
             'PodcastAlbumSubscription',
         ]),
+        ('term', [
+            'Tier',
+            'Order',
+            'Payment',
+            'Ticket',
+        ]),
         ('auth', [
             'User',
             'Group',

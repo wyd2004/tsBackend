@@ -1,0 +1,93 @@
+[
+{
+    "model": "term.tier",
+    "pk": 1,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:03:45.718Z",
+        "dt_updated": "2016-11-15T14:49:55.107Z",
+        "scope": "yearly",
+        "package": "channel",
+        "price": "80.00",
+        "is_published": true
+    }
+},
+{
+    "model": "term.tier",
+    "pk": 2,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:04:01.263Z",
+        "dt_updated": "2016-11-15T14:50:15.100Z",
+        "scope": "yearly",
+        "package": "album",
+        "price": "25.00",
+        "is_published": true
+    }
+},
+{
+    "model": "term.tier",
+    "pk": 3,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:04:15.670Z",
+        "dt_updated": "2016-11-15T14:49:55.102Z",
+        "scope": "seasonally",
+        "package": "channel",
+        "price": "25.00",
+        "is_published": true
+    }
+},
+{
+    "model": "term.tier",
+    "pk": 4,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:04:22.618Z",
+        "dt_updated": "2016-11-15T14:50:15.095Z",
+        "scope": "seasonally",
+        "package": "album",
+        "price": "10.00",
+        "is_published": true
+    }
+},
+{
+    "model": "term.tier",
+    "pk": 5,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:04:36.616Z",
+        "dt_updated": "2016-11-15T14:49:55.088Z",
+        "scope": "monthly",
+        "package": "channel",
+        "price": "10.00",
+        "is_published": true
+    }
+},
+{
+    "model": "term.tier",
+    "pk": 6,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:04:45.502Z",
+        "dt_updated": "2016-11-15T14:50:15.083Z",
+        "scope": "monthly",
+        "package": "album",
+        "price": "5.00",
+        "is_published": true
+    }
+},
+{
+    "model": "term.tier",
+    "pk": 7,
+    "fields": {
+        "is_deleted": false,
+        "dt_created": "2016-11-15T14:31:18.514Z",
+        "dt_updated": "2016-11-15T14:50:24.337Z",
+        "scope": "single",
+        "package": "episode",
+        "price": "1.00",
+        "is_published": true
+    }
+}
+]

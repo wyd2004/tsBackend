@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 00:44+0800\n"
+"POT-Creation-Date: 2016-11-15 23:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,142 +18,142 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: term/apps.py:9
+#: apps.py:9
 msgid "term"
 msgstr "合约"
 
-#: term/models.py:13
+#: models.py:13
 msgid "is deleted"
 msgstr "已删除"
 
-#: term/models.py:14
+#: models.py:14
 msgid "created datetime"
 msgstr "创建时间"
 
-#: term/models.py:15
+#: models.py:15
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: term/models.py:52
-msgid "Yearly"
-msgstr "年度"
+#: models.py:52
+msgid "One Year"
+msgstr "一年"
 
-#: term/models.py:53
-msgid "Seasonally"
-msgstr "季度"
+#: models.py:53
+msgid "One Season"
+msgstr "一季"
 
-#: term/models.py:54
-msgid "Monthly"
-msgstr "月度"
+#: models.py:54
+msgid "One Month"
+msgstr "一个月"
 
-#: term/models.py:55
-msgid "Single"
-msgstr "单次"
+#: models.py:55
+msgid "One Time"
+msgstr "一次"
 
-#: term/models.py:59
+#: models.py:59
 msgid "Channel"
 msgstr "频道"
 
-#: term/models.py:60
+#: models.py:60
 msgid "Album"
 msgstr "栏目"
 
-#: term/models.py:61
+#: models.py:61
 msgid "Episode"
 msgstr "节目"
 
-#: term/models.py:65 term/models.py:87 term/models.py:138
+#: models.py:65 models.py:87 models.py:138
 msgid "tier scope"
-msgstr "范围"
+msgstr "合约时长"
 
-#: term/models.py:66 term/models.py:88 term/models.py:139
+#: models.py:66 models.py:88 models.py:139
 msgid "tier package"
-msgstr "包"
+msgstr "合约对象"
 
-#: term/models.py:67 term/models.py:89 term/models.py:140
+#: models.py:67 models.py:89 models.py:140
 msgid "tier price"
 msgstr "价格"
 
-#: term/models.py:68
+#: models.py:68
 msgid "is published"
 msgstr "是否发布"
 
-#: term/models.py:72
+#: models.py:72
 msgid "tier"
-msgstr "合约级别"
+msgstr "合约类别"
 
-#: term/models.py:73
+#: models.py:73
 msgid "tiers"
-msgstr "合约级别"
+msgstr "合约类别"
 
-#: term/models.py:80 term/models.py:109
+#: models.py:80 models.py:109
 msgid "Waiting purchase"
 msgstr "等待支付"
 
-#: term/models.py:81 term/models.py:110
+#: models.py:81 models.py:110
 msgid "Succeeded"
 msgstr "成功"
 
-#: term/models.py:82 term/models.py:111
+#: models.py:82 models.py:111
 msgid "Faield"
 msgstr "失败"
 
-#: term/models.py:86 term/models.py:115 term/models.py:137
+#: models.py:86 models.py:115 models.py:137
 msgid "uuid"
 msgstr "UUID"
 
-#: term/models.py:90 term/models.py:145
+#: models.py:90 models.py:145
 msgid "member"
 msgstr "用户"
 
-#: term/models.py:91
+#: models.py:91
 msgid "payment value"
 msgstr "价值"
 
-#: term/models.py:92 term/models.py:119
+#: models.py:92 models.py:119
 msgid "status"
 msgstr "状态"
 
-#: term/models.py:96 term/models.py:144
+#: models.py:96 models.py:144
 msgid "order"
 msgstr "订单"
 
-#: term/models.py:97
+#: models.py:97
 msgid "orders"
 msgstr "订单"
 
-#: term/models.py:104
+#: models.py:104
 msgid "Wechat"
 msgstr "微信"
 
-#: term/models.py:116 term/models.py:123
+#: models.py:116 models.py:123
 msgid "payment"
 msgstr "支付"
 
-#: term/models.py:117
+#: models.py:117
 msgid "payment receipt"
 msgstr "凭证"
 
-#: term/models.py:118
+#: models.py:118
 msgid "payment agent"
 msgstr "代理"
 
-#: term/models.py:124
+#: models.py:124
 msgid "payments"
 msgstr "支付"
 
-#: term/models.py:141
+#: models.py:141
 msgid "content_type"
 msgstr "内容类型"
 
-#: term/models.py:142
+#: models.py:142
 msgid "object id"
 msgstr "内容 ID"
 
-#: term/models.py:149
+#: models.py:149
 msgid "ticket"
 msgstr "票据"
 
-#: term/models.py:150
+#: models.py:150
 msgid "tickets"
 msgstr "票据"

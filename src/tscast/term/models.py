@@ -49,10 +49,10 @@ class BaseModel(models.Model):
 #         return self.name
 
 TIER_SCOPE_CHOICES = (
-        ('yearly', _('Yearly')),
-        ('seasonally', _('Seasonally')),
-        ('monthly', _('Monthly')),
-        ('single', _('Single')),
+        ('one year', _('One Year')),
+        ('one season', _('One Season')),
+        ('one month', _('One Month')),
+        ('one time', _('One Time')),
         )
 
 TIER_PACKAGE_CHOICES = (
@@ -113,9 +113,9 @@ PAYMENT_STATUS_CHOICES = (
 
 class Payment(BaseModel):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
-    order = models.ForeignKey('Order', related_name='payments', verbose_name=_('payment'), editable=False)
-    receipt = models.TextField(blank=True, verbose_name=_('payment receipt'), editable=False)
-    agent = models.CharField(max_length=32, choices=PAYMENT_AGENT_CHOICES, verbose_name=_('payment agent'), editable=False)
+    order = models.ForeignKey('Order', related_name='payments', verbose_name=_('payment'))
+    receipt = models.TextField(blank=True, verbose_name=_('payment receipt'))
+    agent = models.CharField(max_length=32, choices=PAYMENT_AGENT_CHOICES, verbose_name=_('payment agent'))
     status = models.CharField(max_length=32, choices=PAYMENT_STATUS_CHOICES, verbose_name=_('status'))
 
     class Meta:
@@ -128,9 +128,9 @@ class Payment(BaseModel):
 
 
 TICKET_CONTENT_TYPE_LIMITS = (
-        models.Q(name='PodcastChannel', label='podcast')
-        | models.Q(name='PodcastAlbum', label='podcast')
-        | models.Q(name='PodcastEpisode', label='podcast')
+        models.Q(model='podcastchannel', app_label='podcast')
+        | models.Q(model='podcastalbum', app_label='podcast')
+        | models.Q(model='podcastepisode', app_label='podcast')
         )
 
 class Ticket(BaseModel):

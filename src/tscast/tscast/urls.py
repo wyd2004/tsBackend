@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('member.urls')),
     url(r'^', include('podcast.urls')),
+    url(r'^', include('term.urls')),
 ]
