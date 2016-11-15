@@ -23,7 +23,7 @@ class MemberTokenInline(CompactInline):
     extra = 0
 
 class MemberModelAdmin(BaseModelAdmin):
-    display_list = ('id', 'username', 'nickname', 'avatar', 'dt_updated', )
+    list_display = ('id', 'username', 'nickname', 'avatar', 'dt_updated', )
     fields = ('username', 'nickname', 'avatar')
     inlines = (
             PodcastAlbumSubscriptionInline,
