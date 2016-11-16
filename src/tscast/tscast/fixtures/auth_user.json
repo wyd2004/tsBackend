@@ -1,0 +1,20 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$30000$Os3hV5iPrB0U$/vjc/iIRWoyfDpHmxa9vR62cW/t9Vh3J3apddzIFq+s=",
+        "last_login": "2016-11-13T15:19:20.437Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@tsradio.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-11-13T15:19:02.840Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

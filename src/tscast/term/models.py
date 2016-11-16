@@ -6,7 +6,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-
+import logging
+logger = logging.getLogger('tier')
 
 
 class BaseModel(models.Model):
@@ -21,32 +22,6 @@ class BaseModel(models.Model):
         self.is_deleted = True
         self.save()
 
-
-
-# class Tier(BaseModel):
-#     code = models.CharField(max_length=32, unique=True, verbose_name=_('tier code'))
-#     name = models.CharField(max_length=32, unique=True, verbose_name=_('tier name'))
-# 
-#     class Meta:
-#         app_label = 'term'
-#         verbose_name = _('tier')
-#         verbose_name_plural = _('tiers')
-# 
-#     def __unicode__(self):
-#         return self.name
-# 
-# 
-# class Scope(BaseModel):
-#     code = models.CharField(max_length=32, unique=True, verbose_name=_('tier code'))
-#     name = models.CharField(max_length=32, unique=True, verbose_name=_('tier name'))
-# 
-#     class Meta:
-#         app_label = 'term'
-#         verbose_name = _('scope')
-#         verbose_name_plural = _('scopes')
-# 
-#     def __unicode__(self):
-#         return self.name
 
 TIER_SCOPE_CHOICES = (
         ('one year', _('One Year')),
@@ -77,14 +52,20 @@ class Tier(BaseModel):
 
 
 ORDER_STATUS_CHOICES = (
-        ('waiting_purchase', _('Waiting purchase')),
+        ('wait-for-payment', _('Waiting for Payment')),
         ('succeeded', _('Succeeded')),
         ('failed', _('Faield')),
+        ('canceled', _('Canceled')),
+        ('expired', _('Expired')),
         )
 
 class Order(BaseModel):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
+    tier = models.ForeignKey('Tier', verbose_name=_('tier'))
     scope = models.CharField(max_length=32, choices=TIER_SCOPE_CHOICES, verbose_name=_('tier scope'))
+    item = models.IntegerField(default=0, verbose_name=_('order item id'))
+    content_type = models.ForeignKey('contenttypes.ContentType', null=True, blank=True, verbose_name=_('content_type'), editable=False)
+    item_object = GenericForeignKey('content_type', 'item')
     package = models.CharField(max_length=32, choices=TIER_PACKAGE_CHOICES, verbose_name=_('tier package'))
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0.0, verbose_name=_('tier price'))
     member = models.ForeignKey('member.Member', related_name='orders', verbose_name = _('member'))
@@ -99,6 +80,70 @@ class Order(BaseModel):
     def __unicode__(self):
         return '%s: %s' % (self.uuid, self.status)
 
+    def fill_order(self):
+        import pdb; pdb.set_trace()
+        ct_map = {
+                'channel': ContentType.objects.get(model='podcastchannel'),
+                'album': ContentType.objects.get(model='podcastalbum'),
+                'episode': ContentType.objects.get(model='podcastepisode'),
+                }
+        self.scope = self.tier.scope if not self.scope else self.scope
+        self.package = self.tier.package if not self.package else self.package
+        self.content_type = ct_map.get(self.package, None)
+        self.price = self.tier.price if not self.price else self.price
+        self.value = self.tier.price if not self.value else self.value
+        self.status = 'wait-for-payment' if not self.status else self.status
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.fill_order()
+        if not self.item_object:
+            # oops
+            return
+        return super(Order, self).save(*args, **kwargs)
+
+    def check_payment(self, status='succeeded'):
+        payments = self.payments.filter(status='succeeded')
+        if payments.count() == 1:
+            return True
+        elif payments.count() > 1:
+            logger.warning('Order: %s payments odds!' % self.uuid)
+            return True
+        else:
+            return False
+
+    def make_empty_payment(self, agent='wechat'):
+        if self.check_payment:
+            return None
+        payment = Payment.objects.create(
+                order=self,
+                status='wait-for-payment',
+                agent=agent,
+                )
+        logger.info('Create payment %s' % payment.uuid)
+        return payment
+
+    def make_purchase(self):
+        if not self.status == 'succeeded':
+            return None
+        if not self.item_object:
+            return None
+        purchase, created = Purchase.get_or_create(
+                order=self,
+                defaults={
+                    'scope': self.scope,
+                    'package': self.package,
+                    'price': self.price,
+                    'content_type': content_type,
+                    'object_id': object_id,
+                    'member': self.member,
+                    },
+                )
+        if created:
+            logger.info('Create purchase %s' % purchase.uuid)
+        return purchase
+
+
 
 PAYMENT_AGENT_CHOICES = (
         ('wechat', _('Wechat')),
@@ -106,13 +151,13 @@ PAYMENT_AGENT_CHOICES = (
 
 
 PAYMENT_STATUS_CHOICES = (
-        ('waiting_purchase', _('Waiting purchase')),
+        ('wait-for-payment', _('Wait for Payment')),
         ('succeeded', _('Succeeded')),
         ('failed', _('Faield')),
         )
 
 class Payment(BaseModel):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
     order = models.ForeignKey('Order', related_name='payments', verbose_name=_('payment'))
     receipt = models.TextField(blank=True, verbose_name=_('payment receipt'))
     agent = models.CharField(max_length=32, choices=PAYMENT_AGENT_CHOICES, verbose_name=_('payment agent'))
@@ -127,21 +172,21 @@ class Payment(BaseModel):
         return '%s: %s' % (self.uuid, self.status)
 
 
-TICKET_CONTENT_TYPE_LIMITS = (
+PURCHASE_CONTENT_TYPE_LIMITS = (
         models.Q(model='podcastchannel', app_label='podcast')
         | models.Q(model='podcastalbum', app_label='podcast')
         | models.Q(model='podcastepisode', app_label='podcast')
         )
 
-class Ticket(BaseModel):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
+class Purchase(BaseModel):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
     scope = models.CharField(max_length=32, choices=TIER_SCOPE_CHOICES, verbose_name=_('tier scope'))
     package = models.CharField(max_length=32, choices=TIER_PACKAGE_CHOICES, verbose_name=_('tier package'))
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0.0, verbose_name=_('tier price'))
-    content_type = models.ForeignKey('contenttypes.ContentType', null=True, blank=True, verbose_name=_('content_type'), limit_choices_to=TICKET_CONTENT_TYPE_LIMITS)
+    content_type = models.ForeignKey('contenttypes.ContentType', null=True, blank=True, verbose_name=_('content_type'), limit_choices_to=PURCHASE_CONTENT_TYPE_LIMITS)
     object_id = models.PositiveIntegerField(verbose_name=_('object id'), default=0)
-    ticket_object = GenericForeignKey('content_type', 'object_id')
-    order = models.ForeignKey('Order', related_name='tickets', verbose_name=_('order'))
+    purchase_object = GenericForeignKey('content_type', 'object_id')
+    order = models.OneToOneField('Order', verbose_name=_('order'))
     member = models.ForeignKey('member.Member', related_name='tickets', verbose_name=_('member'))
 
     class Meta:

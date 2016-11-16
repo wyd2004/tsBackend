@@ -6,7 +6,9 @@ from rest_framework.permissions import BasePermission
 from rest_framework.permissions import SAFE_METHODS
 
 from .models import Tier
+from .models import Order
 from .serializers import TierSerializer
+from .serializers import OrderSerializer
 
 
 class Readonly(BasePermission):
@@ -24,3 +26,9 @@ class TierViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.model.objects.filter(is_published=True)
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    model = Order
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()

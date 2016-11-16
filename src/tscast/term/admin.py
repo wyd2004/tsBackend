@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from .models import Tier
 from .models import Order
 from .models import Payment
-from .models import Ticket
+from .models import Purchase
 
 
 class TierModelAdmin(admin.ModelAdmin):
@@ -26,6 +26,9 @@ class TierModelAdmin(admin.ModelAdmin):
 
 
 class OrderModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'uuid', 'tier', 'member', 'value', 'status')
+    readonly_fields = ('status', 'scope', 'package', 'price')
+
     def has_delete_permission(self, request, obj=None):
         return False
 
@@ -45,12 +48,12 @@ class PaymentModelAdmin(admin.ModelAdmin):
         return actions
 
 
-class TicketModelAdmin(admin.ModelAdmin):
+class PurchaseModelAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
     def get_actions(self, request):
-        actions = super(TicketModelAdmin, self).get_actions(request)
+        actions = super(PurchaseModelAdmin, self).get_actions(request)
         del actions['delete_selected']
         return actions
 
@@ -58,4 +61,4 @@ class TicketModelAdmin(admin.ModelAdmin):
 admin.site.register(Tier, TierModelAdmin)
 admin.site.register(Order, OrderModelAdmin)
 admin.site.register(Payment, PaymentModelAdmin)
-admin.site.register(Ticket, TicketModelAdmin)
+admin.site.register(Purchase, PurchaseModelAdmin)
