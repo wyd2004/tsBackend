@@ -81,7 +81,6 @@ class Order(BaseModel):
         return '%s: %s' % (self.uuid, self.status)
 
     def fill_order(self):
-        import pdb; pdb.set_trace()
         ct_map = {
                 'channel': ContentType.objects.get(model='podcastchannel'),
                 'album': ContentType.objects.get(model='podcastalbum'),
@@ -113,7 +112,7 @@ class Order(BaseModel):
             return False
 
     def make_empty_payment(self, agent='wechat'):
-        if self.check_payment:
+        if self.check_payment():
             return None
         payment = Payment.objects.create(
                 order=self,

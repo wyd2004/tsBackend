@@ -32,3 +32,4 @@ class OrderViewSet(viewsets.ModelViewSet):
     model = Order
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+    permission_classes = ()

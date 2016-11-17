@@ -14,25 +14,52 @@ class TierSerializer(serializers.ModelSerializer):
         fields = ('scope', 'package', 'price')
 
 
+class PaymentSerializer(serializers.ModelSerializer):
+    payload = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Payment
+        fields = ('agent', 'status', 'payload')
+
+    def get_payload(self, obj):
+        if obj.status == 'wait-for-payment':
+            return {'prepay_id': 'xxx', 'pay_sign': 'yyy'}
+        else:
+            return {}
+
+
 class OrderSerializer(serializers.ModelSerializer):
-    # TODO 
-    member = serializers.HiddenField(default=None)
-    payment_agent = serializers.SerializerMethodField()
-    payment_args = serializers.SerializerMethodField()
+    from member.models import Member
+    member = serializers.HiddenField(default=Member.objects.get(id=1))
+    payments = PaymentSerializer(many=True)
 
     class Meta:
         model = Order
         fields = ('uuid', 'tier', 'scope', 'item',
                 'package', 'price', 'value', 'status',
                 'dt_updated', 'dt_created', 'member',
-                'payment_agent', 'payment_args',
+                'payments',
                 )
-        readonly_fields = ('uuid', 'scope', 'package',
+        read_only_fields = ('uuid', 'scope', 'package',
                 'price', 'value', 'status',
                 'dt_updated', 'dt_created')
 
-    def get_payment_agent(self, instance):
-        return 'wechat'
+    def create(self, validated_data):
+        tier = validated_data['tier']
+        member = validated_data['member']
+        item = validated_data['item']
+        ps = validated_data['payments']
+        ps = [{'agent': 'wechat'}]
+        order = Order.objects.create(
+                tier=tier,
+                member=member,
+                item=item,
+                )
+        for p in ps:
+            agent = p['agent']
+            order.make_empty_payment(agent=agent)
+        return order
 
-    def get_payment_args(self, instance):
-        return {}
+
+            
+        import pdb; pdb.set_trace()
