@@ -16,7 +16,7 @@ router.register('member/(?P<member_id>\d+)/purchase', MemberPurchasedAlbumViewSe
 
 
 view_urls = [
-        url('podcast/tangsuan/album/(?P<album_id>\d+)/subscribe/',
+        url('podcast/album/(?P<album_id>\d+)/subscribe/',
             PodcastAlbumSubscribeViewSet.as_view(
                 {'post': 'create', 'delete': 'destroy'}
                 ),

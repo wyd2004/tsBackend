@@ -25,6 +25,6 @@ view_urls = [
         
 
 urlpatterns = [
-        url(r'^podcast/tangsuan/', include(view_urls, namespace='api')),
-        url(r'^podcast/tangsuan/', include(router.urls, namespace='api')),
+        url(r'^podcast/', include(view_urls, namespace='api')),
+        url(r'^podcast/', include(router.urls, namespace='api')),
     ]
