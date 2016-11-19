@@ -21,7 +21,7 @@ class BaseModel(models.Model):
 
 
 class MemberToken(models.Model):
-    user = models.ForeignKey('Member', related_name='tokens', on_delete=models.CASCADE, verbose_name=_('user'))
+    user = models.ForeignKey('Member', related_name='tokens', on_delete=models.CASCADE, verbose_name=_('member'))
     key = models.CharField(max_length=40, primary_key=True, verbose_name=_('token'))
 
     class Meta:
@@ -83,3 +83,16 @@ class PodcastAlbumSubscription(BaseModel):
     def __unicode__(self):
         uname = '%s: %s' % (self.member.username, self.album.title)
         return uname
+
+
+class MemberPrivilege(BaseModel):
+    member = models.OneToOneField(Member, verbose_name=_('member'))
+    payload = models.TextField(blank=True, verbose_name=_('payload'))
+
+    class Meta:
+        app_label = 'member'
+        verbose_name = _('member privilege')
+        verbose_name_plural = _('member privileges')
+
+    def __unicode__(self):
+        return '%s - privilege' % self.member.username

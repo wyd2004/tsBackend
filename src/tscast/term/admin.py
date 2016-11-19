@@ -24,10 +24,37 @@ class TierModelAdmin(admin.ModelAdmin):
         del actions['delete_selected']
         return actions
 
+class PaymentInline(CompactInline):
+    model = Payment
+    exclude = ('is_deleted',)
+    # readonly_fields = ('receipt', 'agent')
+    fields = ('agent', 'receipt', 'status')
+    extra = 0
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+class PurchaseInline(CompactInline):
+    model = Purchase
+    exclude = ('is_deleted',)
+    # readonly_fields = ('package', 'scope', 'content_type', 'object_id', 'member', 'order',) 
+    fields = ('package', 'scope', 'content_type', 'object_id', 'member', 'order',)
+    extra = 0
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
 
 class OrderModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'uuid', 'tier', 'member', 'value', 'status')
-    readonly_fields = ('status', 'scope', 'package', 'price')
+    list_display = ('id', 'scope', 'package', 'item_object', 'member', 'price',  'value', 'status')
+    # readonly_fields = ('tier', 'item', 'member', 'status', 'scope', 'package', 'price', 'value')
+    exclude = ('is_deleted',)
+    fields = ('tier', 'member', 'status', 'package', 'scope', 'price', 'value')
+    list_filter = ('status', 'tier__scope', 'tier__package')
+    search_fields = ('order__member__username',)
+    inlines = (PaymentInline, PurchaseInline)
 
     def has_delete_permission(self, request, obj=None):
         return False
@@ -39,6 +66,10 @@ class OrderModelAdmin(admin.ModelAdmin):
 
 
 class PaymentModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'order', 'agent', 'status')
+    list_filter = ('status', 'agent')
+    search_fields = ('order__member__username',)
+
     def has_delete_permission(self, request, obj=None):
         return False
 
@@ -49,6 +80,13 @@ class PaymentModelAdmin(admin.ModelAdmin):
 
 
 class PurchaseModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'order', 'member', 'scope', 'package', 'purchase_object')
+    list_filter = ('order__tier__scope', 'order__tier__package')
+    search_fields = ('member__username',)
+    # readonly_fields = ( 'order', 'member', 'scope', 'package', 'price', 'purchase_object',)
+    exclude = ('is_deleted', 'object_id', 'content_type',)
+
+
     def has_delete_permission(self, request, obj=None):
         return False
 

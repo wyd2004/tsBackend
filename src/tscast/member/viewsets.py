@@ -1,16 +1,31 @@
 from django_filters import FilterSet
 from django.db.models import Count
 from rest_framework import viewsets
+from rest_framework import views
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-from rest_framework.response import Response 
 from rest_framework.permissions import BasePermission
 
 
 from .models import PodcastAlbumSubscription
 from .models import Member
+from .models import MemberToken
 
 from .serializers import PodcastAlbumSubscriptionSerializer
 from .serializers import PodcastAlbumSubscribeSerializer
+
+
+from podcast.viewsets import PodcastAlbumViewSet
+
+
+
+@api_view(['GET', 'HEAD'])
+def oauth(request, format='json'):
+    token = MemberToken.objects.first()
+    data = {'token': token.key, 'member_id': token.user.id}
+    response = Response(data)
+    return response
 
 
 class PodcastAlbumSubscriptionViewSet(viewsets.ModelViewSet):
@@ -69,3 +84,14 @@ class PodcastAlbumSubscribeViewSet(viewsets.ModelViewSet):
             q.save()
         return Response(status=204)
 
+class MemberPurchasedAlbumViewSet(PodcastAlbumViewSet):
+    def get_queryset(self):
+        queryset = self.model.objects.filter(
+                is_deleted=False,
+                status='publish',
+                )
+        from term.models import Purchase
+        member_purchased = Purchase.objects.filter(
+                member_id=self.kwargs.get('member_id', 0),
+                )
+        return queryset

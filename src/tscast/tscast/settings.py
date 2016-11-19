@@ -185,6 +185,7 @@ LOGGING = {
 # DJANGO JET
 JET_SIDE_MENU_CUSTOM_APPS = [
         ('podcast', [
+            'PodcastChannel',
             'PodcastHost',
             'PodcastAlbum',
             'PodcastEpisode',
@@ -198,7 +199,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
             'Tier',
             'Order',
             'Payment',
-            'Ticket',
+            'Purchase',
         ]),
         ('auth', [
             'User',
@@ -206,7 +207,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         ]),
     ]
 
-JET_SIDE_MENU_COMPAT = True
+JET_SIDE_MENU_COMPACT = True
 JET_INDEX_DASHBOARD = 'tscast.dashboard.CustomIndexDashboard'
 
 
@@ -233,3 +234,6 @@ REST_FRAMEWORK = {
             'tscast.utils.permissions.ReadOnly',
             ),
         }
+
+PODCAST_ENCLOSURE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+PODCAST_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'

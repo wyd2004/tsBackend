@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import uuid
+from datetime import timedelta
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -30,6 +31,13 @@ TIER_SCOPE_CHOICES = (
         ('one time', _('One Time')),
         )
 
+TIER_SCOPE_EXPIRES_MAP = {
+        'one year': timedelta(days=365),
+        'one season': timedelta(days=90),
+        'one month': timedelta(days=30),
+        'one time': timedelta.max,
+        }
+
 TIER_PACKAGE_CHOICES = (
         ('channel', _('Channel')),
         ('album', _('Album')),
@@ -48,11 +56,15 @@ class Tier(BaseModel):
         verbose_name_plural = _('tiers')
 
     def __unicode__(self):
-        return '%s x %s, %s' % (self.scope, self.package, self.price)
+        scope = filter(lambda x: x[0] == self.scope, TIER_SCOPE_CHOICES)
+        scope = scope[0][1] if scope else self.scope
+        package = filter(lambda x: x[0] == self.package, TIER_PACKAGE_CHOICES)
+        package = package[0][1] if package else self.package
+        return '%s x %s, %s' % (scope, package, self.price)
 
 
 ORDER_STATUS_CHOICES = (
-        ('wait-for-payment', _('Waiting for Payment')),
+        ('wait-for-payment', _('Wait for Payment')),
         ('succeeded', _('Succeeded')),
         ('failed', _('Faield')),
         ('canceled', _('Canceled')),
@@ -78,7 +90,7 @@ class Order(BaseModel):
         verbose_name_plural = _('orders')
 
     def __unicode__(self):
-        return '%s: %s' % (self.uuid, self.status)
+        return '%s - Order %s' % (self.member.username, self.id)
 
     def fill_order(self):
         ct_map = {
@@ -127,14 +139,14 @@ class Order(BaseModel):
             return None
         if not self.item_object:
             return None
-        purchase, created = Purchase.get_or_create(
+        purchase, created = Purchase.objects.get_or_create(
                 order=self,
                 defaults={
                     'scope': self.scope,
                     'package': self.package,
                     'price': self.price,
-                    'content_type': content_type,
-                    'object_id': object_id,
+                    'content_type': self.content_type,
+                    'object_id': self.item,
                     'member': self.member,
                     },
                 )
@@ -157,7 +169,7 @@ PAYMENT_STATUS_CHOICES = (
 
 class Payment(BaseModel):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name=_('uuid'))
-    order = models.ForeignKey('Order', related_name='payments', verbose_name=_('payment'))
+    order = models.ForeignKey('Order', related_name='payments', verbose_name=_('order'))
     receipt = models.TextField(blank=True, verbose_name=_('payment receipt'))
     agent = models.CharField(max_length=32, choices=PAYMENT_AGENT_CHOICES, verbose_name=_('payment agent'))
     status = models.CharField(max_length=32, choices=PAYMENT_STATUS_CHOICES, verbose_name=_('status'))
@@ -168,7 +180,7 @@ class Payment(BaseModel):
         verbose_name_plural = _('payments')
 
     def __unicode__(self):
-        return '%s: %s' % (self.uuid, self.status)
+        return '%s - Order.%d' % (self.order.member.username, self.order.id)
 
 
 PURCHASE_CONTENT_TYPE_LIMITS = (
@@ -187,6 +199,8 @@ class Purchase(BaseModel):
     purchase_object = GenericForeignKey('content_type', 'object_id')
     order = models.OneToOneField('Order', verbose_name=_('order'))
     member = models.ForeignKey('member.Member', related_name='tickets', verbose_name=_('member'))
+    dt_expired = models.DateTimeField(null=True, verbose_name=_('expired datetime'))
+    is_expired = models.BooleanField(default=False, verbose_name=_('is expired'))
 
     class Meta:
         app_label = 'term'
@@ -194,4 +208,5 @@ class Purchase(BaseModel):
         verbose_name_plural = _('tickets')
 
     def __unicode__(self):
-        return self.uuid
+        return '%s - Order - %s' % (
+                self.member.username, self.order.id)

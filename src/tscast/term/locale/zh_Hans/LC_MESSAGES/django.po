@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 23:04+0800\n"
+"POT-Creation-Date: 2016-11-19 16:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,142 +18,157 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: apps.py:9
+#: term/apps.py:9
 msgid "term"
 msgstr "合约"
 
-#: models.py:13
+#: term/models.py:14
 msgid "is deleted"
 msgstr "已删除"
 
-#: models.py:14
+#: term/models.py:15
 msgid "created datetime"
 msgstr "创建时间"
 
-#: models.py:15
+#: term/models.py:16
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: models.py:52
+#: term/models.py:27
 msgid "One Year"
 msgstr "一年"
 
-#: models.py:53
+#: term/models.py:28
 msgid "One Season"
 msgstr "一季"
 
-#: models.py:54
+#: term/models.py:29
 msgid "One Month"
 msgstr "一个月"
 
-#: models.py:55
+#: term/models.py:30
 msgid "One Time"
 msgstr "一次"
 
-#: models.py:59
+#: term/models.py:34
 msgid "Channel"
 msgstr "频道"
 
-#: models.py:60
+#: term/models.py:35
 msgid "Album"
 msgstr "栏目"
 
-#: models.py:61
+#: term/models.py:36
 msgid "Episode"
 msgstr "节目"
 
-#: models.py:65 models.py:87 models.py:138
+#: term/models.py:40 term/models.py:65 term/models.py:182
 msgid "tier scope"
 msgstr "合约时长"
 
-#: models.py:66 models.py:88 models.py:139
+#: term/models.py:41 term/models.py:69 term/models.py:183
 msgid "tier package"
 msgstr "合约对象"
 
-#: models.py:67 models.py:89 models.py:140
+#: term/models.py:42 term/models.py:70 term/models.py:184
 msgid "tier price"
 msgstr "价格"
 
-#: models.py:68
+#: term/models.py:43
 msgid "is published"
 msgstr "是否发布"
 
-#: models.py:72
+#: term/models.py:47 term/models.py:64
 msgid "tier"
 msgstr "合约类别"
 
-#: models.py:73
+#: term/models.py:48
 msgid "tiers"
 msgstr "合约类别"
 
-#: models.py:80 models.py:109
-msgid "Waiting purchase"
+#: term/models.py:55 term/models.py:153
+msgid "Wait for Payment"
 msgstr "等待支付"
 
-#: models.py:81 models.py:110
+#: term/models.py:56 term/models.py:154
 msgid "Succeeded"
 msgstr "成功"
 
-#: models.py:82 models.py:111
+#: term/models.py:57 term/models.py:155
 msgid "Faield"
 msgstr "失败"
 
-#: models.py:86 models.py:115 models.py:137
+#: term/models.py:58
+msgid "Canceled"
+msgstr ""
+
+#: term/models.py:59
+msgid "Expired"
+msgstr ""
+
+#: term/models.py:63 term/models.py:159 term/models.py:181
 msgid "uuid"
 msgstr "UUID"
 
-#: models.py:90 models.py:145
-msgid "member"
-msgstr "用户"
+#: term/models.py:66
+msgid "order item id"
+msgstr ""
 
-#: models.py:91
-msgid "payment value"
-msgstr "价值"
-
-#: models.py:92 models.py:119
-msgid "status"
-msgstr "状态"
-
-#: models.py:96 models.py:144
-msgid "order"
-msgstr "订单"
-
-#: models.py:97
-msgid "orders"
-msgstr "订单"
-
-#: models.py:104
-msgid "Wechat"
-msgstr "微信"
-
-#: models.py:116 models.py:123
-msgid "payment"
-msgstr "支付"
-
-#: models.py:117
-msgid "payment receipt"
-msgstr "凭证"
-
-#: models.py:118
-msgid "payment agent"
-msgstr "代理"
-
-#: models.py:124
-msgid "payments"
-msgstr "支付"
-
-#: models.py:141
+#: term/models.py:67 term/models.py:185
 msgid "content_type"
 msgstr "内容类型"
 
-#: models.py:142
+#: term/models.py:71 term/models.py:189
+msgid "member"
+msgstr "用户"
+
+#: term/models.py:72
+msgid "payment value"
+msgstr "价值"
+
+#: term/models.py:73 term/models.py:163
+msgid "status"
+msgstr "状态"
+
+#: term/models.py:77 term/models.py:188
+msgid "order"
+msgstr "订单"
+
+#: term/models.py:78
+msgid "orders"
+msgstr "订单"
+
+#: term/models.py:148
+msgid "Wechat"
+msgstr "微信"
+
+#: term/models.py:160 term/models.py:167
+msgid "payment"
+msgstr "支付"
+
+#: term/models.py:161
+msgid "payment receipt"
+msgstr "凭证"
+
+#: term/models.py:162
+msgid "payment agent"
+msgstr "代理"
+
+#: term/models.py:168
+msgid "payments"
+msgstr "支付"
+
+#: term/models.py:186
 msgid "object id"
 msgstr "内容 ID"
 
-#: models.py:149
+#: term/models.py:193
 msgid "ticket"
 msgstr "票据"
 
-#: models.py:150
+#: term/models.py:194
 msgid "tickets"
 msgstr "票据"
+
+#~ msgid "Waiting for Payment"
+#~ msgstr "等待支付"

@@ -110,6 +110,7 @@ class PodcastChannel(BaseModel):
     Podcast Channel
     '''
     name = models.CharField(max_length=128, verbose_name=_('channel name'))
+    slug = models.SlugField(unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
     image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
 
     class Meta:
@@ -293,4 +294,4 @@ class PodcastEnclosure(BaseModel):
         get_latest_by = 'dt_updated'
 
     def __unicode__(self):
-        return self.file.name
+        return '%s - %s' % (self.expression, self.title)

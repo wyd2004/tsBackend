@@ -33,3 +33,4 @@ class MemberModelAdmin(BaseModelAdmin):
 
 
 admin.site.register(Member, MemberModelAdmin)
+admin.site.register(PodcastAlbumSubscription)

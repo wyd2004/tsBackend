@@ -3,6 +3,7 @@ from jet.admin import CompactInline
 from django.utils.translation import ugettext_lazy as _
 
 from .utils.admin import BaseModelAdmin
+from .models import PodcastChannel
 from .models import PodcastHost
 from .models import PodcastAlbum
 from .models import PodcastEpisode
@@ -12,9 +13,10 @@ from .models import PodcastEnclosure
 class PodcastEnclosureInline(CompactInline):
     model = PodcastEnclosure
     extra = 0
-    readonly_fields = ('is_deleted', 'length', 'size')
+    readonly_fields = ('length', 'size')
+    exclude = ('is_deleted',)
     fields = ('title', 
-            'expression', 'file',
+            'expression', 'file', 'file_url',
             'size', 'length',
             )
     show_change_link = True
@@ -24,7 +26,7 @@ class PodcastEpisodeInline(CompactInline):
     model = PodcastEpisode
     # prepopulated_fields = {"slug": ("title",)}
     extra = 0
-    readonly_fields = ('is_deleted', )
+    exclude = ('is_deleted',)
     fields = ('title', 'subtitle', 'serial', 'length', 'image', 'copyright', 'status',
             'hosts', 'explicit', 'keywords', 'description',
             )
@@ -33,19 +35,25 @@ class PodcastEpisodeInline(CompactInline):
 class PodcastAlbumInline(CompactInline):
     model = PodcastAlbum
     extra = 0
+    exclude = ('is_deleted',)
+
+
+class PodcastChannelAdmin(BaseModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    exclude = ('is_deleted',)
+    fields = ('name', 'slug', 'image', 'description')
 
 
 class PodcastHostAdmin(BaseModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'short_description', 'albums_count', 'episodes_count', 'dt_updated')
     search_fields = ('name',)
     fieldsets = (
         (None, {
-            'fields': ('name', 'slug', 'image', 'description',)
+            'fields': ('channel', 'name', 'image', 'description',)
                 }),
         )
-    ordering = ('name', 'dt_updated')
-    readonly_fields = ('is_deleted',)
+    # ordering = ('name', 'dt_updated')
+    exclude = ('is_deleted',)
 
     def short_description(self, instance):
         return instance.description[:25]
@@ -64,10 +72,11 @@ class PodcastAlbumAdmin(BaseModelAdmin):
     # prepopulated_fields = {"slug": ("title",)}
     list_display= ('id', 'title', 'frequency', 'keywords', 'explicit', 'status', 'dt_updated',)
     search_fields = ('title', 'hosts__name')
-    readonly_fields = ('is_deleted',)
+    exclude = ('is_deleted',)
     fieldsets = (
         (None, {
             'fields': (
+                'channel',
                 'title',
                 # 'slug',
                 'image',
@@ -79,7 +88,7 @@ class PodcastAlbumAdmin(BaseModelAdmin):
                 )
             }),
         )
-    inlines = (PodcastEpisodeInline,)
+    # inlines = (PodcastEpisodeInline,)
     # list_editable = ('status',)
 
     def episode_dt_updated(self, obj):
@@ -120,12 +129,13 @@ class PodcastEnclosureAdmin(BaseModelAdmin):
     list_display = ('id', 'episode', 'title', 'expression', 'dt_updated')
     search_fields = ('title', 'episode__title', 'episode__album__title')
     readonly_fields = ('length', 'size')
-    fields = ('episode', 'title', 'expression', 'file', 'length', 'size')
+    fields = ('episode', 'title', 'expression', 'file', 'file_url', 'length', 'size')
     raw_id_fields = ('episode', )
 
 
 
 
+admin.site.register(PodcastChannel, PodcastChannelAdmin)
 admin.site.register(PodcastHost, PodcastHostAdmin)
 admin.site.register(PodcastAlbum, PodcastAlbumAdmin)
 admin.site.register(PodcastEnclosure, PodcastEnclosureAdmin)
