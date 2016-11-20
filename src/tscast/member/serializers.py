@@ -4,6 +4,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 
 from .models import PodcastAlbumSubscription
+from .models import Member
 
 from podcast.models  import PodcastAlbum
 
@@ -61,3 +62,15 @@ class PodcastAlbumSubscribeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PodcastAlbumSubscription
         fields = ('member', 'album')
+
+
+class MemberSerializer(serializers.ModelSerializer):
+    expire_datetime = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Member
+        fields = ('nickname', 'avatar', 'expire_datetime')
+
+    def get_expire_datetime(self, obj):
+        return obj.privilege.expires_datetime
+        

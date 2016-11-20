@@ -13,8 +13,10 @@ from .models import PodcastAlbumSubscription
 from .models import Member
 from .models import MemberToken
 
+
 from .serializers import PodcastAlbumSubscriptionSerializer
 from .serializers import PodcastAlbumSubscribeSerializer
+from .serializers import MemberSerializer
 
 
 from podcast.viewsets import PodcastAlbumViewSet
@@ -27,6 +29,13 @@ def oauth(request, format='json'):
     data = {'token': token.key, 'member_id': token.user.id}
     response = Response(data)
     return response
+
+
+class MemberViewSet(viewsets.ModelViewSet):
+    model = Member
+    serializer_class = MemberSerializer
+    queryset = Member.objects.all()
+
 
 
 class PodcastAlbumSubscriptionViewSet(viewsets.ModelViewSet):

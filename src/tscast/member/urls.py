@@ -6,11 +6,13 @@ from rest_framework import routers
 from .viewsets import PodcastAlbumSubscriptionViewSet
 from .viewsets import PodcastAlbumSubscribeViewSet
 from .viewsets import MemberPurchasedAlbumViewSet 
+from .viewsets import MemberViewSet 
 from .viewsets import oauth
 
 
 router = routers.DefaultRouter()
 
+router.register('member', MemberViewSet, base_name='MemberViewSet')
 router.register('member/(?P<member_id>\d+)/subscription',PodcastAlbumSubscriptionViewSet, base_name='PodcastAlbumSubscriptionViewSet')
 router.register('member/(?P<member_id>\d+)/purchase', MemberPurchasedAlbumViewSet, base_name='PodcastAlbumSubscriptionViewSet')
 
