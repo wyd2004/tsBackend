@@ -1,10 +1,17 @@
 from __future__ import unicode_literals
+
+import json
 import uuid
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.timezone import now
+from django.utils.dateparse import parse_datetime
 
 from rest_framework.authtoken.models import Token
+
+from .signals import update_member_privilege
 
 
 class BaseModel(models.Model):
@@ -47,6 +54,16 @@ class Member(BaseModel):
 
     def __unicode__(self):
         return self.username
+
+    @property
+    def privilege(self):
+        try:
+            mp = self.memberprivilege
+        except Exception as error:
+            mp = MemberPrivilege.get_or_create(member=self)
+        _privilege = Privilege()
+        _privilege.loads(mp.payload)
+        return _privilege
 
 
 SOCIAL_NETWORK_SITE_CHOICES = (
@@ -96,3 +113,93 @@ class MemberPrivilege(BaseModel):
 
     def __unicode__(self):
         return '%s - privilege' % self.member.username
+
+
+class Privilege(object):
+    expires_datetime = None
+    channels = None
+    albums = None
+    episodes = None
+    channel_ids = None
+    album_ids = None
+    episode_ids = None
+    is_dirty = True
+     
+    def __init__(self, purchase_queryset=None):
+        self.expires_datetime = now() # TODO
+        self.channels = []
+        self.albums = []
+        self.episodes = []
+        self.channel_ids = set()
+        self.album_ids = set()
+        self.episode_ids = set()
+        if purchase_queryset:
+            for package, payload in self.make_payload(
+                    purchase_queryset):
+                if package == 'channel':
+                    self.channels.append(payload)
+                elif package == 'album':
+                    self.albums.append(payload)
+                elif package == 'episode':
+                    self.episodes.append(payload)
+        self.is_dirty = False
+
+    def make_payload(self, purchase_queryset):
+        for purchase in purchase_queryset:
+            purchase_object = purchase.purchase_object
+            payload = {
+                    'dt_created': purchase.dt_created,
+                    'dt_expired': purchase.dt_expired,
+                    'is_permanent': purchase.is_permanent,
+                    'object_id': purchase.object_id,
+                    'channel': None,
+                    'album': None,
+                    'episode': None,
+                    }
+            if purchase.content_type.model == 'podcastchannel':
+                payload['channel'] = purchase_object.id
+                payload['album'] = '__all__'
+                payload['episode'] = '__all__'
+                self.channel_ids.add(payload['channel'])
+            elif purchase.content_type.model == 'podcastalbum':
+                payload['channel'] = purchase_object.channel_id
+                payload['album'] = purchase_object.id
+                payload['episode'] = '__all__'
+                self.channel_ids.add(payload['channel'])
+                self.album_ids.add(payload['album'])
+            elif purchase.content_type.model == 'podcastepisode':
+                payload['channel'] = purchase_object.album.channel_id
+                payload['album'] = purchase_object.album_id
+                payload['episode'] = purchase_object.id
+                self.channel_ids.add(payload['channel'])
+                self.album_ids.add(payload['album'])
+                self.episode_ids.add(payload['episode'])
+            yield purchase.package, payload
+
+    def dumps(self):
+        data = {
+                'expires_datetime': self.expires_datetime,
+                'channels': self.channels,
+                'albums': self.albums,
+                'episodes': self.episodes,
+                'channel_ids': list(self.channel_ids),
+                'album_ids': list(self.album_ids),
+                'episode_ids': list(self.episode_ids),
+                }
+        return json.dumps(data, cls=DjangoJSONEncoder)
+
+    def loads(self, json_data):
+        if not json_data:
+            return
+        try:
+            data = json.loads(json_data)
+            self.expires_datetime = parse_datetime(data['expires_datetime'])
+            self.channel = data['channels']
+            self.album = data['albums']
+            self.episode = data['episodes']
+            self.channel_ids = data['channel_ids']
+            self.album_ids = data['album_ids']
+            self.episode_ids = data['episode_ids']
+            self.is_dirty = False
+        except Exception as error:
+            self.is_dirty = True

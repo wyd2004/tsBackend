@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-19 16:05+0800\n"
+"POT-Creation-Date: 2016-11-20 20:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,153 +22,160 @@ msgstr ""
 msgid "term"
 msgstr "合约"
 
-#: term/models.py:14
+#: term/models.py:15
 msgid "is deleted"
 msgstr "已删除"
 
-#: term/models.py:15
+#: term/models.py:16
 msgid "created datetime"
 msgstr "创建时间"
 
-#: term/models.py:16
+#: term/models.py:17
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: term/models.py:27
+#: term/models.py:28
 msgid "One Year"
 msgstr "一年"
 
-#: term/models.py:28
+#: term/models.py:29
 msgid "One Season"
 msgstr "一季"
 
-#: term/models.py:29
+#: term/models.py:30
 msgid "One Month"
 msgstr "一个月"
 
-#: term/models.py:30
-msgid "One Time"
-msgstr "一次"
+#: term/models.py:31
+msgid "Permanent"
+msgstr "永久"
 
-#: term/models.py:34
+#: term/models.py:42
 msgid "Channel"
 msgstr "频道"
 
-#: term/models.py:35
+#: term/models.py:43
 msgid "Album"
 msgstr "栏目"
 
-#: term/models.py:36
+#: term/models.py:44
 msgid "Episode"
 msgstr "节目"
 
-#: term/models.py:40 term/models.py:65 term/models.py:182
+#: term/models.py:48 term/models.py:77 term/models.py:194
 msgid "tier scope"
 msgstr "合约时长"
 
-#: term/models.py:41 term/models.py:69 term/models.py:183
+#: term/models.py:49 term/models.py:81 term/models.py:195
 msgid "tier package"
 msgstr "合约对象"
 
-#: term/models.py:42 term/models.py:70 term/models.py:184
+#: term/models.py:50 term/models.py:82 term/models.py:196
 msgid "tier price"
 msgstr "价格"
 
-#: term/models.py:43
+#: term/models.py:51
 msgid "is published"
 msgstr "是否发布"
 
-#: term/models.py:47 term/models.py:64
+#: term/models.py:55 term/models.py:76
 msgid "tier"
 msgstr "合约类别"
 
-#: term/models.py:48
+#: term/models.py:56
 msgid "tiers"
 msgstr "合约类别"
 
-#: term/models.py:55 term/models.py:153
+#: term/models.py:67 term/models.py:165
 msgid "Wait for Payment"
 msgstr "等待支付"
 
-#: term/models.py:56 term/models.py:154
+#: term/models.py:68 term/models.py:166
 msgid "Succeeded"
 msgstr "成功"
 
-#: term/models.py:57 term/models.py:155
+#: term/models.py:69 term/models.py:167
 msgid "Faield"
 msgstr "失败"
 
-#: term/models.py:58
+#: term/models.py:70
 msgid "Canceled"
 msgstr ""
 
-#: term/models.py:59
+#: term/models.py:71
 msgid "Expired"
 msgstr ""
 
-#: term/models.py:63 term/models.py:159 term/models.py:181
+#: term/models.py:75 term/models.py:171 term/models.py:193
 msgid "uuid"
 msgstr "UUID"
 
-#: term/models.py:66
+#: term/models.py:78
 msgid "order item id"
 msgstr ""
 
-#: term/models.py:67 term/models.py:185
+#: term/models.py:79 term/models.py:197
 msgid "content_type"
 msgstr "内容类型"
 
-#: term/models.py:71 term/models.py:189
+#: term/models.py:83 term/models.py:201
 msgid "member"
 msgstr "用户"
 
-#: term/models.py:72
+#: term/models.py:84
 msgid "payment value"
 msgstr "价值"
 
-#: term/models.py:73 term/models.py:163
+#: term/models.py:85 term/models.py:175
 msgid "status"
 msgstr "状态"
 
-#: term/models.py:77 term/models.py:188
+#: term/models.py:89 term/models.py:172 term/models.py:200
 msgid "order"
 msgstr "订单"
 
-#: term/models.py:78
+#: term/models.py:90
 msgid "orders"
 msgstr "订单"
 
-#: term/models.py:148
+#: term/models.py:160
 msgid "Wechat"
 msgstr "微信"
 
-#: term/models.py:160 term/models.py:167
-msgid "payment"
-msgstr "支付"
-
-#: term/models.py:161
+#: term/models.py:173
 msgid "payment receipt"
 msgstr "凭证"
 
-#: term/models.py:162
+#: term/models.py:174
 msgid "payment agent"
 msgstr "代理"
 
-#: term/models.py:168
+#: term/models.py:179
+msgid "payment"
+msgstr "支付"
+
+#: term/models.py:180
 msgid "payments"
 msgstr "支付"
 
-#: term/models.py:186
+#: term/models.py:198
 msgid "object id"
 msgstr "内容 ID"
 
-#: term/models.py:193
+#: term/models.py:202
+#, fuzzy
+#| msgid "created datetime"
+msgid "expired datetime"
+msgstr "创建时间"
+
+#: term/models.py:203
+msgid "is expired"
+msgstr ""
+
+#: term/models.py:207
 msgid "ticket"
 msgstr "票据"
 
-#: term/models.py:194
+#: term/models.py:208
 msgid "tickets"
 msgstr "票据"
-
-#~ msgid "Waiting for Payment"
-#~ msgstr "等待支付"

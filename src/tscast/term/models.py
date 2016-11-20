@@ -28,14 +28,14 @@ TIER_SCOPE_CHOICES = (
         ('one year', _('One Year')),
         ('one season', _('One Season')),
         ('one month', _('One Month')),
-        ('one time', _('One Time')),
+        ('permanent', _('Permanent')),
         )
 
 TIER_SCOPE_EXPIRES_MAP = {
         'one year': timedelta(days=365),
         'one season': timedelta(days=90),
         'one month': timedelta(days=30),
-        'one time': timedelta.max,
+        'permanent': timedelta.max,
         }
 
 TIER_PACKAGE_CHOICES = (
@@ -198,9 +198,10 @@ class Purchase(BaseModel):
     object_id = models.PositiveIntegerField(verbose_name=_('object id'), default=0)
     purchase_object = GenericForeignKey('content_type', 'object_id')
     order = models.OneToOneField('Order', verbose_name=_('order'))
-    member = models.ForeignKey('member.Member', related_name='tickets', verbose_name=_('member'))
+    member = models.ForeignKey('member.Member', related_name='purchases', verbose_name=_('member'))
     dt_expired = models.DateTimeField(null=True, verbose_name=_('expired datetime'))
     is_expired = models.BooleanField(default=False, verbose_name=_('is expired'))
+    is_permanent = models.BooleanField(default=False, verbose_name=_('is permanent'))
 
     class Meta:
         app_label = 'term'
@@ -209,4 +210,6 @@ class Purchase(BaseModel):
 
     def __unicode__(self):
         return '%s - Order - %s' % (
-                self.member.username, self.order.id)
+            self.member.username,
+            self.order.id,
+            )

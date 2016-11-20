@@ -1,5 +1,6 @@
 from django_filters import FilterSet
 from django.db.models import Count
+from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework import views
 from rest_framework.decorators import api_view
@@ -84,14 +85,22 @@ class PodcastAlbumSubscribeViewSet(viewsets.ModelViewSet):
             q.save()
         return Response(status=204)
 
+
 class MemberPurchasedAlbumViewSet(PodcastAlbumViewSet):
     def get_queryset(self):
+        member_id=self.kwargs.get('member_id',)
+        if member_id:
+            try:
+                member = Member.objects.get(id=member_id)
+            except:
+                raise NotFound
+        privilege = member.privilege
         queryset = self.model.objects.filter(
                 is_deleted=False,
                 status='publish',
-                )
-        from term.models import Purchase
-        member_purchased = Purchase.objects.filter(
-                member_id=self.kwargs.get('member_id', 0),
-                )
+                ).filter(
+                Q(id__in=privilege.episode_ids) |\
+                Q(channel_id__in=privilege.channel_ids) |\
+                Q(episodes__id__in=privilege.episode_ids)
+                ).distinct()
         return queryset
