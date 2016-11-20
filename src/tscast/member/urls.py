@@ -13,8 +13,8 @@ from .viewsets import oauth
 router = routers.DefaultRouter()
 
 router.register('member', MemberViewSet, base_name='MemberViewSet')
-router.register('member/(?P<member_id>\d+)/subscription',PodcastAlbumSubscriptionViewSet, base_name='PodcastAlbumSubscriptionViewSet')
-router.register('member/(?P<member_id>\d+)/purchase', MemberPurchasedAlbumViewSet, base_name='PodcastAlbumSubscriptionViewSet')
+router.register('member/(?P<member_id>\d+)/subscription/album',PodcastAlbumSubscriptionViewSet, base_name='PodcastAlbumSubscriptionViewSet')
+router.register('member/(?P<member_id>\d+)/purchase/album', MemberPurchasedAlbumViewSet, base_name='PodcastAlbumSubscriptionViewSet')
 
 
 view_urls = [
