@@ -1,5 +1,6 @@
 from django_filters import FilterSet
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response 
 from rest_framework.permissions import BasePermission
@@ -7,8 +8,10 @@ from rest_framework.permissions import SAFE_METHODS
 
 from .models import Tier
 from .models import Order
+from .models import Payment
 from .serializers import TierSerializer
 from .serializers import OrderSerializer
+from .serializers import PaymentSerializer
 
 
 class Readonly(BasePermission):
@@ -33,3 +36,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     permission_classes = ()
+
+@api_view(['GET',])
+def payment_callback(request, uuid, format='json'):
+    try:
+        payment = Payment.objects.get(uuid=uuid)
+    except Payment.DoesNotExist as error:
+        raise NotFound
+    data = PaymentSerializer(payment).data
+    response = Response(data)
+    return response
