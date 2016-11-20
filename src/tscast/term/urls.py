@@ -9,8 +9,8 @@ from .viewsets import OrderViewSet
 
 router = routers.DefaultRouter()
 
-router.register('podcast/tangsuan/term/tier', TierViewSet, base_name='TierViewSet')
-router.register('podcast/tangsuan/term/order', OrderViewSet, base_name='OrderViewSet')
+router.register('term/tier', TierViewSet, base_name='TierViewSet')
+router.register('term/order', OrderViewSet, base_name='OrderViewSet')
 
 
 urlpatterns = [
