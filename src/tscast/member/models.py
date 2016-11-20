@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 import json
 import uuid
+import os
+import binascii
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -39,6 +41,14 @@ class MemberToken(models.Model):
     def __unicode__(self):
         uname = '%s: %s' % (self.user.username, self.key)
         return uname
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = self.generate_key()
+        return super(MemberToken, self).save(*args, **kwargs)
+
+    def generate_key(self):
+        return binascii.hexlify(os.urandom(20)).decode()
 
 
 class Member(BaseModel):
