@@ -60,7 +60,7 @@ class Member(BaseModel):
         try:
             mp = self.memberprivilege
         except Exception as error:
-            mp = MemberPrivilege.get_or_create(member=self)
+            mp, created = MemberPrivilege.objects.get_or_create(member=self)
         _privilege = Privilege()
         _privilege.loads(mp.payload)
         return _privilege
