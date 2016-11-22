@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 20:26+0800\n"
+"POT-Creation-Date: 2016-11-23 01:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,11 +100,11 @@ msgstr "失败"
 
 #: term/models.py:70
 msgid "Canceled"
-msgstr ""
+msgstr "取消"
 
 #: term/models.py:71
 msgid "Expired"
-msgstr ""
+msgstr "过期"
 
 #: term/models.py:75 term/models.py:171 term/models.py:193
 msgid "uuid"
@@ -112,7 +112,7 @@ msgstr "UUID"
 
 #: term/models.py:78
 msgid "order item id"
-msgstr ""
+msgstr "订单条目 ID"
 
 #: term/models.py:79 term/models.py:197
 msgid "content_type"
@@ -163,19 +163,25 @@ msgid "object id"
 msgstr "内容 ID"
 
 #: term/models.py:202
-#, fuzzy
-#| msgid "created datetime"
 msgid "expired datetime"
-msgstr "创建时间"
+msgstr "过期时间"
 
 #: term/models.py:203
 msgid "is expired"
-msgstr ""
+msgstr "是否过期"
 
-#: term/models.py:207
+#: term/models.py:204
+msgid "is permanent"
+msgstr "永久"
+
+#: term/models.py:208
 msgid "ticket"
 msgstr "票据"
 
-#: term/models.py:208
+#: term/models.py:209
 msgid "tickets"
 msgstr "票据"
+
+#: term/serializers.py:74
+msgid "invalid item"
+msgstr "错误的 item 值"

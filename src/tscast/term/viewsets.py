@@ -13,6 +13,8 @@ from .serializers import TierSerializer
 from .serializers import OrderSerializer
 from .serializers import PaymentSerializer
 
+from member.models import Member
+
 
 class Readonly(BasePermission):
     def has_permission(self, request, view):
@@ -30,12 +32,22 @@ class TierViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.model.objects.filter(is_published=True)
 
+class MemberWriteOnly(BasePermission):
+    def has_permission(self, request, view):
+        if type(request.user) is Member and request.method == 'POST':
+            return True
+        else:
+            return False
+
+    def has_object_permission(self, request, view, object):
+        return False
+
 
 class OrderViewSet(viewsets.ModelViewSet):
     model = Order
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    permission_classes = ()
+    permission_classes = (MemberWriteOnly,)
 
 @api_view(['GET',])
 def payment_callback(request, uuid, format='json'):
