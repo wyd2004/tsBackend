@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import get_storage_class
 from django.conf import settings
@@ -98,6 +99,7 @@ class BaseModel(models.Model):
 
 def podcast_channel_image_upload_to(instance, filename):
     args = (
+        settings.UPLOAD_BASE_DIR,
         'podcast',
         'channel',
         'image',
@@ -137,6 +139,7 @@ class PodcastChannel(BaseModel):
 
 def podcast_people_image_upload_to(instance, filename):
     args = (
+        settings.UPLOAD_BASE_DIR,
         'podcast',
         'people',
         'image',
@@ -188,6 +191,7 @@ class PodcastHost(PodcastPeople):
 
 def podcast_album_image_upload_to(instance, filename):
     args = (
+        settings.UPLOAD_BASE_DIR,
         'podcast',
         'album',
         'image',
@@ -224,6 +228,7 @@ class PodcastAlbum(BaseModel):
 
 def podcast_episode_image_upload_to(instance, filename):
     args = (
+        settings.UPLOAD_BASE_DIR,
         'podcast',
         'episode',
         'image',
@@ -261,6 +266,7 @@ class PodcastEpisode(BaseModel):
 
 def podcast_enclosure_upload_to(instance, filename):
     args = (
+        settings.UPLOAD_BASE_DIR,
         'podcast',
         'enclosure',
         filename,

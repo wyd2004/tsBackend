@@ -7,13 +7,21 @@ import binascii
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
+from django.core.files.storage import get_storage_class
 
 from rest_framework.authtoken.models import Token
 
 from .signals import update_member_privilege
+
+def path_join(args):
+    return '/'.join(args)
+
+
+MEMBER_IMAGE_STORAGE = get_storage_class(getattr(settings, 'MEMBER_IMAGE_STORAGE', None))()
 
 
 class BaseModel(models.Model):
@@ -51,11 +59,20 @@ class MemberToken(models.Model):
         return binascii.hexlify(os.urandom(20)).decode()
 
 
+def member_image_upload_to(instance, filename):
+    args = (
+        settings.UPLOAD_BASE_DIR,
+        'member',
+        'image',
+        filename,
+        )
+    return path_join(args)
+
 class Member(BaseModel):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, verbose_name=_('uuid'))
     username = models.CharField(max_length=32, unique=True, verbose_name=_('username'))
     nickname = models.CharField(max_length=32, null=True, unique=True, verbose_name=_('nickname'))
-    avatar = models.ImageField(blank=True, verbose_name=_('avatar'))
+    avatar = models.ImageField(storage=MEMBER_IMAGE_STORAGE, upload_to=member_image_upload_to,  blank=True, verbose_name=_('avatar'))
 
     class Meta:
         app_label = 'member'
