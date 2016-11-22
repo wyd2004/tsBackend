@@ -30,7 +30,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     from member.models import Member
-    member = serializers.HiddenField(default=Member.objects.get(id=1))
+    # member = serializers.HiddenField(default=Member.objects.get(id=1))
     payments = PaymentSerializer(many=True)
 
     class Meta:
