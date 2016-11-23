@@ -83,10 +83,10 @@
     "fields": {
         "is_deleted": false,
         "dt_created": "2016-11-15T14:31:18.514Z",
-        "dt_updated": "2016-11-15T14:50:24.337Z",
-        "scope": "one time",
+        "dt_updated": "2016-11-23T15:09:20.984Z",
+        "scope": "permanent",
         "package": "episode",
-        "price": "1.00",
+        "price": "6.00",
         "is_published": true
     }
 }
