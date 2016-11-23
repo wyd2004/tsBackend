@@ -8,12 +8,12 @@ from rest_framework.response import Response
 from .models import PodcastHost
 from .models import PodcastAlbum
 from .models import PodcastEpisode
-from .models import PodcastEnclosure
+# from .models import PodcastEnclosure
 
 from .serializers import PodcastHostSerializer
 from .serializers import PodcastAlbumSerializer
 from .serializers import PodcastEpisodeSerializer
-from .serializers import PodcastEnclosureSerializer
+# from .serializers import PodcastEnclosureSerializer
 
 
 class PodcastHostViewSet(viewsets.ModelViewSet):
@@ -74,8 +74,8 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         return Response()
 
 
-class PodcastEnclosureViewSet(viewsets.ModelViewSet):
-    model = PodcastEnclosure
-    serializer_class = PodcastEnclosureSerializer
-    queryset = PodcastEnclosure.objects.all()
-    ordering_fields = ('-dt_updated',)
+# class PodcastEnclosureViewSet(viewsets.ModelViewSet):
+#     model = PodcastEnclosure
+#     serializer_class = PodcastEnclosureSerializer
+#     queryset = PodcastEnclosure.objects.all()
+#     ordering_fields = ('-dt_updated',)

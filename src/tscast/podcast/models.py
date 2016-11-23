@@ -236,6 +236,15 @@ def podcast_episode_image_upload_to(instance, filename):
         )
     return path_join(args)
 
+def podcast_enclosure_upload_to(instance, filename):
+    args = (
+        settings.UPLOAD_BASE_DIR,
+        'podcast',
+        'enclosure',
+        filename,
+        )
+    return path_join(args)
+
 class PodcastEpisode(BaseModel):
     '''
     Podcast Episode
@@ -253,6 +262,13 @@ class PodcastEpisode(BaseModel):
     explicit = models.CharField(max_length=32, default='no', choices=EXPLICIT_CHOICES, verbose_name=_('explicit'))
     is_hot = models.BooleanField(default=False, verbose_name=_('is hot'))
     status = models.CharField(max_length=32, default='draft', choices=STATUS_CHOICES, verbose_name=_('stauts'))
+    full_file = models.FileField(blank=True, upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('full file'))
+    full_file_url = models.CharField(blank=True, max_length=255, verbose_name=_('alter full file url'))
+    full_file_length = models.IntegerField(default=0, verbose_name=_('full file length'))
+    # full_file_length = models.TimeField(blank=True, verbose_name=_('full file length'))
+    preview_file = models.FileField(blank=True, upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('preview file'))
+    preview_file_url = models.CharField(blank=True, max_length=255, verbose_name=_('alter preview file url'))
+    preview_file_length = models.IntegerField(default=0, verbose_name=_('preview file length'))
 
     class Meta:
         app_label = 'podcast'
@@ -264,40 +280,40 @@ class PodcastEpisode(BaseModel):
         return self.title
 
 
-def podcast_enclosure_upload_to(instance, filename):
-    args = (
-        settings.UPLOAD_BASE_DIR,
-        'podcast',
-        'enclosure',
-        filename,
-        )
-    return path_join(args)
-
-class PodcastEnclosure(BaseModel):
-    '''
-    Podcase Enclosure Model
-    '''
-
-    EXPRESSION_CHOICES = (
-        ('preview', _('Preview')),
-        ('full', _('Full')),
-    )
-
-    slug = None
-    episode = models.ForeignKey(PodcastEpisode, related_name='enclosures', verbose_name=_('episode'))
-    title = models.CharField(max_length=255, blank=True, verbose_name=_('title'))
-    expression = models.CharField(max_length=32, default='full', choices=EXPRESSION_CHOICES, verbose_name=_('expression'))
-    file = models.FileField(upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('file'))
-    file_url = models.CharField(max_length=255, verbose_name=_('alter file url'))
-    hash = models.CharField(max_length=64, blank=True)
-    length = models.IntegerField(blank=True, default=0,  verbose_name=_('length'))
-    size = models.IntegerField(blank=True, default=0, verbose_name=_('file size'))
-
-    class Meta:
-        app_label = 'podcast'
-        verbose_name = _('podcast enclosure')
-        verbose_name_plural = _('podcast enclosures')
-        get_latest_by = 'dt_updated'
-
-    def __unicode__(self):
-        return '%s - %s' % (self.expression, self.title)
+# def podcast_enclosure_upload_to(instance, filename):
+#     args = (
+#         settings.UPLOAD_BASE_DIR,
+#         'podcast',
+#         'enclosure',
+#         filename,
+#         )
+#     return path_join(args)
+# 
+# class PodcastEnclosure(BaseModel):
+#     '''
+#     Podcase Enclosure Model
+#     '''
+# 
+#     EXPRESSION_CHOICES = (
+#         ('preview', _('Preview')),
+#         ('full', _('Full')),
+#     )
+# 
+#     slug = None
+#     episode = models.ForeignKey(PodcastEpisode, related_name='enclosures', verbose_name=_('episode'))
+#     title = models.CharField(max_length=255, blank=True, verbose_name=_('title'))
+#     expression = models.CharField(max_length=32, default='full', choices=EXPRESSION_CHOICES, verbose_name=_('expression'))
+#     file = models.FileField(upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('file'))
+#     file_url = models.CharField(max_length=255, verbose_name=_('alter file url'))
+#     hash = models.CharField(max_length=64, blank=True)
+#     length = models.IntegerField(blank=True, default=0,  verbose_name=_('length'))
+#     size = models.IntegerField(blank=True, default=0, verbose_name=_('file size'))
+# 
+#     class Meta:
+#         app_label = 'podcast'
+#         verbose_name = _('podcast enclosure')
+#         verbose_name_plural = _('podcast enclosures')
+#         get_latest_by = 'dt_updated'
+# 
+#     def __unicode__(self):
+#         return '%s - %s' % (self.expression, self.title)

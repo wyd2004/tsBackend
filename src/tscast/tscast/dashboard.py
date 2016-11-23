@@ -20,7 +20,7 @@ class CustomIndexDashboard(Dashboard):
                 'podcast.PodcastHost',
                 'podcast.PodcastAlbum',
                 'podcast.PodcastEpisode',
-                'podcast.PodcastEnclosure',
+                # 'podcast.PodcastEnclosure',
                 ],
             column=0,
             order=2

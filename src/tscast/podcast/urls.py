@@ -6,7 +6,7 @@ from rest_framework import routers
 from .viewsets import PodcastHostViewSet
 from .viewsets import PodcastAlbumViewSet
 from .viewsets import PodcastEpisodeViewSet
-from .viewsets import PodcastEnclosureViewSet
+# from .viewsets import PodcastEnclosureViewSet
 
 
 router = routers.DefaultRouter()

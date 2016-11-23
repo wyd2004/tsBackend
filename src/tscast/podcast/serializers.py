@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from .models import PodcastHost
 from .models import PodcastAlbum
 from .models import PodcastEpisode
-from .models import PodcastEnclosure
+# from .models import PodcastEnclosure
 
 
 class PodcastHostSerializer(serializers.ModelSerializer):
@@ -49,9 +49,13 @@ class PodcastAlbumSerializer(serializers.ModelSerializer):
 
 class PodcastEpisodeSerializer(serializers.ModelSerializer):
     hosts = PodcastHostSerializer(many=True)
-    enclosures = serializers.SerializerMethodField()
+    # enclosures = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     album_title = serializers.SerializerMethodField()
+    full_url = serializers.SerializerMethodField()
+    full_length = serializers.SerializerMethodField()
+    preview_url = serializers.SerializerMethodField()
+    preview_length = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -59,7 +63,8 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         fields = ('id', 'album_title', 'serial', 'title',
                 'subtitle', 'image', 'description', 'length',
                 'keywords', 'copyright', 'explicit',
-                'hosts', 'enclosures', 'price', 'dt_updated',
+                'hosts', 'price', 'dt_updated', 'full_url',
+                'full_length', 'preview_url', 'preview_length',
                 )
     
     def get_album_title(self, instance):
@@ -68,22 +73,34 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     def get_price(self, instance):
         return 0
 
-    def get_enclosures(self, instance):
-        previews = instance.enclosures.filter(expression='preview')
-        fulls = instance.enclosures.filter(expression='full')
-        data = {
-            'previews': PodcastEnclosureSerializer(previews, many=True).data,
-            'fulls': PodcastEnclosureSerializer(fulls, many=True).data
-            }
-        return data
+    def get_full_url(self, instance):
+        return 'http://xxx.mp3'
+
+    def get_full_length(self, instance):
+        return 1230
+
+    def get_preview_url(self, instance):
+        return 'http://xxx.mp3'
+
+    def get_preview_length(self, instance):
+        return 300
+
+    # def get_enclosures(self, instance):
+    #     previews = instance.enclosures.filter(expression='preview')
+    #     fulls = instance.enclosures.filter(expression='full')
+    #     data = {
+    #         'previews': PodcastEnclosureSerializer(previews, many=True).data,
+    #         'fulls': PodcastEnclosureSerializer(fulls, many=True).data
+    #         }
+    #     return data
 
 
-class PodcastEnclosureSerializer(serializers.ModelSerializer):
-    url = serializers.SerializerMethodField()
-
-    class Meta:
-        model = PodcastEnclosure
-        fields = ('title', 'url', 'length', 'size')
-
-    def get_url(self, instance):
-        return instance.file.url if instance.file else None
+# class PodcastEnclosureSerializer(serializers.ModelSerializer):
+#     url = serializers.SerializerMethodField()
+# 
+#     class Meta:
+#         model = PodcastEnclosure
+#         fields = ('title', 'url', 'length', 'size')
+# 
+#     def get_url(self, instance):
+#         return instance.file.url if instance.file else None

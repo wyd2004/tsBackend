@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True and False
+DEBUG = True#  and False
 
-ALLOWED_HOSTS = ['120.25.232.11',]
+ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11',]
 
 
 # Application definition
@@ -119,10 +119,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# LOCALE_PATHS = (
-#         'tscast/locale',
-#         'podcast/locale',
-#         )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
