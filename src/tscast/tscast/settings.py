@@ -237,4 +237,9 @@ REST_FRAMEWORK = {
         }
 
 PODCAST_ENCLOSURE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
 PODCAST_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+MEMBER_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+UPLOAD_BASE_DIR = 'tscast/statics/upload'
