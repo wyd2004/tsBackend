@@ -255,7 +255,7 @@ class PodcastEpisode(BaseModel):
     serial = models.CharField(max_length=128, blank=True, verbose_name=_('episode serial'))
     title = models.CharField(max_length=128, verbose_name=_('episode title'))
     subtitle = models.CharField(max_length=128, blank=True, verbose_name=_('episode subtitle'))
-    length = models.CharField(max_length=32, blank=True, verbose_name=_('length'))
+    # length = models.CharField(max_length=32, blank=True, verbose_name=_('length'))
     image = models.ImageField(blank=True, upload_to=podcast_episode_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
     keywords = models.CharField(max_length=256, blank=True, default='', verbose_name=_('keywords'))
     copyright = models.CharField(max_length=256, default='All rights reserved', choices=COPYRIGHT_CHOICES, verbose_name=_('copyright'))

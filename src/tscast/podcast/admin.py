@@ -27,7 +27,7 @@ class PodcastEpisodeInline(CompactInline):
     # prepopulated_fields = {"slug": ("title",)}
     extra = 0
     exclude = ('is_deleted',)
-    fields = ('title', 'subtitle', 'serial', 'length', 'image', 'copyright', 'status',
+    fields = ('title', 'subtitle', 'serial', 'image', 'copyright', 'status',
             'hosts', 'explicit', 'keywords', 'description',
             )
 
@@ -112,7 +112,6 @@ class PodcastEpisodeAdmin(BaseModelAdmin):
                 'title',
                 'subtitle',
                 'serial',
-                'length',
                 'image',
                 'hosts', 
                 'preview_file',

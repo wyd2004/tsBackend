@@ -8,6 +8,8 @@ from .models import PodcastAlbum
 from .models import PodcastEpisode
 # from .models import PodcastEnclosure
 
+from term.models import Tier
+
 
 class PodcastHostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,7 +63,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PodcastEpisode
         fields = ('id', 'album_title', 'serial', 'title',
-                'subtitle', 'image', 'description', 'length',
+                'subtitle', 'image', 'description',
                 'keywords', 'copyright', 'explicit',
                 'hosts', 'price', 'dt_updated', 'full_url',
                 'full_length', 'preview_url', 'preview_length',
@@ -71,19 +73,35 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         return instance.album.title
 
     def get_price(self, instance):
-        return 0
+        try:
+            tier = Tier.objects.get(
+                    scope='permanent',
+                    package='episode',
+                    is_published=True,
+                    )
+            return tier.price
+        except Tier.DoesNotExist as error:
+            return 0
 
     def get_full_url(self, instance):
-        return 'http://xxx.mp3'
+        if instance.full_file:
+            url = instance.full_file.url
+        else:
+            url = instance.full_file_url
+        return url
 
     def get_full_length(self, instance):
-        return 1230
+        return instance.full_file_length
 
     def get_preview_url(self, instance):
-        return 'http://xxx.mp3'
+        if instance.preview_file:
+            url = instance.preview_file.url
+        else:
+            url = instance.preview_file_url
+        return url
 
     def get_preview_length(self, instance):
-        return 300
+        return instance.full_file_length
 
     # def get_enclosures(self, instance):
     #     previews = instance.enclosures.filter(expression='preview')
