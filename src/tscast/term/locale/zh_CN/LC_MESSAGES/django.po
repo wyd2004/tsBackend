@@ -1,0 +1,187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-23 01:59+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: term/apps.py:9
+msgid "term"
+msgstr "合约"
+
+#: term/models.py:15
+msgid "is deleted"
+msgstr "已删除"
+
+#: term/models.py:16
+msgid "created datetime"
+msgstr "创建时间"
+
+#: term/models.py:17
+msgid "updated datetime"
+msgstr "更新时间"
+
+#: term/models.py:28
+msgid "One Year"
+msgstr "一年"
+
+#: term/models.py:29
+msgid "One Season"
+msgstr "一季"
+
+#: term/models.py:30
+msgid "One Month"
+msgstr "一个月"
+
+#: term/models.py:31
+msgid "Permanent"
+msgstr "永久"
+
+#: term/models.py:42
+msgid "Channel"
+msgstr "频道"
+
+#: term/models.py:43
+msgid "Album"
+msgstr "栏目"
+
+#: term/models.py:44
+msgid "Episode"
+msgstr "节目"
+
+#: term/models.py:48 term/models.py:77 term/models.py:194
+msgid "tier scope"
+msgstr "合约时长"
+
+#: term/models.py:49 term/models.py:81 term/models.py:195
+msgid "tier package"
+msgstr "合约对象"
+
+#: term/models.py:50 term/models.py:82 term/models.py:196
+msgid "tier price"
+msgstr "价格"
+
+#: term/models.py:51
+msgid "is published"
+msgstr "是否发布"
+
+#: term/models.py:55 term/models.py:76
+msgid "tier"
+msgstr "合约类别"
+
+#: term/models.py:56
+msgid "tiers"
+msgstr "合约类别"
+
+#: term/models.py:67 term/models.py:165
+msgid "Wait for Payment"
+msgstr "等待支付"
+
+#: term/models.py:68 term/models.py:166
+msgid "Succeeded"
+msgstr "成功"
+
+#: term/models.py:69 term/models.py:167
+msgid "Faield"
+msgstr "失败"
+
+#: term/models.py:70
+msgid "Canceled"
+msgstr "取消"
+
+#: term/models.py:71
+msgid "Expired"
+msgstr "过期"
+
+#: term/models.py:75 term/models.py:171 term/models.py:193
+msgid "uuid"
+msgstr "UUID"
+
+#: term/models.py:78
+msgid "order item id"
+msgstr "订单条目 ID"
+
+#: term/models.py:79 term/models.py:197
+msgid "content_type"
+msgstr "内容类型"
+
+#: term/models.py:83 term/models.py:201
+msgid "member"
+msgstr "用户"
+
+#: term/models.py:84
+msgid "payment value"
+msgstr "价值"
+
+#: term/models.py:85 term/models.py:175
+msgid "status"
+msgstr "状态"
+
+#: term/models.py:89 term/models.py:172 term/models.py:200
+msgid "order"
+msgstr "订单"
+
+#: term/models.py:90
+msgid "orders"
+msgstr "订单"
+
+#: term/models.py:160
+msgid "Wechat"
+msgstr "微信"
+
+#: term/models.py:173
+msgid "payment receipt"
+msgstr "凭证"
+
+#: term/models.py:174
+msgid "payment agent"
+msgstr "代理"
+
+#: term/models.py:179
+msgid "payment"
+msgstr "支付"
+
+#: term/models.py:180
+msgid "payments"
+msgstr "支付"
+
+#: term/models.py:198
+msgid "object id"
+msgstr "内容 ID"
+
+#: term/models.py:202
+msgid "expired datetime"
+msgstr "过期时间"
+
+#: term/models.py:203
+msgid "is expired"
+msgstr "是否过期"
+
+#: term/models.py:204
+msgid "is permanent"
+msgstr "永久"
+
+#: term/models.py:208
+msgid "ticket"
+msgstr "票据"
+
+#: term/models.py:209
+msgid "tickets"
+msgstr "票据"
+
+#: term/serializers.py:74
+msgid "invalid item"
+msgstr "错误的 item 值"
