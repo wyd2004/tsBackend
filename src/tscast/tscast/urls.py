@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
+from tscast.utils.wechat import wechat_message
 
 
 admin.site.site_url = None
@@ -23,10 +24,12 @@ admin.site.site_header = 'Podcast Data Console'
 admin.site.index_title = 'Podcast Data Console'
 
 
+
 urlpatterns = [
     url(r'^admin/jet', include('jet.urls', 'jet')),
     url(r'^admin/jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
+    url(r'^misc/wechat_message/', wechat_message),
     url(r'^', include('member.urls')),
     url(r'^', include('podcast.urls')),
     url(r'^', include('term.urls')),

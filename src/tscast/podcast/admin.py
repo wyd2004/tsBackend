@@ -40,6 +40,7 @@ class PodcastAlbumInline(CompactInline):
 
 class PodcastChannelAdmin(BaseModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
+    list_display = ('id', 'name', 'slug', 'image',)
     exclude = ('is_deleted',)
     search_fields = ('name',)
     fields = ('name', 'slug', 'image', 'description')

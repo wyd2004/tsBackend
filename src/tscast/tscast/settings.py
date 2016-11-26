@@ -23,7 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  and False
+TSCAST_ENV = os.environ.get('TSCAST_ENV')
+if TSCAST_ENV != 'PRODUCT':
+    DEBUG = True
+else:
+    DEBUG = False
+
 
 ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11',]
 
@@ -73,6 +78,17 @@ TEMPLATES = [
         },
     },
 ]
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'db': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'yimi_cache_table',
+    }
+}
 
 WSGI_APPLICATION = 'tscast.wsgi.application'
 
@@ -124,9 +140,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'tscast/statics')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'tscast/statics/media/')
-MEDIA_URL = '/static/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'tscast/static/')
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'tscast/media/')
 
 
 LOGGING = {
@@ -251,3 +270,7 @@ RAVEN_CONFIG = {
     #  release based on the git info.
     # 'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
 }
+
+
+# WECHAT
+WECHAT_TOKEN = 'gNHmLEkaE/JL8DH0TIFFhquB2xP9fYqdDnUufc6Xfnw='
