@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True#  and False
+DEBUG = True  and False
 
 ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11',]
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'raven.contrib.django.raven_compat',
     'podcast',
     'member',
     'term',
@@ -124,6 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'tscast/statics')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'tscast/statics/media/')
+MEDIA_URL = 'statics/media/'
 
 
 LOGGING = {
@@ -186,7 +189,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
             'PodcastHost',
             'PodcastAlbum',
             'PodcastEpisode',
-            'PodcastEnclosure',
+            # 'PodcastEnclosure',
         ]),
         ('member', [
             'Member',
@@ -239,3 +242,12 @@ PODCAST_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 MEMBER_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 UPLOAD_BASE_DIR = 'tscast/statics/upload'
+
+
+# SENTRY RAVEN
+RAVEN_CONFIG = {
+    'dsn': 'https://52ff3091d44543fbbf7468a84358da06:0bdd2be3023d4be4820b878c2f5b714f@sentry.io/117413',
+    #  If you are using git, you can also automatically configure the 
+    #  release based on the git info.
+    # 'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
