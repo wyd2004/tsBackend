@@ -126,7 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'tscast/statics')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'tscast/statics/media/')
-MEDIA_URL = 'statics/media/'
+MEDIA_URL = '/static/media/'
 
 
 LOGGING = {
@@ -241,7 +241,7 @@ PODCAST_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 MEMBER_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-UPLOAD_BASE_DIR = 'tscast/statics/upload'
+UPLOAD_BASE_DIR = 'upload'
 
 
 # SENTRY RAVEN
