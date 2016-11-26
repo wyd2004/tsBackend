@@ -26,8 +26,11 @@ from podcast.viewsets import PodcastAlbumViewSet
 @api_view(['GET', 'HEAD'])
 def oauth(request, format='json'):
     token = MemberToken.objects.first()
-    data = {'token': token.key, 'member_id': token.user.id}
-    response = Response(data)
+    if token:
+        data = {'token': token.key, 'member_id': token.user.id}
+        response = Response(data)
+    else:
+        raise NotFound
     return response
 
 

@@ -16,8 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
-from tscast.utils.wechat import wechat_message
 
+
+from tscast.utils.wechat.views import wechat_message
 
 admin.site.site_url = None
 admin.site.site_header = 'Podcast Data Console'
