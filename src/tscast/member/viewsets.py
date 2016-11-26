@@ -1,6 +1,7 @@
 from django_filters import FilterSet
 from django.db.models import Count
 from django.db.models import Q
+from django.http.response import HttpResponseRedirect
 from rest_framework import viewsets
 from rest_framework import views
 from rest_framework.decorators import api_view
@@ -21,11 +22,16 @@ from .serializers import MemberSerializer
 
 from podcast.viewsets import PodcastAlbumViewSet
 
+from tscast.utils.wechat.api import get_wechat_oauth_url
+
 
 
 @api_view(['GET', 'HEAD'])
 def oauth(request, format='json'):
     token = MemberToken.objects.first()
+    url = get_wechat_oauth_url('http://120.25.232.11/member/oauth/')
+    print url
+    return HttpResponseRedirect(url)
     if token:
         data = {'token': token.key, 'member_id': token.user.id}
         response = Response(data)

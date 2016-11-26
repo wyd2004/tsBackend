@@ -1,6 +1,8 @@
 import json
 import requests
 import logging
+from urllib import urlencode
+from urllib import quote as urlquote
 from hashlib import sha1
 from django.core.cache import cache
 from django.core.cache import caches
@@ -70,9 +72,95 @@ def create_wechat_menu(*button):
     else:
         return response.content
 
+def get_wechat_oauth_url(redirect_uri, scope='snsapi_userinfo', state='oauth'):
+    '''
+    https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+    '''
+    url = 'https://open.weixin.qq.com/connect/oauth2/authorize'
+    redirect_uri = urlquote(redirect_uri, safe='')
+    params = {
+        'appid': WECHAT_APPID,
+        'redirect_uri': redirect_uri,
+        'response_type': 'code',
+        'scope': scope,
+        'state': state,
+        }
+    params = urlencode(params)
+    anchor = 'wechat_redirect'
+    return '%s?%s#%s' % (url, params, anchor)
 
-def validate_user(*args, **kwargs):
-    avatar = ''
-    nickname = ''
-    return avatar, nickname
 
+def get_user_info_access_token(code):
+    '''
+    https://mp.weixin.qq.com/wiki/9/01f711493b5a02f24b04365ac5d8fd95.html
+
+    https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+    {
+        "access_token":"ACCESS_TOKEN",
+        "expires_in":7200,
+        "refresh_token":"REFRESH_TOKEN",
+        "openid":"OPENID",
+        "scope":"SCOPE",
+        "unionid":"o6_bmasdasdsad6_2sgVt7hMZOPfL"
+    }
+    '''
+    url = 'https://api.weixin.qq.com/sns/oauth2/access_token'
+    params = {
+        'appid': WECHAT_APPID,
+        'secret': WECHAT_APPSECRET,
+        'code': code,
+        'grant_type': 'authorization_code',
+        }
+    response = requests.get(url, params=params)
+    if response.ok and 'errcode' not in response.json:
+        return response.json()
+    else:
+        return None
+
+
+def refresh_user_info_access_token(refresh_token):
+    '''
+    https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&grant_type=refresh_token&refresh_token=REFRESH_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/sns/oauth2/refresh_token'
+    params = {
+        'appid': WECHAT_APPID,
+        'refresh_token': refresh_token,
+        'grant_type': 'refresh_token',
+        }
+    response = requests.get(url, params=params)
+    if response.ok and 'errcode' not in response.json:
+        return response.json()
+    else:
+        return None
+
+def get_user_info(access_token, openid):
+    '''
+    https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+    '''
+    url = 'https://api.weixin.qq.com/sns/userinfo'
+    params = {
+        'access_token': access_token,
+        'openid': openid,
+        'lang': 'zh_CH',
+        }
+    response = requests.get(url, params=params)
+    if response.ok and 'errcode' not in response.json:
+        return response.json()
+    else:
+        return None
+
+def is_user_info_access_token_valid(access_token):
+    '''
+    https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&openid=OPENID
+    '''
+    url = 'https://api.weixin.qq.com/sns/auth'
+    params = {
+        'access_token': access_token,
+        'openid': openid,
+        }
+    response = requests.get(url, params=params)
+    if response.ok:
+        return response.json().get('errmsg') == 'ok'
+    else:
+        return None
