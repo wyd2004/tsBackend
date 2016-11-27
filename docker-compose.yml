@@ -1,0 +1,43 @@
+version: '2'
+services:
+  django:
+    build: .
+    container_name: tscast-django
+    links:
+      - redis
+      - mysql
+    volumes:
+      - django-data:/data/
+      - log-data:/var/log/
+  nginx:
+    container_name: tscast-nginx
+    image: nginx:stable-alpine
+    expose:
+      - "80"
+    links:
+      - django
+    volumes:
+      - nginx-data:/etc/nginx
+      - log-data:/var/log
+  redis:
+    container_name: tscast-redis
+    image: redis:3.2-alpine
+    volumes:
+      - log-data:/var/log
+  mysql:
+    container_name: tscast-mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: sqlpassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - log-data:/var/log
+volumes:
+  mysql-data:
+    driver: local
+  #django-data:
+  #  driver: local
+  #nginx-data:
+  #  driver: local
+  log-data:
+    driver: local
