@@ -4,6 +4,8 @@ source env/bin/activate
 
 cd src/tscast
 
+export TSCAST_ENV='PRODUCT'
+
 exec gunicorn -k gevent tscast.wsgi:application \
     --name mjtt_django\
     --bind 127.0.0.1:4001\
