@@ -94,4 +94,5 @@ migrations/
 
 # sqlite3
 db.sqlite3
-statics/
+static/
+media/

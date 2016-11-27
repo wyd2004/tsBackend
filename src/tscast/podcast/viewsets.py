@@ -80,6 +80,13 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         url = 'http://cdn5.lizhi.fm/audio/2016/11/25/2570200503485179398_hd.mp3'
         return HttpResponseRedirect(url)
 
+    def get_preview_file(self, request, *args, **kwargs):
+        obj = self.get_object()
+        # data = {'full_url': 'http://xx.mp3'}
+        # return Response(data)
+        url = 'http://cdn5.lizhi.fm/audio/2016/11/25/2570200503485179398_hd.mp3'
+        return HttpResponseRedirect(url)
+
 
 # class PodcastEnclosureViewSet(viewsets.ModelViewSet):
 #     model = PodcastEnclosure
