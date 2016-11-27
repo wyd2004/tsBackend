@@ -8,6 +8,7 @@ from .models import PodcastAlbum
 from .models import PodcastEpisode
 # from .models import PodcastEnclosure
 
+from member.models import Member
 from term.models import Tier
 
 
@@ -58,6 +59,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     full_length = serializers.SerializerMethodField()
     preview_url = serializers.SerializerMethodField()
     preview_length = serializers.SerializerMethodField()
+    privilege = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -67,6 +69,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                 'keywords', 'copyright', 'explicit',
                 'hosts', 'price', 'dt_updated', 'full_url',
                 'full_length', 'preview_url', 'preview_length',
+                'privilege',
                 )
     
     def get_album_title(self, instance):
@@ -116,6 +119,13 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
 
     def get_preview_length(self, instance):
         return instance.full_file_length
+
+    def get_privilege(self, instance):
+        if self.context.get('request'):
+            request = self.context['request']
+            if type(request.user) is Member:
+                return ['full', 'preview']
+        return []
 
     # def get_enclosures(self, instance):
     #     previews = instance.enclosures.filter(expression='preview')
