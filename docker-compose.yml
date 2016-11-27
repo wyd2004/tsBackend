@@ -35,9 +35,9 @@ services:
 volumes:
   mysql-data:
     driver: local
-  #django-data:
-  #  driver: local
-  #nginx-data:
-  #  driver: local
+  django-data:
+    driver: local
+  nginx-data:
+    driver: local
   log-data:
     driver: local
