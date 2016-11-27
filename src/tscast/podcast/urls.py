@@ -20,7 +20,8 @@ router.register('episode', PodcastEpisodeViewSet, base_name='PodcastEpisodeViewS
 
 view_urls = [
         url(r'episode/(?P<pk>\d+)/next/', PodcastEpisodeViewSet.as_view({'get': 'get_next'}), name='NextPodcastEpisodeViewSet'),
-        url(r'episode/(?P<pk>\d+)/previous/', PodcastEpisodeViewSet.as_view({'get': 'get_previous'}), name='PreviousPodcastEpisodeViewSet')
+        url(r'episode/(?P<pk>\d+)/previous/', PodcastEpisodeViewSet.as_view({'get': 'get_previous'}), name='PreviousPodcastEpisodeViewSet'),
+        url(r'episode/(?P<pk>\d+)/full_file/', PodcastEpisodeViewSet.as_view({'get': 'get_full_file'}), name='FullFilePodcastEpisodeViewSet')
         ]
         
 

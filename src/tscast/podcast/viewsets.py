@@ -3,6 +3,7 @@ from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response 
+from django.http.response import HttpResponseRedirect
 
 
 from .models import PodcastHost
@@ -71,7 +72,13 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
             raise NotFound
         data = self.serializer_class(previous_obj).data
         return Response(data)
-        return Response()
+
+    def get_full_file(self, request, *args, **kwargs):
+        obj = self.get_object()
+        # data = {'full_url': 'http://xx.mp3'}
+        # return Response(data)
+        url = 'http://baidu.com'
+        return HttpResponseRedirect(url)
 
 
 # class PodcastEnclosureViewSet(viewsets.ModelViewSet):

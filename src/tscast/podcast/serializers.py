@@ -84,10 +84,11 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
             return 0
 
     def get_full_url(self, instance):
-        if instance.full_file:
-            url = instance.full_file.url
-        else:
-            url = instance.full_file_url
+        url = '/podcast/episode/%d/full_file/?format=json' % instance.id
+        # if instance.full_file:
+        #     url = instance.full_file.url
+        # else:
+        #     url = instance.full_file_url
         return url
 
     def get_full_length(self, instance):

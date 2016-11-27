@@ -23,22 +23,38 @@ from .serializers import MemberSerializer
 from podcast.viewsets import PodcastAlbumViewSet
 
 from tscast.utils.wechat.api import get_wechat_oauth_url
+from tscast.utils.wechat.api import get_user_info_access_token
+from tscast.utils.wechat.api import get_user_info
 
 
 
-@api_view(['GET', 'HEAD'])
+def wechat_oauth_post(request, format='json'):
+    code = request.POST.get('code')
+    if code:
+        data = get_user_info_access_token(code)
+        if data:
+            access_token = data.get('access_token')
+            openid = data.get('openid')
+            user_info = get_user_info(access_token, openid)
+            data ={
+                'nickname': user_info.get('nickname'),
+                'avatar': user_info.get('headimgurl'),
+                }
+            response = Response(data)
+            return response
+    return Response(status=400)
+
+
+
+@api_view(['GET', 'POST'])
 def oauth(request, format='json'):
-    token = MemberToken.objects.first()
-    url = get_wechat_oauth_url('http://120.25.232.11/member/oauth/')
-    print url
-    return HttpResponseRedirect(url)
-    if token:
-        data = {'token': token.key, 'member_id': token.user.id}
-        response = Response(data)
-    else:
-        raise NotFound
+    if request.method == 'GET':
+        url = get_wechat_oauth_url('http://vip.tangsuanradio.com/member/oauth/')
+        response = HttpResponseRedirect(url)
+        response = wechat_oauth_post(request, format)
+    elif request.method == 'POST':
+        response = wechat_oauth_post(request, format)
     return response
-
 
 class MemberViewSet(viewsets.ModelViewSet):
     model = Member

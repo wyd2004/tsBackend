@@ -103,7 +103,7 @@ class SocialNetwork(models.Model):
     site = models.CharField(max_length=32, choices=SOCIAL_NETWORK_SITE_CHOICES, verbose_name=_('sns'))
     identifier = models.CharField(max_length=128, unique=True, verbose_name=_('identifier'))
     nickname = models.CharField(max_length=32, verbose_name=_('nickname'))
-    avatar = models.ImageField(blank=True, verbose_name=_('avatar'))
+    avatar = models.URLField(blank=True, verbose_name=_('avatar'))
 
     class Meta:
         app_label = 'member'

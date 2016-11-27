@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from hashlib import sha1
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -98,6 +99,9 @@ class BaseModel(models.Model):
 
 
 def podcast_channel_image_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -138,6 +142,9 @@ class PodcastChannel(BaseModel):
 
 
 def podcast_people_image_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -190,6 +197,9 @@ class PodcastHost(PodcastPeople):
 
 
 def podcast_album_image_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -227,6 +237,9 @@ class PodcastAlbum(BaseModel):
 
 
 def podcast_episode_image_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -237,6 +250,33 @@ def podcast_episode_image_upload_to(instance, filename):
     return path_join(args)
 
 def podcast_enclosure_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
+    args = (
+        settings.UPLOAD_BASE_DIR,
+        'podcast',
+        'enclosure',
+        filename,
+        )
+    return path_join(args)
+
+def podcast_full_file_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
+    args = (
+        settings.UPLOAD_BASE_DIR,
+        'podcast',
+        'enclosure',
+        filename,
+        )
+    return path_join(args)
+
+def podcast_preview_file_upload_to(instance, filename):
+    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    # suffix = filename.split('.')[-1]
+    # filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -262,11 +302,10 @@ class PodcastEpisode(BaseModel):
     explicit = models.CharField(max_length=32, default='no', choices=EXPLICIT_CHOICES, verbose_name=_('explicit'))
     is_hot = models.BooleanField(default=False, verbose_name=_('is hot'))
     status = models.CharField(max_length=32, default='draft', choices=STATUS_CHOICES, verbose_name=_('stauts'))
-    full_file = models.FileField(blank=True, upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('full file'))
+    full_file = models.FileField(blank=True, upload_to=podcast_full_file_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('full file'))
     full_file_url = models.CharField(blank=True, max_length=255, verbose_name=_('alter full file url'))
     full_file_length = models.IntegerField(default=0, verbose_name=_('full file length'))
-    # full_file_length = models.TimeField(blank=True, verbose_name=_('full file length'))
-    preview_file = models.FileField(blank=True, upload_to=podcast_enclosure_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('preview file'))
+    preview_file = models.FileField(blank=True, upload_to=podcast_preview_file_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('preview file'))
     preview_file_url = models.CharField(blank=True, max_length=255, verbose_name=_('alter preview file url'))
     preview_file_length = models.IntegerField(default=0, verbose_name=_('preview file length'))
 

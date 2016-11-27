@@ -137,6 +137,20 @@ def refresh_user_info_access_token(refresh_token):
 def get_user_info(access_token, openid):
     '''
     https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+    {
+       "openid":" OPENID",
+       "nickname": NICKNAME,
+       "sex":"1",
+       "province":"PROVINCE"
+       "city":"CITY",
+       "country":"COUNTRY",
+        "headimgurl":    "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46", 
+            "privilege":[
+            "PRIVILEGE1"
+            "PRIVILEGE2"
+        ],
+        "unionid": "o6_bmasdasdsad6_2sgVt7hMZOPfL"
+    }
     '''
     url = 'https://api.weixin.qq.com/sns/userinfo'
     params = {
@@ -160,6 +174,102 @@ def is_user_info_access_token_valid(access_token):
         'openid': openid,
         }
     response = requests.get(url, params=params)
+    if response.ok:
+        return response.json().get('errmsg') == 'ok'
+    else:
+        return None
+
+def get_all_groups():
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/get?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/get'
+    params = {'access_token': get_access_token()}
+    response = requests.post(url, params=params)
+    if response.ok:
+        return response.json().get('groups')
+    else:
+        return None
+
+def create_group(name):
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/create?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/create'
+    params = {'access_token': get_access_token()}
+    data = {'group': {'name': name}}
+    data = json.dumps(data)
+    response = requests.post(url, params=params, data=data)
+    if response.ok:
+        return response.json().get('group')
+    else:
+        return None
+
+def update_group(group_id, name):
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/update?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/update'
+    params = {'access_token': get_access_token()}
+    data = {'group': {'id': group_id, 'name': name}}
+    data = json.dumps(data)
+    response = requests.post(url, params=params, data=data)
+    if response.ok:
+        return response.json().get('errmsg') == 'ok'
+    else:
+        return None
+
+def delete_group(group_id):
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/delete?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/delete'
+    params = {'access_token': get_access_token()}
+    data = {'group': {'id': group_id}}
+    data = json.dumps(data)
+    response = requests.post(url, params=params, data=data)
+    if response.ok:
+        return response.json().get('errmsg') == 'ok'
+    else:
+        return None
+
+def query_user_group(openid):
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/getid?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/getid'
+    params = {'access_token': get_access_token()}
+    data = {'openid': openid}
+    data = json.dumps(data)
+    response = requests.post(url, params=params, data=data)
+    if response.ok:
+        return response.json().get('groupid')
+    else:
+        return None
+
+def update_user_group(openid, to_groupid):
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/members/update?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/members/update'
+    params = {'access_token': get_access_token()}
+    data = {'openid': openid, 'to_groupid': to_groupid}
+    data = json.dumps(data)
+    response = requests.post(url, params=params, data=data)
+    if response.ok:
+        return response.json().get('errmsg') == 'ok'
+    else:
+        return None
+
+def bulk_update_user_group(openid_list, to_groupid):
+    '''
+    https://api.weixin.qq.com/cgi-bin/groups/getid?access_token=ACCESS_TOKEN
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/groups/getid'
+    params = {'access_token': get_access_token()}
+    data = {'openid_list': openid, 'to_groupid': to_groupid}
+    data = json.dumps(data)
+    response = requests.post(url, params=params, data=data)
     if response.ok:
         return response.json().get('errmsg') == 'ok'
     else:
