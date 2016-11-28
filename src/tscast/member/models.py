@@ -5,6 +5,7 @@ import uuid
 import os
 import binascii
 
+
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.conf import settings
@@ -230,3 +231,21 @@ class Privilege(object):
             self.is_dirty = False
         except Exception as error:
             self.is_dirty = True
+
+
+class TrialMember(BaseModel):
+    key = models.UUIDField(default=uuid.uuid4, verbose_name=_('trial key'))
+    user = models.OneToOneField('Member', blank=True, null=True,  verbose_name=_('member'))
+    is_activated = models.BooleanField(default=False, verbose_name=_('is activated'))
+
+    class Meta:
+        app_label = 'member'
+        verbose_name = _('trial member')
+        verbose_name_plural = _('trial members')
+
+    def __unicode__(self):
+        if self.user:
+            uname = '%s: %s' % (self.user.username, str(self.key))
+        else:
+            uname = str(self.key)
+        return uname

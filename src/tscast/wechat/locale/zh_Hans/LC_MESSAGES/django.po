@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-28 23:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: wechat/models.py:13 wechat/models.py:62
+msgid "group id"
+msgstr "分组 ID"
+
+#: wechat/models.py:14
+msgid "group name"
+msgstr "分组名称"
+
+#: wechat/models.py:22
+msgid "wechat member group"
+msgstr "微信用户分组"
+
+#: wechat/models.py:23
+msgid "wechat member groups"
+msgstr "微信用户分组"
+
+#: wechat/models.py:31
+msgid "unknown"
+msgstr "未知"
+
+#: wechat/models.py:32
+msgid "male"
+msgstr "男性"
+
+#: wechat/models.py:33
+msgid "female"
+msgstr "女性"
+
+#: wechat/models.py:35
+msgid "nickname"
+msgstr "昵称"
+
+#: wechat/models.py:36
+msgid "headimgurl"
+msgstr "头像 URL"
+
+#: wechat/models.py:37
+msgid "open id"
+msgstr "OPENID"
+
+#: wechat/models.py:39
+msgid "sex"
+msgstr "性别"
+
+#: wechat/models.py:40 wechat/models.py:66
+msgid "city"
+msgstr "城市"
+
+#: wechat/models.py:41 wechat/models.py:65
+msgid "province"
+msgstr "省市"
+
+#: wechat/models.py:42 wechat/models.py:63 wechat/models.py:64
+msgid "country"
+msgstr "国家"
+
+#: wechat/models.py:43
+msgid "subscribe_time"
+msgstr "关注时间"
+
+#: wechat/models.py:44
+msgid "remark"
+msgstr "备注"
+
+#: wechat/models.py:45
+msgid "groups"
+msgstr "分组"
+
+#: wechat/models.py:53
+msgid "wechat member"
+msgstr "微信用户"
+
+#: wechat/models.py:54
+msgid "wechat members"
+msgstr "微信用户"
+
+#: wechat/models.py:67
+msgid "client platform type"
+msgstr "客户端平台类型"
+
+#: wechat/models.py:68
+msgid "language"
+msgstr "语言"
+
+#: wechat/models.py:70
+msgid "rule key"
+msgstr "规则名"
+
+#: wechat/models.py:71
+msgid "rule value"
+msgstr "规则值"
+
+#: wechat/models.py:79
+msgid "wechat menu match rule"
+msgstr "微信菜单匹配规则"
+
+#: wechat/models.py:80
+msgid "wechat menu match rules"
+msgstr "微信菜单匹配规则"
+
+#: wechat/models.py:88
+msgid "click"
+msgstr "单击"
+
+#: wechat/models.py:89
+msgid "view"
+msgstr "页面"
+
+#: wechat/models.py:91
+msgid "menuuid"
+msgstr "菜单 UID"
+
+#: wechat/models.py:92
+msgid "parent"
+msgstr "父级"
+
+#: wechat/models.py:93
+msgid "menu type"
+msgstr "菜单类型"
+
+#: wechat/models.py:94
+msgid "button name"
+msgstr "按钮名称"
+
+#: wechat/models.py:95
+msgid "button key"
+msgstr "菜单 KEY"
+
+#: wechat/models.py:96
+msgid "button url"
+msgstr "按钮 URL"
+
+#: wechat/models.py:97
+msgid "matchrules"
+msgstr "匹配规则"
+
+#: wechat/models.py:105
+msgid "wechat menu button"
+msgstr "微信菜单按钮"
+
+#: wechat/models.py:106
+msgid "wechat menu buttons"
+msgstr "微信菜单按钮"

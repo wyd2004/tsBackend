@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-23 21:52+0800\n"
+"POT-Creation-Date: 2016-11-28 23:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,7 @@ msgstr ""
 
 #: member/apps.py:11 member/models.py:41 member/models.py:79
 #: member/models.py:102 member/models.py:119 member/models.py:133
+#: member/models.py:237
 msgid "member"
 msgstr "会员"
 
@@ -113,14 +114,28 @@ msgstr "播客栏目订阅"
 
 #: member/models.py:134
 msgid "payload"
-msgstr ""
+msgstr "Payload"
 
 #: member/models.py:138
 msgid "member privilege"
-msgstr ""
+msgstr "会员权益"
 
 #: member/models.py:139
-#, fuzzy
-#| msgid "member tokens"
 msgid "member privileges"
-msgstr "会员令牌"
+msgstr "会员权益"
+
+#: member/models.py:236
+msgid "trial key"
+msgstr "密钥"
+
+#: member/models.py:238
+msgid "is activated"
+msgstr "是否激活"
+
+#: member/models.py:242
+msgid "trial member"
+msgstr "试用会员"
+
+#: member/models.py:243
+msgid "trial members"
+msgstr "试用会员"

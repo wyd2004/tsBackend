@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'podcast',
     'member',
     'term',
+    'wechat',
 ]
 
 MIDDLEWARE = [
@@ -212,6 +213,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         ]),
         ('member', [
             'Member',
+            'TrialMember',
             'PodcastAlbumSubscription',
         ]),
         ('term', [
@@ -219,6 +221,12 @@ JET_SIDE_MENU_CUSTOM_APPS = [
             'Order',
             'Payment',
             'Purchase',
+        ]),
+        ('wechat', [
+            'WeChatMemberGroup',
+            'WeChatMember',
+            # 'WeChatMenuMatchRule',
+            'WeChatMenuButton',
         ]),
         ('auth', [
             'User',

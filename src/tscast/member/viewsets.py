@@ -1,3 +1,5 @@
+import uuid
+
 from django_filters import FilterSet
 from django.db.models import Count
 from django.db.models import Q
@@ -5,14 +7,17 @@ from django.http.response import HttpResponseRedirect
 from rest_framework import viewsets
 from rest_framework import views
 from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes as permission_decorator
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import BasePermission
 
 
 from .models import PodcastAlbumSubscription
 from .models import Member
 from .models import MemberToken
+from .models import TrialMember
 
 
 from .serializers import PodcastAlbumSubscriptionSerializer
@@ -55,6 +60,35 @@ def oauth(request, format='json'):
     elif request.method == 'POST':
         response = wechat_oauth_post(request, format)
     return response
+
+
+class ActivateTrialKeyPermission(BasePermission):
+    def has_permission(self, request, view):
+        if not type(request.user) is Member:
+            return False
+        if request.method in ['POST', 'PUT', 'HEAD', 'DELETED']:
+            return False
+        return True
+
+@api_view(['GET'])
+@permission_decorator([ActivateTrialKeyPermission,])
+def active_trial_key(request, key, format='json'):
+    try:
+        key = uuid.UUID(key, version=4)
+    except ValueError as error:
+        raise ValidationError('invalid key')
+    try:
+        trial = TrialMember.objects.get(key=key)
+        if trial.is_activated:
+            raise NotFound
+        else:
+            trial.user = request.user
+            trial.is_activated = True
+            trial.save()
+        return Response('ok')
+    except TrialMember.DoesNotExist:
+        raise NotFound
+
 
 class MemberViewSet(viewsets.ModelViewSet):
     model = Member

@@ -8,6 +8,7 @@ from .models import Member
 from .models import MemberToken
 from .models import SocialNetwork
 from .models import PodcastAlbumSubscription
+from .models import TrialMember
 
 
 class PodcastAlbumSubscriptionInline(CompactInline):
@@ -31,6 +32,11 @@ class MemberModelAdmin(BaseModelAdmin):
             MemberTokenInline,
             )
 
+class TrialMemberModelAdmin(BaseModelAdmin):
+    list_display = ('user', 'key', 'is_activated', 'dt_created', 'dt_updated', )
+    fields = ('key', 'user')
+    readonly_fields = ('key', 'is_activated')
 
 admin.site.register(Member, MemberModelAdmin)
 admin.site.register(PodcastAlbumSubscription)
+admin.site.register(TrialMember, TrialMemberModelAdmin)
