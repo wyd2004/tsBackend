@@ -29,7 +29,7 @@ class PodcastAlbumViewSet(viewsets.ModelViewSet):
     serializer_class = PodcastAlbumSerializer
     search_fields = ('title',)
     filter_fields = ('hosts__id',)
-    ordering_fields = ('-dt_updated',)
+    ordering_fields = ('dt_updated',)
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
@@ -44,7 +44,8 @@ class PodcastAlbumViewSet(viewsets.ModelViewSet):
 class PodcastEpisodeViewSet(viewsets.ModelViewSet):
     model = PodcastEpisode
     serializer_class = PodcastEpisodeSerializer
-    ordering_fields = ('-dt_updated',)
+    search_fields = ('title',)
+    ordering_fields = ('dt_updated', 'id')
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
@@ -73,6 +74,17 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         data = self.serializer_class(previous_obj).data
         return Response(data)
 
+    def get_earlier(self, request, *args, **kwargs):
+        obj = self.get_object()
+        queryset = self.get_queryset().filter(
+                album=obj.album,
+                dt_created__gte=obj.dt_created,
+                status='publish',
+                is_deleted=False).exclude(
+                id=obj.id)
+        self.get_queryset = lambda: queryset
+        return self.list(self, request, *args, **kwargs)
+
     def get_full_file(self, request, *args, **kwargs):
         obj = self.get_object()
         # data = {'full_url': 'http://xx.mp3'}
@@ -86,6 +98,7 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         # return Response(data)
         url = 'http://cdn5.lizhi.fm/audio/2016/11/25/2570200503485179398_hd.mp3'
         return HttpResponseRedirect(url)
+
 
 
 # class PodcastEnclosureViewSet(viewsets.ModelViewSet):
