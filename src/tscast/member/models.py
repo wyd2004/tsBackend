@@ -236,6 +236,7 @@ class Privilege(object):
 class TrialMember(BaseModel):
     key = models.UUIDField(default=uuid.uuid4, verbose_name=_('trial key'))
     user = models.OneToOneField('Member', blank=True, null=True,  verbose_name=_('member'))
+    remark = models.CharField(max_length=32, blank=True, verbose_name=_('remark'))
     is_activated = models.BooleanField(default=False, verbose_name=_('is activated'))
 
     class Meta:

@@ -25,10 +25,13 @@ admin.site.site_header = 'Podcast Data Console'
 admin.site.index_title = 'Podcast Data Console'
 
 
+from member.views import admin_bulk_add_trial_member
+
 
 urlpatterns = [
     url(r'^admin/jet', include('jet.urls', 'jet')),
     url(r'^admin/jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+    url(r'^admin/member/trialmember/bulk_add/', admin_bulk_add_trial_member, name='bulk_add_trial_member'),
     url(r'^admin/', admin.site.urls),
     url(r'^misc/wechat_message/', wechat_message),
     url(r'^', include('member.urls')),

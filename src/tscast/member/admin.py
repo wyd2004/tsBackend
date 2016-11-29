@@ -33,9 +33,10 @@ class MemberModelAdmin(BaseModelAdmin):
             )
 
 class TrialMemberModelAdmin(BaseModelAdmin):
-    list_display = ('user', 'key', 'is_activated', 'dt_created', 'dt_updated', )
-    fields = ('key', 'user')
-    readonly_fields = ('key', 'is_activated')
+    list_display = ('id', 'key', 'user', 'is_activated', 'dt_created', 'remark', )
+    fields = ('key', 'user', 'is_activated', 'dt_created', 'dt_updated', 'remark')
+    readonly_fields = ('key', 'user', 'is_activated', 'dt_created', 'dt_updated')
+    change_list_template = "change_list.html"
 
 admin.site.register(Member, MemberModelAdmin)
 admin.site.register(PodcastAlbumSubscription)
