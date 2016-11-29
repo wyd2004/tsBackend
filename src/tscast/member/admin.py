@@ -34,6 +34,8 @@ class MemberModelAdmin(BaseModelAdmin):
 
 class TrialMemberModelAdmin(BaseModelAdmin):
     list_display = ('id', 'key', 'user', 'is_activated', 'dt_created', 'remark', )
+    search_fields = ('remark',)
+    list_filter = ('is_activated',)
     fields = ('key', 'user', 'is_activated', 'dt_created', 'dt_updated', 'remark')
     readonly_fields = ('key', 'user', 'is_activated', 'dt_created', 'dt_updated')
     change_list_template = "change_list.html"
