@@ -27,9 +27,10 @@ class PodcastHostViewSet(viewsets.ModelViewSet):
 class PodcastAlbumViewSet(viewsets.ModelViewSet):
     model = PodcastAlbum
     serializer_class = PodcastAlbumSerializer
-    search_fields = ('title',)
-    filter_fields = ('hosts__id',)
-    ordering_fields = ('dt_updated',)
+    search_fields = ('title', 'keywords')
+    filter_fields = ('hosts__id', 'is_hot')
+    ordering_fields = ('is_hot', 'dt_updated', 'id', 'title')
+    ordering = ('-dt_updated',)
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
@@ -46,6 +47,7 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
     serializer_class = PodcastEpisodeSerializer
     search_fields = ('title',)
     ordering_fields = ('dt_updated', 'id')
+    ordering = ('-dt_updated',)
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
@@ -78,7 +80,7 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         obj = self.get_object()
         queryset = self.get_queryset().filter(
                 album=obj.album,
-                dt_created__gte=obj.dt_created,
+                dt_created__lte=obj.dt_created,
                 status='publish',
                 is_deleted=False).exclude(
                 id=obj.id)
