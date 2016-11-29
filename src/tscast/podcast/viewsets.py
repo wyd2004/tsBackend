@@ -16,10 +16,14 @@ from .serializers import PodcastAlbumSerializer
 from .serializers import PodcastEpisodeSerializer
 # from .serializers import PodcastEnclosureSerializer
 
+from tscast.utils.permissions import ReadOnly
+from member.utils.permissions import OnlyMemberAccess
+
 
 class PodcastHostViewSet(viewsets.ModelViewSet):
     model = PodcastHost
     serializer_class = PodcastHostSerializer
+    permission_classes = (ReadOnly, OnlyMemberAccess)
     queryset = PodcastHost.objects.all()
     search_fields = ('name',)
 
@@ -27,6 +31,7 @@ class PodcastHostViewSet(viewsets.ModelViewSet):
 class PodcastAlbumViewSet(viewsets.ModelViewSet):
     model = PodcastAlbum
     serializer_class = PodcastAlbumSerializer
+    permission_classes = (ReadOnly, OnlyMemberAccess)
     search_fields = ('title', 'keywords')
     filter_fields = ('hosts__id', 'is_hot')
     ordering_fields = ('is_hot', 'dt_updated', 'id', 'title')
@@ -45,6 +50,7 @@ class PodcastAlbumViewSet(viewsets.ModelViewSet):
 class PodcastEpisodeViewSet(viewsets.ModelViewSet):
     model = PodcastEpisode
     serializer_class = PodcastEpisodeSerializer
+    permission_classes = (ReadOnly, OnlyMemberAccess)
     search_fields = ('title',)
     ordering_fields = ('dt_updated', 'id')
     ordering = ('-dt_updated',)
