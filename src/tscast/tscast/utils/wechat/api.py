@@ -112,7 +112,7 @@ def get_user_info_access_token(code):
         'grant_type': 'authorization_code',
         }
     response = requests.get(url, params=params)
-    if response.ok and 'errcode' not in response.json:
+    if response.ok and 'errcode' not in response.json():
         return response.json()
     else:
         return None
@@ -129,7 +129,7 @@ def refresh_user_info_access_token(refresh_token):
         'grant_type': 'refresh_token',
         }
     response = requests.get(url, params=params)
-    if response.ok and 'errcode' not in response.json:
+    if response.ok and 'errcode' not in response.json():
         return response.json()
     else:
         return None
@@ -159,7 +159,7 @@ def get_user_info(access_token, openid):
         'lang': 'zh_CH',
         }
     response = requests.get(url, params=params)
-    if response.ok and 'errcode' not in response.json:
+    if response.ok and 'errcode' not in response.json():
         return response.json()
     else:
         return None

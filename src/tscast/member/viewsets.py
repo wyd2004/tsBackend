@@ -1,6 +1,11 @@
 import uuid
+import requests
+from io import BytesIO
+from PIL import Image
+from hashlib import sha1
 
 from django_filters import FilterSet
+from django.core.files import File
 from django.db.models import Count
 from django.db.models import Q
 from django.http.response import HttpResponseRedirect
@@ -16,6 +21,8 @@ from rest_framework.permissions import BasePermission
 
 from .models import PodcastAlbumSubscription
 from .models import Member
+from .models import MemberToken
+from .models import SocialNetwork
 from .models import MemberToken
 from .models import TrialMember
 
@@ -45,22 +52,56 @@ def wechat_oauth_post(request, format='json'):
             access_token = data.get('access_token')
             openid = data.get('openid')
             user_info = get_user_info(access_token, openid)
-            data ={
-                'nickname': user_info.get('nickname'),
-                'avatar': user_info.get('headimgurl'),
-                }
-            response = Response(data)
+            if user_info:
+                try:
+                    social_network = SocialNetwork.objects.get(identifier=openid, site='wechat')
+                    member = social_network.member
+                except SocialNetwork.DoesNotExist as error:
+                    member = Member()
+                    member.username = 'wechat_%s' % openid
+                    member.nickname = user_info.get('nickname')
+                    avatar_url = user_info.get('headimgurl')
+                    if avatar_url:
+                        response = requests.get(avatar_url, verify=False)
+                        if response.ok:
+                            bio = BytesIO(response.content)
+                            image = Image.open(bio)
+                            suffix = image.format.lower()
+                            filename = sha1(response.content).hexdigest()
+                            avatar = File(bio, '%s.%s' % (filename, suffix))
+                        else:
+                            avatar = None
+                    else:
+                        avatar = None
+                    member.avatar = avatar
+                    member.save()
+                    social_network = SocialNetwork.objects.create(
+                            member=member,
+                            site='wechat',
+                            identifier=openid,
+                            nickname=user_info.get('nickname'),
+                            avatar=avatar,
+                            )
+                token = MemberToken.objects.create(user=member)
+                data ={
+                    'nickname': user_info.get('nickname'),
+                    'avatar': user_info.get('headimgurl'),
+                    'token': token.key,
+                    }
+                response = Response(data)
+            else:
+                response = Response(status=400)
             return response
     return Response(status=400)
 
 
 
 @api_view(['GET', 'POST'])
+@permission_decorator([])
 def oauth(request, format='json'):
     if request.method == 'GET':
         url = get_wechat_oauth_url('http://vip.tangsuanradio.com/member/oauth/')
         response = HttpResponseRedirect(url)
-        response = wechat_oauth_post(request, format)
     elif request.method == 'POST':
         response = wechat_oauth_post(request, format)
     return response
