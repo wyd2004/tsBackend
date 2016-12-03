@@ -30,7 +30,7 @@ else:
     DEBUG = False
 
 
-ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11',]
+ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11', 'vip.tangsuanradio.com']
 
 
 # Application definition
