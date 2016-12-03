@@ -7,8 +7,9 @@ services:
       - redis
       - mysql
     volumes:
-      - django-data:/data/
+      - ./src/:/data/src/
       - log-data:/var/log/
+
   nginx:
     container_name: tscast-nginx
     image: nginx:stable-alpine
@@ -35,8 +36,8 @@ services:
 volumes:
   mysql-data:
     driver: local
-  django-data:
-    driver: local
+  #django-data:
+  #  driver: local
   nginx-data:
     driver: local
   log-data:
