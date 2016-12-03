@@ -124,8 +124,14 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         if self.context.get('request'):
             request = self.context['request']
             if type(request.user) is Member:
-                return ['full', 'preview']
-        return []
+                privilege = request.user.privilege
+                if any((
+                        (instance.id in privilege.episode_ids),
+                        (instance.album.id in privilege.album_ids),
+                        (instance.album.channel.id in privilege.channel_ids),
+                        )):
+                    return ['full', 'preview']
+        return ['preview']
 
     # def get_enclosures(self, instance):
     #     previews = instance.enclosures.filter(expression='preview')
