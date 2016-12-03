@@ -83,11 +83,22 @@ TEMPLATES = [
 
 CACHES = {
     'default': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        'OPTIONS': {
+            'DB': 6,
+            'PASSWORD': '',
+            'PICKLE_VERSION': -1, # default
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
+        },
+    },
+    'locmem': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     },
     'db': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'yimi_cache_table',
+        'LOCATION': 'django_cache_table',
     }
 }
 
