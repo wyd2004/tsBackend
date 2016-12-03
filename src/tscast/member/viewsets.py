@@ -16,6 +16,7 @@ from rest_framework.decorators import permission_classes as permission_decorator
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import BasePermission
 
 
@@ -84,16 +85,14 @@ def wechat_oauth_post(request, format='json'):
                             )
                 token = MemberToken.objects.create(user=member)
                 data ={
-                    'nickname': user_info.get('nickname'),
-                    'avatar': user_info.get('headimgurl'),
+                    'member_id': member.id,
                     'token': token.key,
                     }
                 response = Response(data)
             else:
-                response = Response(status=400)
+                raise AuthenticationFailed
             return response
-    return Response(status=400)
-
+    raise AuthenticationFailed
 
 
 @api_view(['GET', 'POST'])
