@@ -52,7 +52,7 @@
             </li>
             -->
             <li>
-              {% url 'bulk_add_trial_member' as bulk_add_url %}
+              {% url 'bulk_add_member_invitation' as bulk_add_url %}
               <a href="{% add_preserved_filters bulk_add_url is_popup to_field %}" class="addlink">
                 {% blocktrans with cl.opts.verbose_name as name %}Bulk Add {{ name }}{% endblocktrans %}
               </a>

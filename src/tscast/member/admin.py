@@ -8,7 +8,7 @@ from .models import Member
 from .models import MemberToken
 from .models import SocialNetwork
 from .models import PodcastAlbumSubscription
-from .models import TrialMember
+from .models import MemberInvitation 
 
 
 class PodcastAlbumSubscriptionInline(CompactInline):
@@ -32,7 +32,7 @@ class MemberModelAdmin(BaseModelAdmin):
             MemberTokenInline,
             )
 
-class TrialMemberModelAdmin(BaseModelAdmin):
+class MemberInvitationModelAdmin(BaseModelAdmin):
     list_display = ('id', 'key', 'user', 'is_activated', 'dt_created', 'remark', )
     search_fields = ('remark',)
     list_filter = ('is_activated',)
@@ -42,4 +42,4 @@ class TrialMemberModelAdmin(BaseModelAdmin):
 
 admin.site.register(Member, MemberModelAdmin)
 admin.site.register(PodcastAlbumSubscription)
-admin.site.register(TrialMember, TrialMemberModelAdmin)
+admin.site.register(MemberInvitation, MemberInvitationModelAdmin)

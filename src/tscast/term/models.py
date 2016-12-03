@@ -158,6 +158,7 @@ class Order(BaseModel):
 
 PAYMENT_AGENT_CHOICES = (
         ('wechat', _('Wechat')),
+        ('invit-conpon', _('Invit-Conpon')),
         )
 
 
