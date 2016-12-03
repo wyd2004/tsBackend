@@ -33,8 +33,8 @@ urlpatterns = [
     url(r'^admin/jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/member/trialmember/bulk_add/', admin_bulk_add_trial_member, name='bulk_add_trial_member'),
     url(r'^admin/', admin.site.urls),
-    url(r'^misc/wechat_message/', wechat_message),
-    url(r'^', include('member.urls')),
-    url(r'^', include('podcast.urls')),
-    url(r'^', include('term.urls')),
+    url(r'^api/misc/wechat_message/', wechat_message),
+    url(r'^api', include('member.urls')),
+    url(r'^api', include('podcast.urls')),
+    url(r'^api', include('term.urls')),
 ]
