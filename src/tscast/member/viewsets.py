@@ -5,6 +5,7 @@ from PIL import Image
 from hashlib import sha1
 
 from django_filters import FilterSet
+from django.urls import reverse
 from django.core.files import File
 from django.db.models import Count
 from django.db.models import Q
@@ -13,6 +14,7 @@ from rest_framework import viewsets
 from rest_framework import views
 from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes as permission_decorator
+from rest_framework.decorators import authentication_classes as authentication_decorator
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework.exceptions import ValidationError
@@ -25,7 +27,7 @@ from .models import Member
 from .models import MemberToken
 from .models import SocialNetwork
 from .models import MemberToken
-from .models import TrialMember
+from .models import MemberInvitation
 
 
 from .serializers import PodcastAlbumSubscriptionSerializer
@@ -106,31 +108,48 @@ def oauth(request, format='json'):
     return response
 
 
-class ActivateTrialKeyPermission(BasePermission):
+class InvitationActivatePermission(BasePermission):
     def has_permission(self, request, view):
-        if not type(request.user) is Member:
-            return False
+        # if not type(request.user) is Member:
+        #     return False
         if request.method in ['POST', 'PUT', 'HEAD', 'DELETED']:
             return False
         return True
 
+    def has_object_permision(self, request, view, obj):
+        if request.method in ['POST', 'PUT', 'HEAD', 'DELETED']:
+            return False
+        else:
+            return True
+
+
+# class WeChatCallbackAuth():
+#     pass
+
 @api_view(['GET'])
-@permission_decorator([ActivateTrialKeyPermission,])
-def active_trial_key(request, key, format='json'):
+@permission_decorator([InvitationActivatePermission,])
+# authentication_decorator([WeChatCallbackAuth,])
+def invitation_activate(request, key, format='json'):
+    if not type(request.user) is Member:
+        url = reverse('api:invitation-activate', kwargs={'key':key})
+        url = 'http://vip.tangsuanradio.com/%s' % url
+        url = get_wechat_oauth_url(url)
+        return HttpResponseRedirect(url)
     try:
         key = uuid.UUID(key, version=4)
     except ValueError as error:
-        raise ValidationError('invalid key')
+        raise NotFound
     try:
-        trial = TrialMember.objects.get(key=key)
-        if trial.is_activated:
+        invitation = MemberInvitation.objects.get(key=key)
+        if invitation.is_activated:
             raise NotFound
         else:
-            trial.user = request.user
-            trial.is_activated = True
-            trial.save()
+            invitation.user = request.user
+            invitation.is_activated = True
+            invitation.make_purchase()
+            invitation.save()
         return Response('ok')
-    except TrialMember.DoesNotExist:
+    except MemberInvitation.DoesNotExist as error:
         raise NotFound
 
 

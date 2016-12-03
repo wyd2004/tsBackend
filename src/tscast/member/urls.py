@@ -8,7 +8,7 @@ from .viewsets import PodcastAlbumSubscribeViewSet
 from .viewsets import MemberPurchasedAlbumViewSet 
 from .viewsets import MemberViewSet 
 from .viewsets import oauth
-from .viewsets import active_trial_key
+from .viewsets import invitation_activate
 
 
 router = routers.DefaultRouter()
@@ -26,7 +26,7 @@ view_urls = [
             name='PodcastAlbumSubscribeViewSet',
             ),
         url('member/oauth/', oauth, name='member-oauth'),
-        url('member/active/(?P<key>[\w\d-]+)/', active_trial_key, name='trial-member-active'),
+        url('invitation/activate/(?P<key>[\w\d-]+)/', invitation_activate, name='invitation-activate'),
         ]
 
 

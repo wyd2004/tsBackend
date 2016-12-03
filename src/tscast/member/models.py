@@ -131,7 +131,7 @@ class PodcastAlbumSubscription(BaseModel):
 
 
 class MemberPrivilege(BaseModel):
-    member = models.OneToOneField(Member, verbose_name=_('member'))
+    member = models.OneToOneField(Member, related_name='member_privilege', verbose_name=_('member'))
     payload = models.TextField(blank=True, verbose_name=_('payload'))
 
     class Meta:
@@ -233,16 +233,16 @@ class Privilege(object):
             self.is_dirty = True
 
 
-class TrialMember(BaseModel):
-    key = models.UUIDField(default=uuid.uuid4, verbose_name=_('trial key'))
-    user = models.OneToOneField('Member', blank=True, null=True,  verbose_name=_('member'))
+class MemberInvitation(BaseModel):
+    key = models.UUIDField(default=uuid.uuid4, verbose_name=_('invitation key'))
+    user = models.OneToOneField('Member', blank=True, null=True, related_name='invitation', verbose_name=_('member'))
     remark = models.CharField(max_length=32, blank=True, verbose_name=_('remark'))
     is_activated = models.BooleanField(default=False, verbose_name=_('is activated'))
 
     class Meta:
         app_label = 'member'
-        verbose_name = _('trial member')
-        verbose_name_plural = _('trial members')
+        verbose_name = _('member invitation')
+        verbose_name_plural = _('member invitation')
 
     def __unicode__(self):
         if self.user:
@@ -250,3 +250,11 @@ class TrialMember(BaseModel):
         else:
             uname = str(self.key)
         return uname
+
+    def make_purchase():
+        # TODO
+        # add a order
+        # make the payment with agent invit-conpon
+        # add purchase
+        # refresh member privilege
+        pass

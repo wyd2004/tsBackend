@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-30 00:36+0800\n"
+"POT-Creation-Date: 2016-12-04 01:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,157 +18,163 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: apps.py:11 models.py:42 models.py:80 models.py:103 models.py:120
-#: models.py:134 models.py:238
+#: member/apps.py:11 member/models.py:42 member/models.py:80
+#: member/models.py:103 member/models.py:120 member/models.py:134
+#: member/models.py:238
 msgid "member"
 msgstr "会员"
 
-#: authentication.py:25
+#: member/authentication.py:25
 msgid "Invalid token."
 msgstr "非法 Token"
 
-#: authentication.py:28
+#: member/authentication.py:28
 msgid "Member not exists."
 msgstr "会员不存在"
 
-#: models.py:29
+#: member/models.py:29
 msgid "is deleted"
 msgstr "已删除"
 
-#: models.py:30
+#: member/models.py:30
 msgid "created datetime"
 msgstr "创建时间"
 
-#: models.py:31
+#: member/models.py:31
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: models.py:43
+#: member/models.py:43
 msgid "token"
 msgstr "令牌"
 
-#: models.py:47
+#: member/models.py:47
 msgid "member token"
 msgstr "会员令牌"
 
-#: models.py:48
+#: member/models.py:48
 msgid "member tokens"
 msgstr "会员令牌"
 
-#: models.py:73
+#: member/models.py:73
 msgid "uuid"
 msgstr "UUID"
 
-#: models.py:74
+#: member/models.py:74
 msgid "username"
 msgstr "用户名"
 
-#: models.py:75 models.py:106
+#: member/models.py:75 member/models.py:106
 msgid "nickname"
 msgstr "昵称"
 
-#: models.py:76 models.py:107
+#: member/models.py:76 member/models.py:107
 msgid "avatar"
 msgstr "头像"
 
-#: models.py:81
+#: member/models.py:81
 msgid "members"
 msgstr "会员"
 
-#: models.py:98
+#: member/models.py:98
 msgid "Unknown"
 msgstr "未知"
 
-#: models.py:99
+#: member/models.py:99
 msgid "Wechat"
 msgstr "微信"
 
-#: models.py:104
+#: member/models.py:104
 msgid "sns"
 msgstr "社交网络站点"
 
-#: models.py:105
+#: member/models.py:105
 msgid "identifier"
 msgstr "标识"
 
-#: models.py:111
+#: member/models.py:111
 msgid "social network"
 msgstr "社交网络"
 
-#: models.py:112
+#: member/models.py:112
 msgid "social networks"
 msgstr "社交网络"
 
-#: models.py:121
+#: member/models.py:121
 msgid "album"
 msgstr "栏目"
 
-#: models.py:125
+#: member/models.py:125
 msgid "podcast album subscription"
 msgstr "播客栏目订阅"
 
-#: models.py:126
+#: member/models.py:126
 msgid "podcast album subscriptions"
 msgstr "播客栏目订阅"
 
-#: models.py:135
+#: member/models.py:135
 msgid "payload"
 msgstr "Payload"
 
-#: models.py:139
+#: member/models.py:139
 msgid "member privilege"
 msgstr "会员权益"
 
-#: models.py:140
+#: member/models.py:140
 msgid "member privileges"
 msgstr "会员权益"
 
-#: models.py:237
-msgid "trial key"
-msgstr "密钥"
+#: member/models.py:237
+msgid "invitation key"
+msgstr "邀请码"
 
-#: models.py:239
+#: member/models.py:239
 msgid "remark"
 msgstr "备注"
 
-#: models.py:240
+#: member/models.py:240
 msgid "is activated"
 msgstr "是否激活"
 
-#: models.py:244
-msgid "trial member"
-msgstr "试用会员"
+#: member/models.py:244 member/models.py:245
+msgid "member invitation"
+msgstr "会员邀请码"
 
-#: models.py:245
-msgid "trial members"
-msgstr "试用会员"
-
-#: templates/change_list.html:31
+#: member/templates/change_list.html:31
 msgid "Home"
 msgstr "首页"
 
-#: templates/change_list.html:50
+#: member/templates/change_list.html:50
 #, python-format
 msgid "Add %(name)s"
 msgstr "添加 %(name)s"
 
-#: templates/change_list.html:57
+#: member/templates/change_list.html:57
 #, python-format
 msgid "Bulk Add %(name)s"
 msgstr "批量添加 %(name)s"
 
-#: templates/change_list.html:66
+#: member/templates/change_list.html:66
 msgid "Please correct the error below."
 msgstr "请修正以下错误"
 
-#: templates/change_list.html:66
+#: member/templates/change_list.html:66
 msgid "Please correct the errors below."
 msgstr "请修正以下错误"
 
-#: templates/change_list.html:77
+#: member/templates/change_list.html:77
 msgid "Filter"
 msgstr "过滤"
 
-#: views.py:14
+#: member/views.py:15
 msgid "success created"
 msgstr "成功创建"
+
+#~ msgid "trial key"
+#~ msgstr "密钥"
+
+#~ msgid "trial member"
+#~ msgstr "试用会员"
+
+#~ msgid "trial members"
+#~ msgstr "试用会员"

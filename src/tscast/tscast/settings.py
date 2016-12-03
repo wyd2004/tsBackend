@@ -224,7 +224,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         ]),
         ('member', [
             'Member',
-            'TrialMember',
+            'MemberInvitation',
             'PodcastAlbumSubscription',
         ]),
         ('term', [
