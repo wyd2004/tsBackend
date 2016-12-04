@@ -45,6 +45,10 @@ class PodcastChannelAdmin(BaseModelAdmin):
     search_fields = ('name',)
     fields = ('name', 'slug', 'image', 'description')
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 
 class PodcastHostAdmin(BaseModelAdmin):
     list_display = ('id', 'name', 'short_description', 'albums_count', 'episodes_count', 'dt_updated')

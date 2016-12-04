@@ -19,6 +19,9 @@ class TierModelAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+    def has_add_permission(self, request):
+        return False
+
     def get_actions(self, request):
         actions = super(TierModelAdmin, self).get_actions(request)
         del actions['delete_selected']
@@ -30,6 +33,7 @@ class PaymentInline(CompactInline):
     # readonly_fields = ('receipt', 'agent')
     fields = ('agent', 'receipt', 'status')
     extra = 0
+
     def has_delete_permission(self, request, obj=None):
         return False
 
@@ -51,7 +55,7 @@ class OrderModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'scope', 'package', 'item_object', 'member', 'price',  'value', 'status')
     # readonly_fields = ('tier', 'item', 'member', 'status', 'scope', 'package', 'price', 'value')
     exclude = ('is_deleted',)
-    fields = ('tier', 'member', 'status', 'package', 'scope', 'price', 'value')
+    fields = ('tier', 'member', 'status', 'package', 'scope', 'item', 'price', 'value',)
     list_filter = ('status', 'tier__scope', 'tier__package')
     search_fields = ('order__member__username',)
     inlines = (PaymentInline, PurchaseInline)
