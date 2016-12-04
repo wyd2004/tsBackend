@@ -305,7 +305,7 @@ def generate_wxpay_sign_sha256(kwargs):
     return (sign_type, sign)
 
 
-def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, open_id, *args, **kwargs):
+def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, open_id, notify_url, *args, **kwargs):
     '''
     https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
     '''
@@ -344,7 +344,7 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     # goods tag
     goods_tag = None
     # wechat payment callback url
-    notify_url = None
+    notify_url = notify_url
     # trade type, JSAPI, NATIVE, APP
     trade_type = 'JSAPI'
     # product id, local value

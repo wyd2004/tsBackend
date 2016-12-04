@@ -38,9 +38,9 @@ from .serializers import MemberSerializer
 from podcast.viewsets import PodcastAlbumViewSet
 
 
-from tscast.utils.wechat.api import get_wechat_oauth_url
-from tscast.utils.wechat.api import get_user_info_access_token
-from tscast.utils.wechat.api import get_user_info
+from wechat.api import get_wechat_oauth_url
+from wechat.api import get_user_info_access_token
+from wechat.api import get_user_info
 
 
 from .utils.permissions import OnlyMemberAccess

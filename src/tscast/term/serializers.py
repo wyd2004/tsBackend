@@ -3,6 +3,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 
 from .models import Tier
 from .models import Order
@@ -13,6 +14,8 @@ from member.models import Member
 from podcast.models import PodcastChannel
 from podcast.models import PodcastAlbum
 from podcast.models import PodcastEpisode
+
+from wechat.api import create_wxpay_prepay
 
 
 class TierSerializer(serializers.ModelSerializer):
@@ -29,8 +32,36 @@ class PaymentSerializer(serializers.ModelSerializer):
         fields = ('agent', 'status', 'payload')
 
     def get_payload(self, obj):
-        if obj.status == 'wait-for-payment':
-            return {'prepay_id': 'xxx', 'pay_sign': 'yyy'}
+        if not obj.status == 'wait-for-payment':
+            return {}
+        notify_url = None
+        ip = None
+        open_id = None
+        if self.context.get('request'):
+            request = self.context['request']
+            notify_uri = reverse('payment_callback', kwargs={'uuid': obj.uuid})
+            notify_url = '%s://%s%s' % (
+                    request._get_scheme(),
+                    request.get_host(),
+                    notify_uri)
+            ip = request.META.get('REMOTE_ADDR')
+            member = request.user
+            wechat = member.social_network.filter(site='wechat').first()
+            if wechat:
+                open_id = wechat.identifier
+        kwargs = {
+                'title': obj.order.tier,
+                'attach': None,
+                'order_id': obj.order.uuid,
+                'fee': obj.order.value,
+                'client_ip': ip,
+                'notify_url': notify_url,
+                'product_id': obj.order.iter.id,
+                'open_id': open_id,
+                }
+        prepay = create_wxpay_prepay(**kwargs)
+        if prepay:
+            return prepay
         else:
             return {}
 
@@ -41,6 +72,7 @@ class CurrentMember(object):
 
     def __call__(self):
         return self.member
+
 
 class OrderSerializer(serializers.ModelSerializer):
     member = serializers.PrimaryKeyRelatedField(
@@ -88,5 +120,5 @@ class OrderSerializer(serializers.ModelSerializer):
                 )
         for p in ps:
             agent = p['agent']
-            order.make_empty_payment(agent=agent)
+            payment = order.make_empty_payment(agent=agent)
         return order

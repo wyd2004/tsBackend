@@ -18,7 +18,7 @@ from django.conf.urls import include
 from django.contrib import admin
 
 
-from tscast.utils.wechat.views import wechat_message
+from wechat.views import wechat_message
 
 admin.site.site_url = None
 admin.site.site_header = 'Podcast Data Console'
@@ -33,8 +33,9 @@ urlpatterns = [
     url(r'^admin/jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/member/trialmember/bulk_add/', admin_bulk_add_member_invitation, name='bulk_add_member_invitation'),
     url(r'^admin/', admin.site.urls),
-    url(r'^api/misc/wechat_message/', wechat_message),
-    url(r'^api', include('member.urls')),
-    url(r'^api', include('podcast.urls')),
-    url(r'^api', include('term.urls')),
+
+    url(r'^api/', include('wechat.urls')),
+    url(r'^api/', include('member.urls')),
+    url(r'^api/', include('podcast.urls')),
+    url(r'^api/', include('term.urls')),
 ]

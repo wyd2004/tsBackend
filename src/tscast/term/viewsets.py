@@ -55,6 +55,10 @@ def payment_callback(request, uuid, format='json'):
         payment = Payment.objects.get(uuid=uuid)
     except Payment.DoesNotExist as error:
         raise NotFound
+    receipt = json.dumps(request.data)
+    payment.status = 'succeeded'
+    payment.receipt = receipt
+    payment.save()
     data = PaymentSerializer(payment).data
     response = Response(data)
     return response
