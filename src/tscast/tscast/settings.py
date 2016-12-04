@@ -194,7 +194,7 @@ LOGGING = {
 #         'file': {
 #             'level': 'INFO',
 #             'class': 'logging.handlers.TimedRotatingFileHandler',
-#             'filename': os.path.join(LOG_FILE_PATH, 'mjtt_django.log'),
+#             'filename': os.path.join(LOG_FILE_PATH, 'tscast.log'),
 #             'when': 'd',
 #             'formatter': 'verbose'
 #         },
@@ -205,6 +205,11 @@ LOGGING = {
             'propagate': True,
         },
         'podcast': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'wechat': {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
@@ -292,6 +297,4 @@ RAVEN_CONFIG = {
 
 
 # WECHAT
-WECHAT_TOKEN = 'gNHmLEkaE/JL8DH0TIFFhquB2xP9fYqdDnUufc6Xfnw='
-WECHAT_APPID = 'wx4ff6dd6b015ca309'
-WECHAT_APPSECRET = '5e2b01725af0c546ebcecf9ebe087136'
+from .conf.wechat import *
