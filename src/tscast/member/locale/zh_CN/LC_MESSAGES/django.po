@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 01:40+0800\n"
+"POT-Creation-Date: 2016-12-05 03:56+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: member/admin.py:54
+msgid "URL"
+msgstr "链接"
+
+#: member/admin.py:55
+msgid "QRCode"
+msgstr "二维码"
 
 #: member/apps.py:11 member/models.py:42 member/models.py:80
 #: member/models.py:103 member/models.py:120 member/models.py:134
@@ -149,7 +157,7 @@ msgstr "首页"
 msgid "Add %(name)s"
 msgstr "添加 %(name)s"
 
-#: member/templates/change_list.html:57
+#: member/templates/change_list.html:58
 #, python-format
 msgid "Bulk Add %(name)s"
 msgstr "批量添加 %(name)s"
