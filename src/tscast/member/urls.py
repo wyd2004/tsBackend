@@ -26,7 +26,7 @@ view_urls = [
             name='PodcastAlbumSubscribeViewSet',
             ),
         url('member/oauth/', oauth, name='member-oauth'),
-        url('invitation/activate/(?P<key>[\w\d-]+)/', invitation_activate, name='invitation-activate'),
+        url('member/invitation/activate/(?P<key>[\w\d-]+)/', invitation_activate, name='invitation-activate'),
         ]
 
 

@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 import uuid
 from datetime import timedelta
+from dateutils import relativedelta
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -32,9 +34,9 @@ TIER_SCOPE_CHOICES = (
         )
 
 TIER_SCOPE_EXPIRES_MAP = {
-        'one year': timedelta(days=365),
-        'one season': timedelta(days=90),
-        'one month': timedelta(days=30),
+        'one year': relativedelta(years=1),
+        'one season': relativedelta(months=3),
+        'one month': relativedelta(months=1),
         'permanent': timedelta.max,
         }
 
@@ -77,7 +79,7 @@ class Order(BaseModel):
     scope = models.CharField(max_length=32, choices=TIER_SCOPE_CHOICES, verbose_name=_('tier scope'))
     item = models.IntegerField(default=0, verbose_name=_('order item id'))
     content_type = models.ForeignKey('contenttypes.ContentType', null=True, blank=True, verbose_name=_('content_type'), editable=False)
-    item_object = GenericForeignKey('content_type', 'item')
+    item_object = GenericForeignKey('content_type', 'item',)
     package = models.CharField(max_length=32, choices=TIER_PACKAGE_CHOICES, verbose_name=_('tier package'))
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0.0, verbose_name=_('tier price'))
     member = models.ForeignKey('member.Member', related_name='orders', verbose_name = _('member'))
@@ -90,7 +92,7 @@ class Order(BaseModel):
         verbose_name_plural = _('orders')
 
     def __unicode__(self):
-        return '%s - Order %s' % (self.member.username, self.id)
+        return 'Order %d' % self.id
 
     def fill_order(self):
         ct_map = {
@@ -181,7 +183,7 @@ class Payment(BaseModel):
         verbose_name_plural = _('payments')
 
     def __unicode__(self):
-        return '%s - Order.%d' % (self.order.member.username, self.order.id)
+        return 'Payment - %d' % self.id
 
 
 PURCHASE_CONTENT_TYPE_LIMITS = (
@@ -210,7 +212,16 @@ class Purchase(BaseModel):
         verbose_name_plural = _('tickets')
 
     def __unicode__(self):
-        return '%s - Order - %s' % (
-            self.member.username,
-            self.order.id,
-            )
+        return 'Purchase - %d' % self.order.id
+
+    def save(self, *args, **kwargs):
+        if not self.dt_expired and not self.is_permanent:
+            tier = self.order.tier
+            if tier.scope == 'permanent':
+                self.is_permanent = True
+            else:
+                base_time = self.dt_created or now()
+                scope_map = TIER_SCOPE_EXPIRES_MAP
+                self.dt_expired = base_time + scope_map.get(
+                        tier.scope, relativedelta(0))
+        super(Purchase, self).save(*args, **kwargs)

@@ -13,8 +13,13 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
 from django.core.files.storage import get_storage_class
+from django.contrib.contenttypes.models import ContentType
 
 from rest_framework.authtoken.models import Token
+
+from term.models import Tier
+from term.models import Order
+from podcast.models import PodcastChannel
 
 from .signals import update_member_privilege
 
@@ -251,10 +256,24 @@ class MemberInvitation(BaseModel):
             uname = str(self.key)
         return uname
 
-    def make_purchase():
-        # TODO
-        # add a order
-        # make the payment with agent invit-conpon
-        # add purchase
-        # refresh member privilege
-        pass
+    def make_order(self):
+        tier = Tier.objects.get(scope='one year', package='channel')
+        content_type = ContentType.objects.get(model='podcastchannel')
+        channel = PodcastChannel.objects.first()
+        if not channel:
+            return None
+        order = Order.objects.create(
+                tier=tier,
+                scope=tier.scope,
+                package=tier.package,
+                content_type=content_type,
+                item=channel.id,
+                price=tier.price,
+                member=self.user,
+                value=tier.price,
+                )
+        payment = order.make_empty_payment(agent='invit-conpon')
+        payment.receipt = self.key
+        payment.status = 'succeeded'
+        payment.save()
+        return order

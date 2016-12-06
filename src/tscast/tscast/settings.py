@@ -23,6 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 TSCAST_ENV = os.environ.get('TSCAST_ENV')
 if TSCAST_ENV != 'PRODUCT':
     DEBUG = True
@@ -31,6 +32,9 @@ else:
 
 
 ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11', 'vip.tangsuanradio.com']
+SITE_SCHEME = 'http'
+SITE_HOST = 'vip.tangsuanradio.com'
+
 
 
 # Application definition
@@ -49,7 +53,7 @@ INSTALLED_APPS = [
     'podcast',
     'member',
     'term',
-    'wechat',
+    # 'wechat',
 ]
 
 MIDDLEWARE = [
@@ -204,6 +208,10 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': True,
         },
+        'tscast': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
         'podcast': {
             'handlers': ['console'],
             'level': 'INFO',
@@ -238,12 +246,12 @@ JET_SIDE_MENU_CUSTOM_APPS = [
             'Payment',
             'Purchase',
         ]),
-        ('wechat', [
-            'WeChatMemberGroup',
-            'WeChatMember',
-            # 'WeChatMenuMatchRule',
-            'WeChatMenuButton',
-        ]),
+        # ('wechat', [
+        #     'WeChatMemberGroup',
+        #     'WeChatMember',
+        #     # 'WeChatMenuMatchRule',
+        #     'WeChatMenuButton',
+        # ]),
         ('auth', [
             'User',
             'Group',

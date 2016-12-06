@@ -1,8 +1,10 @@
-import uuid
-import requests
 from io import BytesIO
 from PIL import Image
 from hashlib import sha1
+
+import uuid
+import requests
+import logging
 
 from django_filters import FilterSet
 from django.urls import reverse
@@ -45,7 +47,7 @@ from wechat.api import get_user_info
 
 from .utils.permissions import OnlyMemberAccess
 
-
+logger = logging.getLogger('tscast.member')
 
 def wechat_oauth_post(request, format='json'):
     code = request.POST.get('code')
@@ -101,7 +103,12 @@ def wechat_oauth_post(request, format='json'):
 @permission_decorator([])
 def oauth(request, format='json'):
     if request.method == 'GET':
-        url = get_wechat_oauth_url('http://vip.tangsuanradio.com/member/oauth/')
+        oauth_api = '%s://%s%s' % (
+                settings.SITE_SCHEME,
+                settings.SITE_HOST,
+                url_reverse('api:mmeber-oauth'),
+                )
+        url = get_wechat_oauth_url(oauth_api)
         response = HttpResponseRedirect(url)
     elif request.method == 'POST':
         response = wechat_oauth_post(request, format)
@@ -110,13 +117,15 @@ def oauth(request, format='json'):
 
 class InvitationActivatePermission(BasePermission):
     def has_permission(self, request, view):
-        # if not type(request.user) is Member:
-        #     return False
+        if not type(request.user) is Member:
+            return False
         if request.method in ['POST', 'PUT', 'HEAD', 'DELETED']:
             return False
         return True
 
     def has_object_permision(self, request, view, obj):
+        if not type(request.user) is Member:
+            return False
         if request.method in ['POST', 'PUT', 'HEAD', 'DELETED']:
             return False
         else:
@@ -130,25 +139,39 @@ class InvitationActivatePermission(BasePermission):
 @permission_decorator([InvitationActivatePermission,])
 # authentication_decorator([WeChatCallbackAuth,])
 def invitation_activate(request, key, format='json'):
-    if not type(request.user) is Member:
-        url = reverse('api:invitation-activate', kwargs={'key':key})
-        url = 'http://vip.tangsuanradio.com/%s' % url
-        url = get_wechat_oauth_url(url)
-        return HttpResponseRedirect(url)
+    # if not type(request.user) is Member:
+    #     url = '%s://%s%s' % (
+    #             settings.SITE_SCHEME,
+    #             settings.SITE_HOST, 
+    #             url_reverse(
+    #                 'api:invitation-activate',
+    #                 kwargs={'key':key},
+    #                 ),
+    #             )
+    #     url = get_wechat_oauth_url(url)
+    #     return HttpResponseRedirect(url)
+    if MemberInvitation.objects.filter(user=request.user).exists:
+        raise ValidationError({'member': 'already activated'})
     try:
         key = uuid.UUID(key, version=4)
     except ValueError as error:
         raise NotFound
     try:
-        invitation = MemberInvitation.objects.get(key=key)
-        if invitation.is_activated:
-            raise NotFound
+        invitation = MemberInvitation.objects.get(key=key,  is_activated=False)
+        # if invitation.is_activated:
+        #     raise NotFound
+        invitation.user = request.user
+        invitation.is_activated = True
+        invitation.save()
+        order = invitation.make_order()
+        if order and order.status == 'succeeded':
+            return Response('ok')
         else:
-            invitation.user = request.user
-            invitation.is_activated = True
-            invitation.make_purchase()
-            invitation.save()
-        return Response('ok')
+            logger.error(
+                    'member %d activate invitation %s error' 
+                    % (request.user.id, key)
+                    )
+            return Response(status=500)
     except MemberInvitation.DoesNotExist as error:
         raise NotFound
 

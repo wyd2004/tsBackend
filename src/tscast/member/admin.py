@@ -2,15 +2,17 @@ import io
 import qrcode
 import base64
 from django.contrib import admin
-from jet.admin import CompactInline
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-from django.urls import reverse
+from django.urls import reverse as url_reverse
+from django.conf import settings
 
+from jet.admin import CompactInline
 from podcast.utils.admin import BaseModelAdmin
 
 from .models import Member
 from .models import MemberToken
+from .models import MemberPrivilege
 from .models import SocialNetwork
 from .models import PodcastAlbumSubscription
 from .models import MemberInvitation 
@@ -19,19 +21,34 @@ from .models import MemberInvitation
 class PodcastAlbumSubscriptionInline(CompactInline):
     model = PodcastAlbumSubscription
     extra = 0
+    exclude = ('is_deleted',)
+    readonly_fields = ('album',)
 
 class SocialNetworkInline(CompactInline):
     model = SocialNetwork
     extra = 0
+    readonly_fields = ('site', 'identifier', 'avatar', 'nickname')
 
 class MemberTokenInline(CompactInline):
     model = MemberToken
     extra = 0
 
+class MemberPrivilegeInline(CompactInline):
+    exclude = ('is_deleted',)
+    readonly_fields = ('payload',)
+    model = MemberPrivilege
+    max_num = 0
+    extra = 0
+
+    def has_add_permission(self, request):
+        return False
+
 class MemberModelAdmin(BaseModelAdmin):
     list_display = ('id', 'username', 'nickname', 'avatar', 'dt_updated', )
     fields = ('username', 'nickname', 'avatar')
+    readonly_fields = ('username', 'nickname', 'avatar')
     inlines = (
+            MemberPrivilegeInline,
             PodcastAlbumSubscriptionInline,
             SocialNetworkInline,
             MemberTokenInline,
@@ -64,7 +81,11 @@ class MemberInvitationForm(forms.ModelForm):
             instance = kwargs['instance']
             if not 'initial' in kwargs:
                 kwargs['initial'] = {}
-            url = 'http://vip.tangsuanradio.com%s' % reverse('api:invitation-activate', kwargs={'key': instance.key})
+            url = '%s://%s%s' % (
+                    settings.SITE_SCHEME,
+                    settings.SITE_HOST,
+                    url_reverse('api:invitation-activate', kwargs={'key': instance.key})
+                    )
             kwargs['initial']['url'] = url
             qr = qrcode.QRCode(
                     version=1,
@@ -101,12 +122,21 @@ class MemberInvitationModelAdmin(BaseModelAdmin):
 
 
 class PodcastAlbumSubscriptionModelAdmin(BaseModelAdmin):
+    list_display = ('id', 'album', 'member')
+    search_fields = ('member__username', 'member__nickname')
+    list_filter = ('album',)
+    readonly_fields = ('album', 'member')
+    exclude = ('is_deleted', )
     def has_delete_permission(self, request, obj=None):
         return False
 
     def has_add_permission(self, request):
         return False
 
+class MemberPrivilegeModelAdmin(BaseModelAdmin):
+    pass
+
 admin.site.register(Member, MemberModelAdmin)
+# admin.site.register(MemberPrivilege)
 admin.site.register(PodcastAlbumSubscription, PodcastAlbumSubscriptionModelAdmin)
 admin.site.register(MemberInvitation, MemberInvitationModelAdmin)
