@@ -49,7 +49,15 @@ class PodcastChannelAdmin(BaseModelAdmin):
         return False
 
     def has_add_permission(self, request):
-        return False
+        count = self.model.objects.count()
+        return request.user.is_superuser and count == 0
+
+    def changelist_view(self, request, extra_context=None):
+        if self.model.objects.all().count() == 1:
+            object_id = str(self.model.objects.first().id)
+            return self.change_view(request, object_id, form_url='', extra_context=extra_context)
+        else:
+            return super(self.__class__, self).changelist_view(request, extra_context)
 
 
 class PodcastHostAdmin(BaseModelAdmin):
