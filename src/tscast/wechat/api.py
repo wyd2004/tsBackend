@@ -1,4 +1,7 @@
+# encoding: utf-8
+
 import json
+import xmltodict
 import requests
 import logging
 import os
@@ -24,6 +27,25 @@ WECHAT_APPSECRET = settings.WECHAT_APPSECRET
 
 
 logger = logging.getLogger('wechat')
+
+
+def cat_xml(kwargs):
+    xml = '<xml>\n'
+    for k, v in kwargs.items():
+        # v = v.encode('utf8')
+        # k = k.encode('utf8')
+        k = str(k)
+        v = str(v)
+        xml += '  <' + k + '>' + v + '</' + k + '>\n'
+    xml += "</xml>"
+    return xml
+
+def decode_wx_xml(xml_str):
+    try:
+        return xmltodict.parse(xml_str)['xml']
+    except Exception as error:
+        logger.error(error)
+        return {}
 
 
 def get_access_token(refresh=False):
@@ -139,6 +161,57 @@ def refresh_user_info_access_token(refresh_token):
         }
     response = requests.get(url, params=params)
     if response.ok and 'errcode' not in response.json():
+        return response.json()
+    else:
+        return None
+
+
+def get_user_list(next_openid=None):
+    '''
+    https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
+
+    {"total":2,"count":2,"data":{"openid":["","OPENID1","OPENID2"]},"next_openid":"NEXT_OPENID"}
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/user/get'
+    params = {'access_token': get_access_token()}
+    if next_openid:
+        params['next_openid'] = next_openid
+    response = requests.get(url, params=params)
+    if response.ok:
+        return response.json()
+    else:
+        return None
+
+
+def get_user_info_by_union_id(union_id):
+    '''
+    https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+
+    {
+        "subscribe": 1, 
+        "openid": "o6_bmjrPTlm6_2sgVt7hMZOPfL2M", 
+        "nickname": "Band", 
+        "sex": 1, 
+        "language": "zh_CN", 
+        "city": "广州", 
+        "province": "广东", 
+        "country": "中国", 
+        "headimgurl":    "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0", 
+       "subscribe_time": 1382694957,
+       "unionid": " o6_bmasdasdsad6_2sgVt7hMZOPfL"
+       "remark": "",
+       "groupid": 0
+    }
+
+    '''
+    url = 'https://api.weixin.qq.com/cgi-bin/user/info'
+    params = {
+            'access_token': get_access_token(),
+            'openid': union_id,
+            'lang': 'zh_CH',
+            }
+    response = requests.get(url, params=params)
+    if response.ok:
         return response.json()
     else:
         return None
@@ -288,20 +361,20 @@ def generate_wxpay_sign_md5(kwargs):
     sign_type = 'MD5'
     key = settings.WECHAT_PAYMENT_KEY
     kwargs = {k:v for k, v in kwargs.items() if k}
-    kwargs = sorted(kwargs)
-    kw_string = u'&'.join(['%s=%s' % (k, v) for k, v in kwargs])
-    kw_string += key
-    sign = md5(kw_string).hexdigest().upper()
+    ks = sorted(kwargs)
+    kw_string = u'&'.join([u'%s=%s' % (k, kwargs[k]) for k in ks])
+    kw_string += (u'&key=%s' % key)
+    sign = md5(kw_string.encode('utf-8')).hexdigest().upper()
     return (sign_type, sign)
 
 def generate_wxpay_sign_sha256(kwargs):
     sign_type = 'HMAC-SHA256'
     key = settings.WECHAT_PAYMENT_KEY
     kwargs = {k:v for k, v in kwargs.items() if k}
-    kwargs = sorted(kwargs)
-    kw_string = u'&'.join(['%s=%s' % (k, v) for k, v in kwargs])
-    kw_string += key
-    sign = sha256(kw_string).hexdigest().upper()
+    ks = sorted(kwargs)
+    kw_string = u'&'.join([u'%s=%s' % (k, kwargs[k]) for k in ks])
+    kw_string += (u'&key=%s' % key)
+    sign = sha256(kw_string.encode('utf-8')).hexdigest().upper()
     return (sign_type, sign)
 
 
@@ -309,6 +382,7 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     '''
     https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
     '''
+    url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     # assigned app id
     appid = settings.WECHAT_APPID
     # assigned merchant id
@@ -318,6 +392,7 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     device_info = 'WEB'
     # random string, 32 or less characters limits
     nonce_str = binascii.hexlify(os.urandom(20)).decode()
+    nonce_str = nonce_str[:32]
     # good description
     body = title 
     # good detail: {'goods_details': [{'goods_id': 'xxx', 
@@ -378,12 +453,17 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
         'product_id': product_id,
         'limit_pay': limit_pay,
         'openid': openid,
+        'sign_type': 'MD5',
     }
-    sign_type, sign = generate_wxpay_sign_sha256(kwargs)
-    response = requests.post(url, data=kwargs)
-    if not respose.ok:
+    kwargs = {k:v for k, v in kwargs.items() if v}
+    sign_type, sign = generate_wxpay_sign_md5(kwargs)
+    kwargs['sign'] = sign
+    xml_data = cat_xml(kwargs)
+    response = requests.post(url, data=xml_data)
+    print response.content
+    if not response.ok:
         return None
-    data = response.json()
+    res_data = decode_wx_xml(response.content)
     if res_data.get('return_code') != 'SUCCESS':
         return None
     if res_data.get('result_code') != 'SUCCESS':
@@ -391,4 +471,10 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     # suppose there is a `prepay_id` in the res_data
     if not res_data.get('prepay_id'):
         return None
-    return res_data
+    res_sign = res_data['sign']
+    del(res_data['sign'])
+    check_f, check_sign = generate_wxpay_sign_md5(res_data)
+    if res_sign == check_sign:
+        return res_data
+    else:
+        return {}

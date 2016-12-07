@@ -1,17 +1,33 @@
 from __future__ import unicode_literals
 
+import pytz
+import logging
+
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.conf import settings
+from django.utils.datetime_safe import datetime
 
 from .managers import WeChatMemberGroupManager
 from .managers import WeChatMemberManager
 from .managers import WeChatMenuMatchRuleManager
 from .managers import WeChatMenuButtonManager
 
+from .api import get_user_list
+from .api import get_user_info_by_union_id
+from .api import get_all_groups
+
+tz = pytz.timezone(settings.TIME_ZONE)
+
+dt = lambda stamp: datetime.fromtimestamp(stamp, tz)
+
+logger = logging.getLogger('wechat')
+
 
 class WeChatMemberGroup(models.Model):
     group_id = models.IntegerField(verbose_name=_('group id'))
     name = models.CharField(max_length=128, blank=True, verbose_name=_('group name'))
+    count = models.IntegerField(default=0, verbose_name=_('user count'))
     dt_created = models.DateTimeField(auto_now_add=True)
     dt_updated = models.DateTimeField(auto_now=True)
 
@@ -25,6 +41,21 @@ class WeChatMemberGroup(models.Model):
     def __unicode__(self):
         return self.name
 
+def fetch_wechat_groups():
+    data = get_all_groups() or []
+    for group in data:
+        g, c = WeChatMemberGroup.objects.update_or_create(
+                group_id=group['id'],
+                defaults={
+                    'name': group['name'],
+                    'count': group['count'],
+                    },
+                )
+        c = 'create' if c else 'update'
+        logger.info('%s %s %s' % (c, group['id'], group['name']))
+
+
+
 
 class WeChatMember(models.Model):
     SEX_CHOICES = (
@@ -32,8 +63,13 @@ class WeChatMember(models.Model):
             ('1', _('male')),
             ('2', _('female')),
             )
-    nickname = models.CharField(max_length=128, verbose_name=_('nickname'))
-    headimgurl = models.URLField(verbose_name=_('headimgurl'))
+    SUBSCRIBE_CHOICES = (
+            ('0', _('No')),
+            ('1', _('Yes')),
+            )
+    subscribe = models.CharField(choices=SUBSCRIBE_CHOICES,max_length=3, default='0', verbose_name=_('subscribe'))
+    nickname = models.CharField(max_length=128, blank=True, verbose_name=_('nickname'))
+    headimgurl = models.URLField(blank=True, verbose_name=_('headimgurl'))
     openid = models.CharField(max_length=128, unique=True, verbose_name=_('open id'))
     # unionid = models.CharField(max_length=128, unique=True, verbose_name=_('union id'))
     sex = models.CharField(choices=SEX_CHOICES, max_length=2, default='0', verbose_name=_('sex'))
@@ -55,6 +91,55 @@ class WeChatMember(models.Model):
 
     def __unicode__(self):
         return self.nickname
+
+def fetch_wechat_member_list():
+    has_next = True
+    next_openid = None
+    total = -1
+    sum_count = 0
+    while has_next:
+        data = get_user_list(next_openid)
+        if not data:
+            has_next = False
+        if 'total' in data:
+            total = data['total']
+        if 'next_openid' in data:
+            next_openid = data['next_openid']
+        if 'data' in data:
+            openids = data['data'].get('openid',[])
+            for open_id in openids:
+                sum_count += 1
+                logger.info('get openid %s' % open_id)
+                yield open_id
+        if sum_count == total:
+            has_next = False
+
+
+def fetch_wechat_members():
+    for open_id in fetch_wechat_member_list():
+        data = get_user_info_by_union_id(open_id) or {}
+        if 'openid' in data:
+            member, created = WeChatMember.objects.update_or_create(
+                openid=data['openid'],
+                defaults={
+                    'subscribe': data.get('subscribe'),
+                    'nickname': data.get('nickname'),
+                    'headimgurl': data.get('headimgurl'),
+                    'sex': data.get('sex'),
+                    'city': data.get('city'),
+                    'province': data.get('province'),
+                    'country': data.get('country'),
+                    'subscribe_time': dt(data.get('subscribe_time')) if data.get('subscribe_time') else '',
+                    'remark': data.get('remark'),
+                    # 'groups': ,
+                    }
+                )
+            create = 'create' if created else 'update'
+            logger.info('%s %s: %s' % (
+                create,
+                data.get('openid'),
+                data.get('nickname'),
+                ))
 
 
 class WeChatMenuMatchRule(models.Model):

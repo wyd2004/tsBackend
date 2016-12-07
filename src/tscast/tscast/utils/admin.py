@@ -4,6 +4,9 @@ from django import forms
 from django.db import models
 from django.utils.safestring import mark_safe
 
+
+all_fields = lambda model: [f.name for f in model._meta.fields if f.name not in ['dt_updated', 'dt_created', 'is_deleted']]
+
 class AdminImageWidget(forms.FileInput):
     """
     A ImageField Widget for admin that shows a thumbnail.

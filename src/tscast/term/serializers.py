@@ -1,9 +1,12 @@
+import json
+from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
+from django.conf import settings
+
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound 
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
-from django.urls import reverse
 
 from .models import Tier
 from .models import Order
@@ -34,33 +37,44 @@ class PaymentSerializer(serializers.ModelSerializer):
     def get_payload(self, obj):
         if not obj.status == 'wait-for-payment':
             return {}
-        notify_url = None
-        ip = None
-        open_id = None
+        try:
+            receipt = json.loads(obj.receipt)
+            return receipt['prepay']
+        except:
+            pass
+        ip = '127.0.0.1'
+        notify_uri = reverse('payment_callback', kwargs={'uuid': obj.uuid})
+        notify_url = '%s://%s%s' % (
+                    settings.SITE_SCHEME,
+                    settings.SITE_HOST,
+                    notify_uri)
         if self.context.get('request'):
             request = self.context['request']
-            notify_uri = reverse('payment_callback', kwargs={'uuid': obj.uuid})
-            notify_url = '%s://%s%s' % (
-                    request._get_scheme(),
-                    request.get_host(),
-                    notify_uri)
             ip = request.META.get('REMOTE_ADDR')
-            member = request.user
-            wechat = member.social_network.filter(site='wechat').first()
-            if wechat:
-                open_id = wechat.identifier
+        member = obj.order.member
+            # DIRTY
+        wechat = member.social_networks.filter(site='wechat').first()
+        if wechat:
+            open_id = wechat.identifier
+        else:
+            # raise error
+            from wechat.models import WeChatMember
+            open_id = WeChatMember.objects.all()[0].openid
+            pass
         kwargs = {
                 'title': obj.order.tier,
                 'attach': None,
-                'order_id': obj.order.uuid,
-                'fee': obj.order.value,
+                'order_id': obj.order.uuid.get_hex(),
+                'fee': int(obj.order.value * 100),
                 'client_ip': ip,
                 'notify_url': notify_url,
-                'product_id': obj.order.iter.id,
+                'product_id': obj.order.tier.id,
                 'open_id': open_id,
                 }
         prepay = create_wxpay_prepay(**kwargs)
         if prepay:
+            obj.receipt = json.dumps({'prepay': prepay})
+            obj.save()
             return prepay
         else:
             return {}
