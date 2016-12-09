@@ -6,8 +6,8 @@ ENV TECAST_ENV PRODUCT
 EXPOSE 4000
 VOLUME ["/data/src",]
 
-COPY ./misc /data/base/
-COPY ./misc/docker/supervisor.conf /etc/supervisor/conf.d/supervisor_tsbackend.conf
+COPY ./misc /data/misc/
+COPY ./misc/docker/supervisor.conf /etc/supervisor.d/tsbackend.ini
 COPY ./misc/pip.conf /etc/pip.conf
 
 RUN echo "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.4/main" > /etc/apk/repositories
@@ -19,14 +19,12 @@ RUN apk add --update \
     python-dev \
     py-pip \
     py-virtualenv \
-    py-mysqldb \
-    py-pillow \
     supervisor
 
 WORKDIR /data/
 RUN virtualenv env
 RUN source env/bin/activate
 RUN pip install --upgrade pip
-RUN pip install -r base/req.txt
+RUN pip install -r misc/docker/req.txt
 
-CMD ["sh", 'base/docker/gunicorn.sh']
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]
