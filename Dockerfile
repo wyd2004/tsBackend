@@ -1,6 +1,5 @@
 #FROM python:2.7.12-alpine
-#FROM alpine:latest
-FROM django
+FROM alpine:latest
 MAINTAINER shengpf
 
 ENV TECAST_ENV PRODUCT
