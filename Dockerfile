@@ -1,10 +1,11 @@
 #FROM python:2.7.12-alpine
-FROM alpine:latest
+#FROM alpine:latest
+FROM django
 MAINTAINER shengpf
 
 ENV TECAST_ENV PRODUCT
 EXPOSE 4000
-VOLUME ["/data/src",]
+#VOLUME ["/data/src",]
 
 COPY ./misc /data/misc/
 COPY ./misc/docker/supervisor.conf /etc/supervisor.d/tsbackend.ini
@@ -19,12 +20,15 @@ RUN apk add --update \
     python-dev \
     py-pip \
     py-virtualenv \
-    supervisor
+    supervisor \ 
+    zlib-dev \
+    libjpeg-turbo-dev 
 
 WORKDIR /data/
 RUN virtualenv env
 RUN source env/bin/activate
 RUN pip install --upgrade pip
 RUN pip install -r misc/docker/req.txt
+RUN mkdir -p /var/log/supervisor/
 
-CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["supervisord", "-nc", "/etc/supervisord.conf"]
