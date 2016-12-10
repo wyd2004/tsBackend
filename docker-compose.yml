@@ -11,41 +11,46 @@ services:
         - "4000:4000"
     links:
       - redis
-        #- mysql
+      - mysql
     container_name: tscast-django
     volumes:
       - ./src:/data/src
-    #  - log-data:/var/log
-
-    #  nginx:
-    #    container_name: tscast-nginx
-    #    image: nginx:stable-alpine
-    #    expose:
-    #      - "80"
-    #    links:
-    #      - django
-    #    volumes:
-    #      - nginx-data:/etc/nginx
-    #      - log-data:/var/log
+      - ./volume/supervisor/log:/var/log/supervisor/
+      - ./volume/gunicorn/log:/var/log/gunicorn/
+      - ./volume/django/log:/var/log/django/
+#  nginx:
+#    container_name: tscast-nginx
+#    image: nginx:stable-alpine
+#    expose:
+#      - "80"
+#    links:
+#      - django
+#    volumes:
+#      - nginx-data:/etc/nginx
+#      - log-data:/var/log
   redis:
     container_name: tscast-redis
     image: redis:3.2-alpine
     volumes:
-      - log-data:/var/log
-    #  mysql:
-    #    container_name: tscast-mysql
-    #    image: mysql
-    #    environment:
-    #      MYSQL_ROOT_PASSWORD: sqlpassword
-    #    volumes:
-    #      - mysql-data:/var/lib/mysql
-    #      - log-data:/var/log
-volumes:
-    #  mysql-data:
-    #    driver: local
-  django-data:
-    driver: local
-  nginx-data:
-    driver: local
-  log-data:
-    driver: local
+      - ./volume/redis/log:/var/log
+      - ./volume/redis/data:/data
+  mysql:
+    container_name: tscast-mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: sqlpassword
+      MYSQL_DATABASE: tscast
+      MYSQL_USER: tscast
+      MYSQL_PASSWORD: tscast
+    volumes:
+      - ./volume/mysql/log/:/var/log
+      - ./volume/mysql/data/:/var/lib/mysql
+#volumes:
+#  mysql-data:
+#    driver: local
+#  django-data:
+#    driver: local
+#  nginx-data:
+#    driver: local
+#  log-data:
+#    driver: local
