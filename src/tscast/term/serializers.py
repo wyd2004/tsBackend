@@ -43,7 +43,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         except:
             pass
         ip = '127.0.0.1'
-        notify_uri = reverse('payment_callback', kwargs={'uuid': obj.uuid})
+        notify_uri = reverse('WeChatWxpayNotifyViewSetPost')
         notify_url = '%s://%s%s' % (
                     settings.SITE_SCHEME,
                     settings.SITE_HOST,
@@ -52,19 +52,17 @@ class PaymentSerializer(serializers.ModelSerializer):
             request = self.context['request']
             ip = request.META.get('REMOTE_ADDR')
         member = obj.order.member
-            # DIRTY
+        # DIRTY
         wechat = member.social_networks.filter(site='wechat').first()
         if wechat:
             open_id = wechat.identifier
         else:
-            # raise error
-            from wechat.models import WeChatMember
-            open_id = WeChatMember.objects.all()[0].openid
-            pass
+            return {}
         kwargs = {
                 'title': obj.order.tier,
                 'attach': None,
-                'order_id': obj.order.uuid.get_hex(),
+                # payment uuid
+                'order_id': obj.uuid.get_hex(),
                 'fee': int(obj.order.value * 100),
                 'client_ip': ip,
                 'notify_url': notify_url,

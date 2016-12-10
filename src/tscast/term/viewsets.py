@@ -1,4 +1,5 @@
 from django_filters import FilterSet
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
@@ -48,17 +49,3 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     permission_classes = (MemberWriteOnly,)
-
-@api_view(['GET',])
-def payment_callback(request, uuid, format='json'):
-    try:
-        payment = Payment.objects.get(uuid=uuid)
-    except Payment.DoesNotExist as error:
-        raise NotFound
-    receipt = json.dumps(request.data)
-    payment.status = 'succeeded'
-    payment.receipt = receipt
-    payment.save()
-    data = PaymentSerializer(payment).data
-    response = Response(data)
-    return response
