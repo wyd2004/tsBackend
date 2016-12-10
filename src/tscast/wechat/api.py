@@ -40,6 +40,7 @@ def cat_xml(kwargs):
     xml += "</xml>"
     return xml
 
+
 def decode_wx_xml(xml_str):
     try:
         return xmltodict.parse(xml_str)['xml']
@@ -478,3 +479,39 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
         return res_data
     else:
         return {}
+
+
+def parse_wxpay_notification(request, *args, **kwargs):
+    '''
+    https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_7&index=3
+    params:
+        return_code         String(32)
+        return_msg          String(32)
+        *appid              String(32) 
+        *mch_id             String(32)
+         device_info        String(32)
+        *nonce_str          String(32)
+        *sign               String(32)
+        *result_code        String(16)
+         err_code           String(32)
+         err_code_des       String(128)
+        *openid             String(128)
+         is_subscribe       String(1)
+        *trade_type         String(16)
+        *bank_type          String(16)
+        *total_fee          Int
+         fee_type           String(8)
+        *cash_fee           Int
+         cash_fee_type      String(16)
+         coupon_fee         Int
+         coupon_count       Int
+         coupon_id_$n       String(20)
+         coupon_fee_$n      Int
+        *transaction_id     String(32)
+        *out_trade_no       String(32)
+         attach             String(128)
+        *time_end           String(14)
+    '''
+    body = request.body
+    req_data = decode_ws_xml(request.body)
+    return req_data
