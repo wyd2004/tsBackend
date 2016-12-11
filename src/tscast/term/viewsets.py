@@ -31,7 +31,9 @@ class TierViewSet(viewsets.ModelViewSet):
     permission_classes = (Readonly,)
 
     def get_queryset(self):
-        return self.model.objects.filter(is_published=True)
+        queryset = self.model.objects.filter(is_published=True)
+        queryset = queryset.order_by('seq')
+        return queryset
 
 class MemberWriteOnly(BasePermission):
     def has_permission(self, request, view):

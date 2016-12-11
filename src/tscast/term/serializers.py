@@ -24,7 +24,8 @@ from wechat.api import create_wxpay_prepay
 class TierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tier
-        fields = ('scope', 'package', 'price')
+        fields = ('title', 'description', 'message',
+                'seq', 'scope', 'package', 'price')
 
 
 class PaymentSerializer(serializers.ModelSerializer):

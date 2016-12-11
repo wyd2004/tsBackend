@@ -30,6 +30,7 @@ TIER_SCOPE_CHOICES = (
         ('one year', _('One Year')),
         ('one season', _('One Season')),
         ('one month', _('One Month')),
+        ('one day', _('One Day')),
         ('permanent', _('Permanent')),
         )
 
@@ -37,6 +38,7 @@ TIER_SCOPE_EXPIRES_MAP = {
         'one year': relativedelta(years=1),
         'one season': relativedelta(months=3),
         'one month': relativedelta(months=1),
+        'one day': relativedelta(days=1),
         'permanent': timedelta.max,
         }
 
@@ -47,6 +49,11 @@ TIER_PACKAGE_CHOICES = (
         )
 
 class Tier(BaseModel):
+    title = models.CharField(max_length=32, verbose_name=_('titer tier'))
+    description = models.TextField(blank=True, verbose_name=_('description'))
+    message = models.CharField(max_length=32, blank=True, verbose_name=_('tier messagee'))
+    remark = models.CharField(max_length=32, blank=True, verbose_name=_('remark'))
+    seq = models.IntegerField(default=0, verbose_name=('tier seq'))
     scope = models.CharField(max_length=32, choices=TIER_SCOPE_CHOICES, verbose_name=_('tier scope'))
     package = models.CharField(max_length=32, choices=TIER_PACKAGE_CHOICES, verbose_name=_('tier package'))
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0.0, verbose_name=_('tier price'))
