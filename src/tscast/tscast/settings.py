@@ -26,10 +26,10 @@ SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 
 TSCAST_ENV = os.environ.get('TSCAST_ENV')
 if TSCAST_ENV == 'PRODUCT':
-    DEBUG = True
+    DEBUG = False
     from tscast.conf.product import *
 else:
-    DEBUG = False
+    DEBUG = True
     from tscast.conf.develop import *
 
 

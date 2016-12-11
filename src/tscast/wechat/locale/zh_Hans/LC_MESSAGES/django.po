@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 01:18+0800\n"
+"POT-Creation-Date: 2016-12-11 14:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,146 +18,276 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: wechat/models.py:13 wechat/models.py:62
+#: wechat/models.py:28 wechat/models.py:147
 msgid "group id"
 msgstr "分组 ID"
 
-#: wechat/models.py:14
+#: wechat/models.py:29
 msgid "group name"
 msgstr "分组名称"
 
-#: wechat/models.py:22
+#: wechat/models.py:30
+msgid "user count"
+msgstr ""
+
+#: wechat/models.py:38
 msgid "wechat member group"
 msgstr "微信用户分组"
 
-#: wechat/models.py:23
+#: wechat/models.py:39
 msgid "wechat member groups"
 msgstr "微信用户分组"
 
-#: wechat/models.py:31
+#: wechat/models.py:62
 msgid "unknown"
 msgstr "未知"
 
-#: wechat/models.py:32
+#: wechat/models.py:63
 msgid "male"
 msgstr "男性"
 
-#: wechat/models.py:33
+#: wechat/models.py:64
 msgid "female"
 msgstr "女性"
 
-#: wechat/models.py:35
+#: wechat/models.py:67
+msgid "No"
+msgstr ""
+
+#: wechat/models.py:68
+msgid "Yes"
+msgstr ""
+
+#: wechat/models.py:70
+#, fuzzy
+#| msgid "subscribe_time"
+msgid "subscribe"
+msgstr "关注时间"
+
+#: wechat/models.py:71
 msgid "nickname"
 msgstr "昵称"
 
-#: wechat/models.py:36
+#: wechat/models.py:72
 msgid "headimgurl"
 msgstr "头像 URL"
 
-#: wechat/models.py:37
+#: wechat/models.py:73
 msgid "open id"
 msgstr "OPENID"
 
-#: wechat/models.py:39
+#: wechat/models.py:75
 msgid "sex"
 msgstr "性别"
 
-#: wechat/models.py:40 wechat/models.py:66
+#: wechat/models.py:76 wechat/models.py:151
 msgid "city"
 msgstr "城市"
 
-#: wechat/models.py:41 wechat/models.py:65
+#: wechat/models.py:77 wechat/models.py:150
 msgid "province"
 msgstr "省市"
 
-#: wechat/models.py:42 wechat/models.py:63 wechat/models.py:64
+#: wechat/models.py:78 wechat/models.py:148 wechat/models.py:149
 msgid "country"
 msgstr "国家"
 
-#: wechat/models.py:43
+#: wechat/models.py:79
 msgid "subscribe_time"
 msgstr "关注时间"
 
-#: wechat/models.py:44
+#: wechat/models.py:80
 msgid "remark"
 msgstr "备注"
 
-#: wechat/models.py:45
+#: wechat/models.py:81
 msgid "groups"
 msgstr "分组"
 
-#: wechat/models.py:53
+#: wechat/models.py:89
 msgid "wechat member"
 msgstr "微信用户"
 
-#: wechat/models.py:54
+#: wechat/models.py:90
 msgid "wechat members"
 msgstr "微信用户"
 
-#: wechat/models.py:67
+#: wechat/models.py:152
 msgid "client platform type"
 msgstr "客户端平台类型"
 
-#: wechat/models.py:68
+#: wechat/models.py:153
 msgid "language"
 msgstr "语言"
 
-#: wechat/models.py:70
+#: wechat/models.py:155
 msgid "rule key"
 msgstr "规则名"
 
-#: wechat/models.py:71
+#: wechat/models.py:156
 msgid "rule value"
 msgstr "规则值"
 
-#: wechat/models.py:79
+#: wechat/models.py:164
 msgid "wechat menu match rule"
 msgstr "微信菜单匹配规则"
 
-#: wechat/models.py:80
+#: wechat/models.py:165
 msgid "wechat menu match rules"
 msgstr "微信菜单匹配规则"
 
-#: wechat/models.py:88
+#: wechat/models.py:173
 msgid "click"
 msgstr "单击"
 
-#: wechat/models.py:89
+#: wechat/models.py:174
 msgid "view"
 msgstr "页面"
 
-#: wechat/models.py:91
+#: wechat/models.py:176
 msgid "menuuid"
 msgstr "菜单 UID"
 
-#: wechat/models.py:92
+#: wechat/models.py:177
 msgid "parent"
 msgstr "父级"
 
-#: wechat/models.py:93
+#: wechat/models.py:178
 msgid "menu type"
 msgstr "菜单类型"
 
-#: wechat/models.py:94
+#: wechat/models.py:179
 msgid "button name"
 msgstr "按钮名称"
 
-#: wechat/models.py:95
+#: wechat/models.py:180
 msgid "button key"
 msgstr "菜单 KEY"
 
-#: wechat/models.py:96
+#: wechat/models.py:181
 msgid "button url"
 msgstr "按钮 URL"
 
-#: wechat/models.py:97
+#: wechat/models.py:182
 msgid "matchrules"
 msgstr "匹配规则"
 
-#: wechat/models.py:105
+#: wechat/models.py:190
 msgid "wechat menu button"
 msgstr "微信菜单按钮"
 
-#: wechat/models.py:106
+#: wechat/models.py:191
 msgid "wechat menu buttons"
 msgstr "微信菜单按钮"
+
+#: wechat/models.py:198
+msgid "return_code"
+msgstr ""
+
+#: wechat/models.py:199
+msgid "return_msg"
+msgstr ""
+
+#: wechat/models.py:204 wechat/models.py:272
+msgid "wechat wxpay notify"
+msgstr ""
+
+#: wechat/models.py:205 wechat/models.py:273
+msgid "wechat wxpay notifies"
+msgstr ""
+
+#: wechat/models.py:244
+msgid "appid"
+msgstr ""
+
+#: wechat/models.py:245 wechat/models.py:246
+msgid "mch_id"
+msgstr ""
+
+#: wechat/models.py:247
+msgid "nonce_str"
+msgstr ""
+
+#: wechat/models.py:248
+msgid "sign"
+msgstr ""
+
+#: wechat/models.py:249
+msgid "result_code"
+msgstr ""
+
+#: wechat/models.py:250
+msgid "err_code"
+msgstr ""
+
+#: wechat/models.py:251
+msgid "err_code_des"
+msgstr ""
+
+#: wechat/models.py:252
+#, fuzzy
+#| msgid "open id"
+msgid "openid"
+msgstr "OPENID"
+
+#: wechat/models.py:253
+#, fuzzy
+#| msgid "subscribe_time"
+msgid "is_subscribe"
+msgstr "关注时间"
+
+#: wechat/models.py:254
+msgid "trade_type"
+msgstr ""
+
+#: wechat/models.py:255
+msgid "bank_type"
+msgstr ""
+
+#: wechat/models.py:256
+msgid "total_fee"
+msgstr ""
+
+#: wechat/models.py:257
+msgid "fee_type"
+msgstr ""
+
+#: wechat/models.py:258
+msgid "cash_fee"
+msgstr ""
+
+#: wechat/models.py:259
+msgid "cash_fee_type"
+msgstr ""
+
+#: wechat/models.py:260
+msgid "coupon_fee"
+msgstr ""
+
+#: wechat/models.py:261
+msgid "coupon_count"
+msgstr ""
+
+#: wechat/models.py:262
+msgid "coupon_id_n"
+msgstr ""
+
+#: wechat/models.py:263
+msgid "coupon_fee_n"
+msgstr ""
+
+#: wechat/models.py:264
+msgid "transaction_id"
+msgstr ""
+
+#: wechat/models.py:265
+msgid "out_trade_no"
+msgstr ""
+
+#: wechat/models.py:266
+msgid "attach"
+msgstr ""
+
+#: wechat/models.py:267
+msgid "time_end"
+msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 01:18+0800\n"
+"POT-Creation-Date: 2016-12-11 14:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,174 +18,198 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: term/admin.py:84
+msgid "item object"
+msgstr "内容 ID"
+
 #: term/apps.py:9
 msgid "term"
 msgstr "合约"
 
-#: term/models.py:15
+#: term/models.py:17
 msgid "is deleted"
 msgstr "已删除"
 
-#: term/models.py:16
+#: term/models.py:18
 msgid "created datetime"
 msgstr "创建时间"
 
-#: term/models.py:17
+#: term/models.py:19
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: term/models.py:28
+#: term/models.py:30
 msgid "One Year"
 msgstr "一年"
 
-#: term/models.py:29
+#: term/models.py:31
 msgid "One Season"
 msgstr "一季"
 
-#: term/models.py:30
+#: term/models.py:32
 msgid "One Month"
 msgstr "一个月"
 
-#: term/models.py:31
+#: term/models.py:33
+msgid "One Day"
+msgstr "一天 "
+
+#: term/models.py:34
 msgid "Permanent"
 msgstr "永久"
 
-#: term/models.py:42
+#: term/models.py:46
 msgid "Channel"
 msgstr "频道"
 
-#: term/models.py:43
+#: term/models.py:47
 msgid "Album"
 msgstr "栏目"
 
-#: term/models.py:44
+#: term/models.py:48
 msgid "Episode"
 msgstr "节目"
 
-#: term/models.py:48 term/models.py:77 term/models.py:195
+#: term/models.py:52
+msgid "tier title"
+msgstr "标题"
+
+#: term/models.py:53
+msgid "description"
+msgstr "描述"
+
+#: term/models.py:54
+msgid "tier messagee"
+msgstr "补充消息"
+
+#: term/models.py:55
+msgid "remark"
+msgstr "备注"
+
+#: term/models.py:57 term/models.py:86 term/models.py:204
 msgid "tier scope"
 msgstr "合约时长"
 
-#: term/models.py:49 term/models.py:81 term/models.py:196
+#: term/models.py:58 term/models.py:90 term/models.py:205
 msgid "tier package"
 msgstr "合约对象"
 
-#: term/models.py:50 term/models.py:82 term/models.py:197
+#: term/models.py:59 term/models.py:91 term/models.py:206
 msgid "tier price"
 msgstr "价格"
 
-#: term/models.py:51
+#: term/models.py:60
 msgid "is published"
 msgstr "是否发布"
 
-#: term/models.py:55 term/models.py:76
+#: term/models.py:64 term/models.py:85
 msgid "tier"
 msgstr "合约类别"
 
-#: term/models.py:56
+#: term/models.py:65
 msgid "tiers"
 msgstr "合约类别"
 
-#: term/models.py:67 term/models.py:166
+#: term/models.py:76 term/models.py:175
 msgid "Wait for Payment"
 msgstr "等待支付"
 
-#: term/models.py:68 term/models.py:167
+#: term/models.py:77 term/models.py:176
 msgid "Succeeded"
 msgstr "成功"
 
-#: term/models.py:69 term/models.py:168
+#: term/models.py:78 term/models.py:177
 msgid "Faield"
 msgstr "失败"
 
-#: term/models.py:70
+#: term/models.py:79
 msgid "Canceled"
 msgstr "取消"
 
-#: term/models.py:71
+#: term/models.py:80
 msgid "Expired"
 msgstr "过期"
 
-#: term/models.py:75 term/models.py:172 term/models.py:194
+#: term/models.py:84 term/models.py:181 term/models.py:203
 msgid "uuid"
 msgstr "UUID"
 
-#: term/models.py:78
+#: term/models.py:87
 msgid "order item id"
 msgstr "订单条目 ID"
 
-#: term/models.py:79 term/models.py:198
+#: term/models.py:88 term/models.py:207
 msgid "content_type"
 msgstr "内容类型"
 
-#: term/models.py:83 term/models.py:202
+#: term/models.py:92 term/models.py:211
 msgid "member"
 msgstr "用户"
 
-#: term/models.py:84
+#: term/models.py:93
 msgid "payment value"
 msgstr "价值"
 
-#: term/models.py:85 term/models.py:176
+#: term/models.py:94 term/models.py:185
 msgid "status"
 msgstr "状态"
 
-#: term/models.py:89 term/models.py:173 term/models.py:201
+#: term/models.py:98 term/models.py:182 term/models.py:210
 msgid "order"
 msgstr "订单"
 
-#: term/models.py:90
+#: term/models.py:99
 msgid "orders"
 msgstr "订单"
 
-#: term/models.py:160
+#: term/models.py:169
 msgid "Wechat"
 msgstr "微信"
 
-#: term/models.py:161
+#: term/models.py:170
 msgid "Invit-Conpon"
 msgstr "邀请码"
 
-#: term/models.py:174
+#: term/models.py:183
 msgid "payment receipt"
 msgstr "凭证"
 
-#: term/models.py:175
+#: term/models.py:184
 msgid "payment agent"
 msgstr "代理"
 
-#: term/models.py:180
+#: term/models.py:189
 msgid "payment"
 msgstr "支付"
 
-#: term/models.py:181
+#: term/models.py:190
 msgid "payments"
 msgstr "支付"
 
-#: term/models.py:199
+#: term/models.py:208
 msgid "object id"
 msgstr "内容 ID"
 
-#: term/models.py:203
+#: term/models.py:212
 msgid "expired datetime"
 msgstr "过期时间"
 
-#: term/models.py:204
+#: term/models.py:213
 msgid "is expired"
 msgstr "是否过期"
 
-#: term/models.py:205
+#: term/models.py:214
 msgid "is permanent"
 msgstr "永久"
 
-#: term/models.py:209
+#: term/models.py:218
 msgid "ticket"
 msgstr "票据"
 
-#: term/models.py:210
+#: term/models.py:219
 msgid "tickets"
 msgstr "票据"
 
-#: term/serializers.py:106
+#: term/serializers.py:119
 msgid "invalid item"
 msgstr "错误的 item 值"

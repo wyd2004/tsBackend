@@ -10,9 +10,9 @@ from .models import Purchase
 
 
 class TierModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'scope', 'package', 'price', 'is_published')
-    fields = ('scope', 'package', 'price', 'is_published')
-    list_filter = ('scope', 'package', 'is_published')
+    list_display = ('id', 'title', 'seq',  'scope', 'package', 'price', 'is_published')
+    fields = ('title', 'description', 'message', 'remark', 'seq', 'scope', 'package', 'price', 'is_published')
+    list_filter = ('title', 'seq', 'scope', 'package', 'is_published')
     list_editable = ('price', 'is_published')
 
     def has_delete_permission(self, request, obj=None):

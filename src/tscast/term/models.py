@@ -49,7 +49,7 @@ TIER_PACKAGE_CHOICES = (
         )
 
 class Tier(BaseModel):
-    title = models.CharField(max_length=32, verbose_name=_('titer tier'))
+    title = models.CharField(max_length=32, verbose_name=_('tier title'))
     description = models.TextField(blank=True, verbose_name=_('description'))
     message = models.CharField(max_length=32, blank=True, verbose_name=_('tier messagee'))
     remark = models.CharField(max_length=32, blank=True, verbose_name=_('remark'))
