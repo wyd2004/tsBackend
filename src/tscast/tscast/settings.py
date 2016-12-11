@@ -25,10 +25,12 @@ SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 TSCAST_ENV = os.environ.get('TSCAST_ENV')
-if TSCAST_ENV != 'PRODUCT':
+if TSCAST_ENV == 'PRODUCT':
     DEBUG = True
+    from tscast.conf.product import *
 else:
     DEBUG = False
+    from tscast.conf.develop import *
 
 
 ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11', 'vip.tangsuanradio.com', 'ts.asyn.me']
@@ -113,24 +115,24 @@ WSGI_APPLICATION = 'tscast.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tscast',
-        'USER': 'tscast',
-        'PASSWORD': 'tscast',
-        'HOST': 'mysql',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-        },
-    },
-}
+# DATABASES = {
+#     'sqlite': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+#     'mysql': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'tscast',
+#         'USER': 'tscast',
+#         'PASSWORD': 'tscast',
+#         'HOST': 'mysql',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'charset': 'utf8mb4',
+#         },
+#     },
+# }
 
 
 # Password validation
