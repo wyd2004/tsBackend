@@ -53,7 +53,7 @@ class Tier(BaseModel):
     description = models.TextField(blank=True, verbose_name=_('description'))
     message = models.CharField(max_length=32, blank=True, verbose_name=_('tier messagee'))
     remark = models.CharField(max_length=32, blank=True, verbose_name=_('remark'))
-    seq = models.IntegerField(default=0, verbose_name=('tier seq'))
+    seq = models.IntegerField(default=0, verbose_name=_('tier seq'))
     scope = models.CharField(max_length=32, choices=TIER_SCOPE_CHOICES, verbose_name=_('tier scope'))
     package = models.CharField(max_length=32, choices=TIER_PACKAGE_CHOICES, verbose_name=_('tier package'))
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0.0, verbose_name=_('tier price'))

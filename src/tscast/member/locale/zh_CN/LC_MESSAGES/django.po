@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 03:56+0800\n"
+"POT-Creation-Date: 2016-12-11 16:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: member/admin.py:54
+#: member/admin.py:71
 msgid "URL"
 msgstr "链接"
 
-#: member/admin.py:55
+#: member/admin.py:72
 msgid "QRCode"
 msgstr "二维码"
 
-#: member/apps.py:11 member/models.py:42 member/models.py:80
-#: member/models.py:103 member/models.py:120 member/models.py:134
-#: member/models.py:238
+#: member/apps.py:11 member/models.py:47 member/models.py:85
+#: member/models.py:108 member/models.py:125 member/models.py:139
+#: member/models.py:243
 msgid "member"
 msgstr "会员"
 
@@ -40,111 +40,111 @@ msgstr "非法 Token"
 msgid "Member not exists."
 msgstr "会员不存在"
 
-#: member/models.py:29
+#: member/models.py:34
 msgid "is deleted"
 msgstr "已删除"
 
-#: member/models.py:30
+#: member/models.py:35
 msgid "created datetime"
 msgstr "创建时间"
 
-#: member/models.py:31
+#: member/models.py:36
 msgid "updated datetime"
 msgstr "更新时间"
 
-#: member/models.py:43
+#: member/models.py:48
 msgid "token"
 msgstr "令牌"
 
-#: member/models.py:47
+#: member/models.py:52
 msgid "member token"
 msgstr "会员令牌"
 
-#: member/models.py:48
+#: member/models.py:53
 msgid "member tokens"
 msgstr "会员令牌"
 
-#: member/models.py:73
+#: member/models.py:78
 msgid "uuid"
 msgstr "UUID"
 
-#: member/models.py:74
+#: member/models.py:79
 msgid "username"
 msgstr "用户名"
 
-#: member/models.py:75 member/models.py:106
+#: member/models.py:80 member/models.py:111
 msgid "nickname"
 msgstr "昵称"
 
-#: member/models.py:76 member/models.py:107
+#: member/models.py:81 member/models.py:112
 msgid "avatar"
 msgstr "头像"
 
-#: member/models.py:81
+#: member/models.py:86
 msgid "members"
 msgstr "会员"
 
-#: member/models.py:98
+#: member/models.py:103
 msgid "Unknown"
 msgstr "未知"
 
-#: member/models.py:99
+#: member/models.py:104
 msgid "Wechat"
 msgstr "微信"
 
-#: member/models.py:104
+#: member/models.py:109
 msgid "sns"
 msgstr "社交网络站点"
 
-#: member/models.py:105
+#: member/models.py:110
 msgid "identifier"
 msgstr "标识"
 
-#: member/models.py:111
+#: member/models.py:116
 msgid "social network"
 msgstr "社交网络"
 
-#: member/models.py:112
+#: member/models.py:117
 msgid "social networks"
 msgstr "社交网络"
 
-#: member/models.py:121
+#: member/models.py:126
 msgid "album"
 msgstr "栏目"
 
-#: member/models.py:125
+#: member/models.py:130
 msgid "podcast album subscription"
 msgstr "播客栏目订阅"
 
-#: member/models.py:126
+#: member/models.py:131
 msgid "podcast album subscriptions"
 msgstr "播客栏目订阅"
 
-#: member/models.py:135
+#: member/models.py:140
 msgid "payload"
 msgstr "Payload"
 
-#: member/models.py:139
+#: member/models.py:144
 msgid "member privilege"
 msgstr "会员权益"
 
-#: member/models.py:140
+#: member/models.py:145
 msgid "member privileges"
 msgstr "会员权益"
 
-#: member/models.py:237
+#: member/models.py:242
 msgid "invitation key"
 msgstr "邀请码"
 
-#: member/models.py:239
+#: member/models.py:244
 msgid "remark"
 msgstr "备注"
 
-#: member/models.py:240
+#: member/models.py:245
 msgid "is activated"
 msgstr "是否激活"
 
-#: member/models.py:244 member/models.py:245
+#: member/models.py:249 member/models.py:250
 msgid "member invitation"
 msgstr "会员邀请码"
 

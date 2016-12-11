@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 03:56+0800\n"
+"POT-Creation-Date: 2016-12-11 16:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: podcast/admin.py:66
+#: podcast/admin.py:76
 msgid "short description"
 msgstr "描述"
 
-#: podcast/admin.py:70
+#: podcast/admin.py:80
 msgid "album count"
 msgstr "栏目数量"
 
-#: podcast/admin.py:74
+#: podcast/admin.py:84
 msgid "episode count"
 msgstr "节目数量"
 
-#: podcast/admin.py:105
+#: podcast/admin.py:115
 msgid "episode updated datetime"
 msgstr "节目更新"
 
