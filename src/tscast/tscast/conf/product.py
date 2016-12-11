@@ -12,3 +12,21 @@ DATABASES = {
         },
     },
 }
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': 'redis:6379',
+        'OPTIONS': {
+            'DB': 6,
+            'PASSWORD': '',
+            'PICKLE_VERSION': -1, # default
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
+        },
+    },
+    'locmem': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+}
