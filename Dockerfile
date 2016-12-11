@@ -1,8 +1,8 @@
-#FROM python:2.7.12-alpine
 FROM alpine:latest
 MAINTAINER shengpf
 
 EXPOSE 4000
+ENV TSCAST_ENV PRODUCT
 
 
 COPY ./misc /data/misc/
@@ -25,8 +25,9 @@ cd /data/ && \
 apk add --update py-mysqldb && \
 #source env/bin/activate && \
 pip install --upgrade pip && \
-pip install -r misc/docker/req.txt 
+pip install -r misc/docker/req.txt && \
+mkdir -p /data/src/tscast/
 
-WORKDIR /data/
+WORKDIR /data/src/tscast/
 
-CMD ["supervisord", "-nc", "/etc/supervisord.conf"]
+CMD ["supervisord", "-j", "/data/supervisord.pip",  "-nc", "/etc/supervisord.conf"]

@@ -4,4 +4,4 @@
 mkdir -p /var/log/gunicorn/
 mkdir -p /var/log/supervisor/
 
-exec gunicorn -c misc/gunicorn.conf tscast.wsgi:application
+exec gunicorn -c /data/misc/docker/gunicorn.conf tscast.wsgi:application
