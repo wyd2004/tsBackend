@@ -22,10 +22,14 @@ from wechat.api import create_wxpay_prepay
 
 
 class TierSerializer(serializers.ModelSerializer):
+    scope = serializers.SerializerMethodField()
     class Meta:
         model = Tier
-        fields = ('title', 'description', 'message',
+        fields = ('id', 'title', 'description', 'message',
                 'seq', 'scope', 'package', 'price')
+
+        def get_scope(self, obj):
+            return ugettext_lazy(obj.scope)
 
 
 class PaymentSerializer(serializers.ModelSerializer):
