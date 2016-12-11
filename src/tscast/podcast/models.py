@@ -99,9 +99,9 @@ class BaseModel(models.Model):
 
 
 def podcast_channel_image_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -142,9 +142,9 @@ class PodcastChannel(BaseModel):
 
 
 def podcast_people_image_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -197,9 +197,9 @@ class PodcastHost(PodcastPeople):
 
 
 def podcast_album_image_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    ha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -237,9 +237,9 @@ class PodcastAlbum(BaseModel):
 
 
 def podcast_episode_image_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -250,9 +250,9 @@ def podcast_episode_image_upload_to(instance, filename):
     return path_join(args)
 
 def podcast_enclosure_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -262,9 +262,9 @@ def podcast_enclosure_upload_to(instance, filename):
     return path_join(args)
 
 def podcast_full_file_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',
@@ -274,9 +274,9 @@ def podcast_full_file_upload_to(instance, filename):
     return path_join(args)
 
 def podcast_preview_file_upload_to(instance, filename):
-    # sha1_hash = sha1(instance.image.file.read()).hexdigest()
-    # suffix = filename.split('.')[-1]
-    # filename = '%s.%s' % (sha1_hash, suffix)
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    suffix = filename.split('.')[-1]
+    filename = '%s.%s' % (sha1_hash, suffix)
     args = (
         settings.UPLOAD_BASE_DIR,
         'podcast',

@@ -2,8 +2,10 @@ import os
 import logging
 import mimetypes
 import posixpath
+from urlparse import urlparse
 
 from io import BytesIO
+from StringIO import StringIO
 
 from django.utils.encoding import force_text
 from django.utils.encoding import filepath_to_uri
@@ -75,6 +77,7 @@ class OSSStorage(Storage):
 
     def _clean_name(self, name):
         clean_name = posixpath.normpath(name).replace('\\', '/')
+        clean_name = clean_name.replace(' ', '_')
         if name.endswith('/') and not clean_name.endswith('/'):
             return clean_name + '/'
         else:
@@ -91,7 +94,7 @@ class OSSStorage(Storage):
         res = self.connection.get_object(self.bucket, name, self.headers)
         if res.status >= 300:
             raise OSSStorageException('OSSStorageError: %s' % res.read())
-        return res.read()
+        return File(StringIO(res.read()), name=name)
 
     def _save(self, name, content_file):
         name = self._clean_name(name)
@@ -126,10 +129,11 @@ class OSSStorage(Storage):
         name = self._clean_name(name)
         res = self.connection.head_object(self.bucket, name)
         headers = convert_header2map(res.getheaders())
+        return headers
 
     def size(self, name):
         file_info = self.file_info(name)
-        return safe_get_element('content-length', file_info) or 0
+        return safe_get_element('content-length', file_info) if file_info else 0
 
     def usage(self):
         pass
@@ -138,4 +142,6 @@ class OSSStorage(Storage):
         name = self._clean_name(name)
         # name = filepath_to_uri(name)
         url = self.connection.sign_url('GET', self.bucket, name)
+        # url_ = urlparse(url)
+        # return '%s://%s%s' % (url_.scheme, url_.netloc, url_.path)
         return url

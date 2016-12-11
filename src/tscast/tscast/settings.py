@@ -306,11 +306,17 @@ REST_FRAMEWORK = {
             ),
         }
 
-PODCAST_ENCLOSURE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+ALIYUN_OSS_STORAGE = 'tscast.utils.django_oss_backend.storage.OSSStorage'
 
-PODCAST_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-MEMBER_IMAGE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DEFAULT_FILE_STORAGE = ALIYUN_OSS_STORAGE
+
+PODCAST_ENCLOSURE_STORAGE = DEFAULT_FILE_STORAGE
+
+PODCAST_IMAGE_STORAGE = DEFAULT_FILE_STORAGE
+
+MEMBER_IMAGE_STORAGE = DEFAULT_FILE_STORAGE
 
 UPLOAD_BASE_DIR = 'upload'
 
@@ -326,3 +332,7 @@ RAVEN_CONFIG = {
 
 # WECHAT
 from .conf.wechat import *
+
+# ALIYUN
+from .conf.aliyun import *
+
