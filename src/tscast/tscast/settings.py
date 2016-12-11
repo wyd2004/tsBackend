@@ -35,8 +35,7 @@ else:
 
 ALLOWED_HOSTS = ['127.0.0.1', '120.25.232.11', 'vip.tangsuanradio.com', 'ts.asyn.me']
 SITE_SCHEME = 'http'
-# SITE_HOST = 'vip.tangsuanradio.com'
-SITE_HOST = 'ts.asyn.me'
+SITE_HOST = 'vip.tangsuanradio.com'
 
 
 
