@@ -107,7 +107,7 @@ def oauth(request, format='json'):
         oauth_api = '%s://%s%s' % (
                 settings.SITE_SCHEME,
                 settings.SITE_HOST,
-                url_reverse('api:mmeber-oauth'),
+                reverse('api:member-oauth'),
                 )
         url = get_wechat_oauth_url(oauth_api)
         response = HttpResponseRedirect(url)
@@ -144,7 +144,7 @@ def invitation_activate(request, key, format='json'):
     #     url = '%s://%s%s' % (
     #             settings.SITE_SCHEME,
     #             settings.SITE_HOST, 
-    #             url_reverse(
+    #             reverse(
     #                 'api:invitation-activate',
     #                 kwargs={'key':key},
     #                 ),
