@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.http.response import HttpResponse
 from django.http.response import HttpResponseNotFound
-
 from .api import validate_wechat_message_nonce
 
 @csrf_exempt
@@ -28,3 +27,8 @@ def validate_user(*args, **kwargs):
     avatar = ''
     nickname = ''
     return avatar, nickname
+
+@csrf_exempt
+def wechat_oauth_callback(request):
+    return HttpResponse()
+
