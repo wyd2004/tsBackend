@@ -88,9 +88,13 @@ def wechat_oauth_post(request, format='json'):
                             nickname=user_info.get('nickname'),
                             avatar=avatar,
                             )
-                token = MemberToken.objects.create(user=member)
+                token = MemberToken.objects.create(user=member,
+                                                   token=access_token)
+
                 data ={
                     'member_id': member.id,
+                    'username': member.username,
+                    'nickname': member.nickname,
                     'token': token.key,
                     }
                 response = Response(data)
