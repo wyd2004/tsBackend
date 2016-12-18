@@ -2,8 +2,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tscast',
-        'USER': 'tscast',
-        'PASSWORD': 'tscast',
+        'USER': 'dbuser',
+        'PASSWORD': '123456abc',
         'HOST': 'mysql',
         'PORT': '3306',
         'OPTIONS': {
