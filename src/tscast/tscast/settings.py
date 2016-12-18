@@ -24,7 +24,7 @@ SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-from tscast.conf.weixin import *
+from tscast.conf.wechat import *
 TSCAST_ENV = os.environ.get('TSCAST_ENV')
 if TSCAST_ENV == 'PRODUCT':
     DEBUG = False
