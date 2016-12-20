@@ -47,7 +47,8 @@ from .utils.permissions import OnlyMemberAccess
 logger = logging.getLogger('tscast.member')
 
 def wechat_oauth_post(request, format='json'):
-    code = request.POST.get('code')
+    data = request.data
+    code = request.data.get('code')
     logger.error("code", code)
 
     if code:
