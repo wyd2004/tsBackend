@@ -76,8 +76,8 @@ def member_image_upload_to(instance, filename):
 
 class Member(BaseModel):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, verbose_name=_('uuid'))
-    username = models.CharField(max_length=32, unique=True, verbose_name=_('username'))
-    nickname = models.CharField(max_length=32, null=True, unique=True, verbose_name=_('nickname'))
+    username = models.CharField(max_length=64, unique=True, verbose_name=_('username'))
+    nickname = models.CharField(max_length=64, null=True, unique=True, verbose_name=_('nickname'))
     avatar = models.CharField(max_length=512, default='',  blank=True, verbose_name=_('avatar'))
 
     class Meta:
