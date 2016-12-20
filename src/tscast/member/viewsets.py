@@ -50,15 +50,18 @@ def wechat_oauth_post(request, format='json'):
     code = request.POST.get('code')
     if code:
         data = get_user_info_access_token(code)
+        logger.info("get_user_info_access_token", data.get('access_token'))
         if data:
             access_token = data.get('access_token')
             openid = data.get('openid')
             user_info = get_user_info(access_token, openid)
+            logger.info("user_info", user_info.get('nickname'))
             if user_info:
                 try:
                     social_network = SocialNetwork.objects.get(identifier=openid, site='wechat')
                     member = social_network.member
                 except SocialNetwork.DoesNotExist as error:
+                    logger.error(error)
                     member = Member()
                     member.username = 'wechat_%s' % openid
                     member.nickname = user_info.get('nickname')
@@ -78,12 +81,12 @@ def wechat_oauth_post(request, format='json'):
                     member.avatar = avatar_url
                     member.save()
                     social_network = SocialNetwork.objects.create(
-                            member=member,
-                            site='wechat',
-                            identifier=openid,
-                            nickname=user_info.get('nickname'),
-                            avatar=avatar_url,
-                            )
+                        member=member,
+                        site='wechat',
+                        identifier=openid,
+                        nickname=user_info.get('nickname'),
+                        avatar=avatar_url,
+                    )
                 token = MemberToken.objects.create(user=member,
                                                    token=access_token)
 
@@ -92,12 +95,14 @@ def wechat_oauth_post(request, format='json'):
                     'username': member.username,
                     'nickname': member.nickname,
                     'token': token.key,
-                    }
+                }
                 response = Response(data)
             else:
+                logger.error("user_info get error null")
                 raise AuthenticationFailed
             return response
     raise AuthenticationFailed
+
 
 
 # @api_view(['GET', 'POST'])
