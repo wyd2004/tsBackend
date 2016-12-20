@@ -48,6 +48,8 @@ logger = logging.getLogger('tscast.member')
 
 def wechat_oauth_post(request, format='json'):
     code = request.POST.get('code')
+    logger.info("code", code)
+
     if code:
         data = get_user_info_access_token(code)
         logger.info("get_user_info_access_token", data.get('access_token'))
