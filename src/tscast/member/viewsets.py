@@ -63,26 +63,26 @@ def wechat_oauth_post(request, format='json'):
                     member.username = 'wechat_%s' % openid
                     member.nickname = user_info.get('nickname')
                     avatar_url = user_info.get('headimgurl')
-                    if avatar_url:
-                        response = requests.get(avatar_url, verify=False)
-                        if response.ok:
-                            bio = BytesIO(response.content)
-                            image = Image.open(bio)
-                            suffix = image.format.lower()
-                            filename = sha1(response.content).hexdigest()
-                            avatar = File(bio, '%s.%s' % (filename, suffix))
-                        else:
-                            avatar = None
-                    else:
-                        avatar = None
-                    member.avatar = avatar
+                    # if avatar_url:
+                    #     response = requests.get(avatar_url, verify=False)
+                    #     if response.ok:
+                    #         bio = BytesIO(response.content)
+                    #         image = Image.open(bio)
+                    #         suffix = image.format.lower()
+                    #         filename = sha1(response.content).hexdigest()
+                    #         avatar = File(bio, '%s.%s' % (filename, suffix))
+                    #     else:
+                    #         avatar = None
+                    # else:
+                    #     avatar = None
+                    member.avatar = avatar_url
                     member.save()
                     social_network = SocialNetwork.objects.create(
                             member=member,
                             site='wechat',
                             identifier=openid,
                             nickname=user_info.get('nickname'),
-                            avatar=avatar,
+                            avatar=avatar_url,
                             )
                 token = MemberToken.objects.create(user=member,
                                                    token=access_token)
@@ -100,7 +100,8 @@ def wechat_oauth_post(request, format='json'):
     raise AuthenticationFailed
 
 
-@api_view(['GET', 'POST'])
+# @api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_decorator([])
 def oauth(request, format='json'):
     if request.method == 'GET':
