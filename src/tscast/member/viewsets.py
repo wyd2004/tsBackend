@@ -48,7 +48,7 @@ logger = logging.getLogger('tscast.member')
 
 def wechat_oauth_post(request, format='json'):
     code = request.POST.get('code')
-    logger.info("code", code)
+    logger.error("code", code)
 
     if code:
         data = get_user_info_access_token(code)
@@ -120,6 +120,7 @@ def oauth(request, format='json'):
         url = get_wechat_oauth_url(oauth_api)
         response = HttpResponseRedirect(url)
     elif request.method == 'POST':
+        logger.info("start wx login")
         response = wechat_oauth_post(request, format)
     return response
 
