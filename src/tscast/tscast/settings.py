@@ -42,6 +42,8 @@ SITE_SCHEME = 'http'
 SITE_HOST = 'vip.tangsuanradio.com'
 
 
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'raven.contrib.django.raven_compat',
     'podcast',
     'member',

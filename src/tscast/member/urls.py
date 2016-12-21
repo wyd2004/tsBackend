@@ -9,13 +9,14 @@ from .viewsets import MemberPurchasedAlbumViewSet
 from .viewsets import MemberViewSet 
 from .viewsets import oauth
 from .viewsets import invitation_activate
-
+from rest_framework.authtoken import views
 
 router = routers.DefaultRouter()
 
 router.register('member', MemberViewSet, base_name='MemberViewSet')
 router.register('member/(?P<member_id>\d+)/subscription/album',PodcastAlbumSubscriptionViewSet, base_name='PodcastAlbumSubscriptionViewSet')
 router.register('member/(?P<member_id>\d+)/purchase/album', MemberPurchasedAlbumViewSet, base_name='PodcastAlbumSubscriptionViewSet')
+
 
 
 view_urls = [
@@ -26,6 +27,7 @@ view_urls = [
             name='PodcastAlbumSubscribeViewSet',
             ),
         url('member/oauth/', oauth, name='member-oauth'),
+        url('^api-token-auth/', views.obtain_auth_token),
         url('member/invitation/activate/(?P<key>[\w\d-]+)/', invitation_activate, name='invitation-activate'),
         ]
 
