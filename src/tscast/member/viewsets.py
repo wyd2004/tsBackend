@@ -50,11 +50,11 @@ def wechat_oauth_post(request, format='json'):
     data = request.data
     code = request.data.get('code')
     logger.error("code", code)
-
     if code:
         data = get_user_info_access_token(code)
-        logger.info("get_user_info_access_token", data.get('access_token'))
+        logger.info("get_user_info_access_token", data)
         if data:
+            logger.info("get_user_info_access_token", data.get('access_token'))
             access_token = data.get('access_token')
             openid = data.get('openid')
             user_info = get_user_info(access_token, openid)
