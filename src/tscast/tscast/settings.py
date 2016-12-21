@@ -34,6 +34,8 @@ else:
     from tscast.conf.develop import *
 
 
+DEBUG = True
+
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '120.76.159.185', 'vip.tangsuanradio.com', 'ts.asyn.me']
 SITE_SCHEME = 'http'
