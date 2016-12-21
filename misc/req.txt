@@ -24,3 +24,4 @@ redis==2.10.5
 requests==2.11.1
 six==1.10.0
 xmltodict==0.10.2
+wechat-sdk=0.6.4
