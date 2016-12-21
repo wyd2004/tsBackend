@@ -108,9 +108,8 @@ def wechat_oauth_post(request, format='json'):
     raise AuthenticationFailed
 
 
-
-# @api_view(['GET', 'POST'])
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
+# @api_view(['POST'])
 @permission_decorator([])
 def oauth(request, format='json'):
     if request.method == 'GET':
