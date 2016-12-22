@@ -3,7 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    os.environ.setdefault("TSCAST_ENV", "dev")
+    os.environ.setdefault("TSCAST_ENV", "PRODUCT")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tscast.settings")
     try:
         from django.core.management import execute_from_command_line
