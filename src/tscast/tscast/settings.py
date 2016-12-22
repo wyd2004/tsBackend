@@ -156,6 +156,12 @@ LOGGING = {
     },
     'handlers': {
         'console': {
+            'level': 'DEBUG',
+            # 'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'console': {
             'level': 'INFO',
             # 'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
@@ -165,6 +171,11 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
             'filters': ['require_debug_false']
+        },
+        'sql': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'level': 'DEBUG',
         },
 #         'file': {
 #             'level': 'INFO',
@@ -196,6 +207,16 @@ LOGGING = {
         'tscast.term': {
             'handlers': ['console'],
             'level': 'INFO',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['sql'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'django.db.backends.schema': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
             'propagate': False,
         },
     }
