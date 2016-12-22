@@ -179,10 +179,9 @@ LOGGING = {
         },
         'sql': {
             'class': 'logging.StreamHandler',
-            'formatter': 'sql',
+            'formatter': 'simple',
             'level': 'DEBUG',
         },
-
 #         'file': {
 #             'level': 'INFO',
 #             'class': 'logging.handlers.TimedRotatingFileHandler',
