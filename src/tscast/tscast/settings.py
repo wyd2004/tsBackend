@@ -15,14 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'v5#gix1jc-r!n#mqy!ky6ey7!sf@b+(44fy=d)q8h8n)axu)$i'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 
 from tscast.conf.wechat import *
 TSCAST_ENV = os.environ.get('TSCAST_ENV')
@@ -33,8 +30,13 @@ else:
     DEBUG = True
     from tscast.conf.develop import *
 
-
 DEBUG = True
+
+
+# WECHAT
+from .conf.wechat import *
+# ALIYUN
+from .conf.aliyun import *
 
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '120.76.159.185', 'vip.tangsuanradio.com', 'ts.asyn.me']
@@ -42,10 +44,7 @@ SITE_SCHEME = 'http'
 SITE_HOST = 'vip.tangsuanradio.com'
 
 
-
-
 # Application definition
-
 INSTALLED_APPS = [
     'jet.dashboard',
     'jet',
@@ -92,57 +91,8 @@ TEMPLATES = [
     },
 ]
 
-
-# Load from separated config file
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'redis_cache.cache.RedisCache',
-#         'LOCATION': 'redis:6379',
-#         'OPTIONS': {
-#             'DB': 6,
-#             'PASSWORD': '',
-#             'PICKLE_VERSION': -1, # default
-#             'PARSER_CLASS': 'redis.connection.HiredisParser',
-#             'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
-#         },
-#     },
-#     'locmem': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#     },
-#     'db': {
-#         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-#         'LOCATION': 'django_cache_table',
-#     }
-# }
-
 WSGI_APPLICATION = 'tscast.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-# DATABASES = {
-#     'sqlite': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-#     'mysql': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'tscast',
-#         'USER': 'tscast',
-#         'PASSWORD': 'tscast',
-#         'HOST': 'mysql',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#             'charset': 'utf8mb4',
-#         },
-#     },
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -334,11 +284,3 @@ RAVEN_CONFIG = {
     #  release based on the git info.
     # 'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
 }
-
-
-# WECHAT
-from .conf.wechat import *
-
-# ALIYUN
-from .conf.aliyun import *
-

@@ -1,16 +1,21 @@
-import os
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tscast',
+        'USER': 'dbuser',
+        'PASSWORD': '123456abc',
+        'HOST': '120.76.159.185',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            # 'charset': 'utf8mb4',
+        },
     },
 }
 
+
 CACHES = {
-    'redis': {
+    'default': {
         'BACKEND': 'redis_cache.cache.RedisCache',
         'LOCATION': 'redis:6379',
         'OPTIONS': {
@@ -21,11 +26,7 @@ CACHES = {
             'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
         },
     },
-    'default': {
+    'locmem': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     },
-    'db': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'django_cache_table',
-    }
 }
