@@ -145,6 +145,11 @@ LOGGING = {
         'simple': {
             'format': '%(levelname)s %(asctime)s %(message)s'
         },
+        'sql': {
+            '()': 'tscast.filter.SqlFormat.SQLFormatter',
+            'format': '[%(duration).3f] %(statement)s',
+        },
+
     },
     'filters': {
         'require_debug_true': {
@@ -174,9 +179,10 @@ LOGGING = {
         },
         'sql': {
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'sql',
             'level': 'DEBUG',
         },
+
 #         'file': {
 #             'level': 'INFO',
 #             'class': 'logging.handlers.TimedRotatingFileHandler',
