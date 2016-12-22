@@ -2,8 +2,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tscast',
-        'USER': 'dbuser',
-        'PASSWORD': '123456abc',
+        'USER': 'root',
+        'PASSWORD': 'sloth',
         'HOST': '120.76.159.185',
         'PORT': '3306',
         'OPTIONS': {
@@ -12,6 +12,7 @@ DATABASES = {
         },
     },
 }
+
 
 
 CACHES = {
