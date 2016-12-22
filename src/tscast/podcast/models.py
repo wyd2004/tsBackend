@@ -197,7 +197,7 @@ class PodcastHost(PodcastPeople):
 
 
 def podcast_album_image_upload_to(instance, filename):
-    ha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
