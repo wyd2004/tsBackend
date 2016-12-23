@@ -289,11 +289,12 @@ REST_FRAMEWORK = {
             ),
         }
 
+
 ALIYUN_OSS_STORAGE = 'tscast.utils.django_oss_backend.storage.OSSStorage'
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-DEFAULT_FILE_STORAGE = ALIYUN_OSS_STORAGE
+DEFAULT_FILE_STORAGE = DEFAULT_FILE_STORAGE
 
 PODCAST_ENCLOSURE_STORAGE = DEFAULT_FILE_STORAGE
 
