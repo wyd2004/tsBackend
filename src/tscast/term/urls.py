@@ -9,11 +9,11 @@ from .viewsets import OrderViewSet
 
 router = routers.DefaultRouter()
 
-router.register('term/tier', TierViewSet, base_name='TierViewSet')
-router.register('term/order/', OrderViewSet, base_name='OrderViewSet')
-router.register('term/order/(?P<order__uuid>\d+)/', OrderViewSet, base_name='OrderViewSet')
+router.register('tier', TierViewSet, base_name='TierViewSet')
+router.register('order', OrderViewSet, base_name='OrderViewSet')
+router.register('order/(?P<order__uuid>\d+)', OrderViewSet, base_name='SingleOrderViewSet')
 
 
 urlpatterns = [
-        url(r'', include(router.urls, namespace='api')),
+        url(r'^term/', include(router.urls, namespace='api')),
         ]

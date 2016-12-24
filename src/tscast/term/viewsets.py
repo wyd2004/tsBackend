@@ -49,7 +49,7 @@ class MemberWriteOnly(BasePermission):
 class OrderViewSet(viewsets.ModelViewSet):
     model = Order
     serializer_class = OrderSerializer
-    queryset = Order.objects.all()
+    # queryset = Order.objects.all()
     permission_classes = (MemberWriteOnly,Readonly,)
     search_fields = ('status',)
     ordering_fields = ('scope', 'id')
@@ -60,4 +60,3 @@ class OrderViewSet(viewsets.ModelViewSet):
         if 'order__uuid' in self.kwargs:
             queryset = queryset.filter(uuid=self.kwargs['order__uuid'])
         return queryset
-
