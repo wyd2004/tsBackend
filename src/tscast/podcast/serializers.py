@@ -94,20 +94,17 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
             host = ''
         uri = '/podcast/episode/%d/full_file/' % instance.id
         url = '%s%s' % (host, uri)
-        # if instance.full_file:
-        #     url = instance.full_file.url
-        # else:
-        #     url = instance.full_file_url
+
+        if instance.full_file:
+            url = instance.full_file.url
+        else:
+            url = instance.full_file_url
         return url
 
     def get_full_length(self, instance):
         return instance.full_file_length
 
     def get_preview_url(self, instance):
-        # if instance.preview_file:
-        #     url = instance.preview_file.url
-        # else:
-        #     url = instance.preview_file_url
         if self.context.get('request'):
             host = self.context['request'].META.get('HTTP_HOST')
             host = 'http://%s' % host
@@ -115,6 +112,11 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
             host = ''
         uri = '/podcast/episode/%d/preview_file/' % instance.id
         url = '%s%s' % (host, uri)
+
+        if instance.preview_file:
+            url = instance.preview_file.url
+        else:
+            url = instance.preview_file_url
         return url
 
     def get_preview_length(self, instance):
