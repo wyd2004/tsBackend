@@ -319,15 +319,6 @@ class PodcastEpisode(BaseModel):
         return self.title
 
 
-# def podcast_enclosure_upload_to(instance, filename):
-#     args = (
-#         settings.UPLOAD_BASE_DIR,
-#         'podcast',
-#         'enclosure',
-#         filename,
-#         )
-#     return path_join(args)
-# 
 # class PodcastEnclosure(BaseModel):
 #     '''
 #     Podcase Enclosure Model
