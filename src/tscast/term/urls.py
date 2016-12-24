@@ -14,6 +14,13 @@ router.register('order', OrderViewSet, base_name='OrderViewSet')
 router.register('order/(?P<order__uuid>\d+)', OrderViewSet, base_name='SingleOrderViewSet')
 
 
+# view_urls = [
+#         url(r'order/', OrderViewSet.as_view({'post': 'create'}), name='COrderViewSet'),
+# ]
+
 urlpatterns = [
         url(r'^term/', include(router.urls, namespace='api')),
+        # url(r'^term/', include(view_urls, namespace='api')),
         ]
+
+
