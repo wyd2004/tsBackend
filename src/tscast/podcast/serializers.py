@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound 
 from rest_framework.exceptions import PermissionDenied
@@ -78,7 +79,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     def get_price(self, instance):
         try:
             tier = Tier.objects.get(
-                    scope='permanent',
+                    ~Q(scope='permanent'),
                     package='episode',
                     is_published=True,
                     )
