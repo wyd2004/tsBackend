@@ -513,5 +513,7 @@ def parse_wxpay_notification(request, *args, **kwargs):
         *time_end           String(14)
     '''
     body = request.body
-    req_data = decode_ws_xml(request.body)
+    req_data = decode_wx_xml(request.body)
     return req_data
+
+
