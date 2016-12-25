@@ -5,6 +5,7 @@ from rest_framework import routers
 
 from .viewsets import TierViewSet
 from .viewsets import OrderViewSet
+from .viewsets import PaymentViewSet
 
 
 router = routers.DefaultRouter()
@@ -12,6 +13,7 @@ router = routers.DefaultRouter()
 router.register('tier', TierViewSet, base_name='TierViewSet')
 router.register('order', OrderViewSet, base_name='OrderViewSet')
 router.register('order/(?P<order__uuid>\d+)', OrderViewSet, base_name='SingleOrderViewSet')
+router.register('order/(?P<order__uuid>\d+/purchase/)', PaymentViewSet, base_name='CreatePaymentViewSet')
 
 
 # view_urls = [

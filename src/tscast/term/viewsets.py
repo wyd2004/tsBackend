@@ -62,3 +62,14 @@ class OrderViewSet(viewsets.ModelViewSet):
         return queryset
 
 
+class PaymentViewSet(viewsets.ModelViewSet):
+    model = Payment
+    serializer_class = PaymentSerializer
+    permission_classes = (MemberWriteOnly,)
+
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        if 'order__uuid' in self.kwargs:
+            queryset = queryset.filter(uuid=self.kwargs['order__uuid'])
+        return queryset
+
