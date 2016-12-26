@@ -45,6 +45,24 @@ class MemberWriteOnly(BasePermission):
     def has_object_permission(self, request, view, object):
         return False
 
+class MemberReadOnlyOwnOrder(BasePermission):
+    def has_permission(self, request, view):
+        if type(request.user) is Member and request.method == 'GET':
+            order__uuid = request.resolver_match.kwargs.get('order__uuid')
+            try:
+                order = Order.objects.get(uuid=order__uuid)
+
+                if order.member == request.user:
+                    return True
+                else:
+                    return False
+            except Order.DoesNotExist as error:
+                return False
+        else:
+            return False
+
+    def has_object_permission(self, request, view, object):
+        return False
 
 class OrderViewSet(viewsets.ModelViewSet):
     model = Order
@@ -65,7 +83,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 class PaymentViewSet(viewsets.ModelViewSet):
     model = Payment
     serializer_class = PaymentSerializer
-    permission_classes = (MemberWriteOnly,)
+    permission_classes = (MemberReadOnlyOwnOrder,)
 
     def get_queryset(self):
         queryset = self.model.objects.all()
