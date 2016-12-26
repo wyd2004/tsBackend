@@ -119,6 +119,7 @@ def get_wechat_oauth_url(redirect_uri, scope='snsapi_userinfo', state='oauth'):
         }
     params = urlencode(params)
     anchor = 'wechat_redirect'
+    r = '%s?%s#%s' % (url, params, anchor)
     return '%s?%s#%s' % (url, params, anchor)
 
 
