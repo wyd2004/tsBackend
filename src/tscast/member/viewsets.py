@@ -67,8 +67,9 @@ def wechat_oauth_post(request, format='json'):
                 except SocialNetwork.DoesNotExist as error:
                     logger.error(error)
                     member.username = 'wechat_%s' % openid
-                    member.nickname = user_info.get('nickname')
+                    member.nickname = u'%s' % user_info.get('nickname')
                     avatar_url = user_info.get('headimgurl')
+
                     # if avatar_url:
                     #     response = requests.get(avatar_url, verify=False)
                     #     if response.ok:
@@ -83,11 +84,12 @@ def wechat_oauth_post(request, format='json'):
                     #     avatar = None
                     member.avatar = avatar_url
                     member.save()
+                    nickname = u'%s' % user_info.get('nickname')
                     social_network = SocialNetwork.objects.create(
                         member=member,
                         site='wechat',
                         identifier=openid,
-                        nickname=user_info.get('nickname'),
+                        nickname=nickname,
                         avatar=avatar_url,
                     )
 
