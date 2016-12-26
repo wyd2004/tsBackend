@@ -125,7 +125,6 @@ def get_wechat_oauth_url(redirect_uri, scope='snsapi_userinfo', state='oauth'):
 def get_user_info_access_token(code):
     '''
     https://mp.weixin.qq.com/wiki/9/01f711493b5a02f24b04365ac5d8fd95.html
-
     https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
     {
         "access_token":"ACCESS_TOKEN",
