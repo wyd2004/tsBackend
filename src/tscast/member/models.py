@@ -45,7 +45,7 @@ class BaseModel(models.Model):
 
 class MemberToken(models.Model):
     user = models.ForeignKey('Member', related_name='tokens', on_delete=models.CASCADE, verbose_name=_('member'))
-    key = models.CharField(max_length=40, primary_key=True, verbose_name=_('token'))
+    key = models.CharField(max_length=128, primary_key=True, verbose_name=_('token'))
 
     class Meta:
         app_label = 'member'
