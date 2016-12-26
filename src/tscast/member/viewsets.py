@@ -49,7 +49,7 @@ logger = logging.getLogger('tscast.member')
 def wechat_oauth_post(request, format='json'):
     data = request.data
     code = request.data.get('code')
-    logger.error("code", code)
+    logger.error("code:  ", code)
     if code:
         data = get_user_info_access_token(code)
         logger.info("get_user_info_access_token", data)
@@ -90,16 +90,19 @@ def wechat_oauth_post(request, format='json'):
                         nickname=user_info.get('nickname'),
                         avatar=avatar_url,
                     )
-                token = MemberToken.objects.create(user=member,
-                                                   key=access_token)
 
+                ### use member info return
+                member_token = MemberToken.objects.get(user=member)
+                if not member_token:
+                    member_token = MemberToken.objects.create(user=member, key=access_token)
                 data ={
                     'member_id': member.id,
                     'username': member.username,
                     'nickname': member.nickname,
                     'avatar': member.avatar,
-                    'token': token.key,
+                    'token': member_token.key,
                 }
+
                 response = Response(data)
             else:
                 logger.error("user_info get error null")
