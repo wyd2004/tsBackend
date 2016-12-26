@@ -92,8 +92,11 @@ def wechat_oauth_post(request, format='json'):
                     )
 
                 ### use member info return
-                member_token = MemberToken.objects.get(user=member)
-                if not member_token:
+                member_token = MemberToken()
+                try:
+                    member_token = MemberToken.objects.get(user=member)
+                except MemberToken.DoesNotExist as error:
+                    logger.error(error)
                     member_token = MemberToken.objects.create(user=member, key=access_token)
                 data ={
                     'member_id': member.id,
@@ -102,12 +105,12 @@ def wechat_oauth_post(request, format='json'):
                     'avatar': member.avatar,
                     'token': member_token.key,
                 }
-
                 response = Response(data)
             else:
-                logger.error("user_info get error null")
+                logger.error("get user_info error null")
                 raise AuthenticationFailed
             return response
+
     raise AuthenticationFailed
 
 
