@@ -476,6 +476,7 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     del(res_data['sign'])
     check_f, check_sign = generate_wxpay_sign_md5(res_data)
     if res_sign == check_sign:
+        res_data['sign'] = res_sign
         return res_data
     else:
         return {}
