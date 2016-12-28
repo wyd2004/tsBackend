@@ -520,7 +520,7 @@ def parse_wxpay_notification(request, *args, **kwargs):
     return req_data
 
 
-def js_api(self, js_sign_params):
+def js_api(js_sign_params):
     """
     生成给JavaScript调用的数据
     详细规则参考 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6
@@ -533,4 +533,5 @@ def js_api(self, js_sign_params):
                nonceStr=nonce_str, package=package, signType="MD5")
     sign_type, sign = generate_wxpay_sign_md5(js_sign_params)
     return sign
+
 
