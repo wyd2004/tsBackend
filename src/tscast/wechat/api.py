@@ -477,8 +477,9 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     del(res_data['sign'])
     check_f, check_sign = generate_wxpay_sign_md5(res_data)
     if res_sign == check_sign:
-        pay_sign = js_api(res_data)
+        pay_sign, timestamp = js_api(res_data)
         res_data['sign'] = pay_sign
+        res_data['timestamp'] = timestamp
         return res_data
     else:
         return {}
@@ -532,6 +533,5 @@ def js_api(js_sign_params):
     js_sign_params = dict(appId=settings.WECHAT_APPID, timeStamp=timestamp,
                nonceStr=nonce_str, package=package, signType="MD5")
     sign_type, sign = generate_wxpay_sign_md5(js_sign_params)
-    return sign
-
+    return sign, timestamp
 
