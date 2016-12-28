@@ -15,6 +15,7 @@ from hashlib import sha1
 from django.core.cache import cache
 from django.core.cache import caches
 from django.conf import settings
+import time
 
 logger = logging.getLogger('wechat')
 
@@ -476,7 +477,8 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     del(res_data['sign'])
     check_f, check_sign = generate_wxpay_sign_md5(res_data)
     if res_sign == check_sign:
-        res_data['sign'] = res_sign
+        pay_sign = js_api(res_data)
+        res_data['sign'] = pay_sign
         return res_data
     else:
         return {}
@@ -517,4 +519,18 @@ def parse_wxpay_notification(request, *args, **kwargs):
     req_data = decode_wx_xml(request.body)
     return req_data
 
+
+def js_api(self, js_sign_params):
+    """
+    生成给JavaScript调用的数据
+    详细规则参考 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6
+    """
+    package = "prepay_id={0}".format(js_sign_params["prepay_id"])
+    timestamp = int(time.time())
+    nonce_str = js_sign_params["nonce_str"]
+
+    js_sign_params = dict(appId=settings.WECHAT_APPID, timeStamp=timestamp,
+               nonceStr=nonce_str, package=package, signType="MD5")
+    sign_type, sign = generate_wxpay_sign_md5(js_sign_params)
+    return sign
 
