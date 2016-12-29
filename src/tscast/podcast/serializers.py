@@ -60,6 +60,10 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     preview_url = serializers.SerializerMethodField()
     preview_length = serializers.SerializerMethodField()
     privilege = serializers.SerializerMethodField()
+    album_id = serializers.SerializerMethodField()
+    next_ep_id = serializers.SerializerMethodField()
+    previous_ep_id = serializers.SerializerMethodField()
+
 
 
     class Meta:
