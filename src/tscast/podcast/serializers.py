@@ -69,11 +69,25 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                 'keywords', 'copyright', 'explicit',
                 'hosts', 'price', 'dt_updated', 'full_url',
                 'full_length', 'preview_url', 'preview_length',
-                'privilege',
+                'privilege','album_id','next_ep_id','previous_ep_id',
                 )
     
     def get_album_title(self, instance):
         return instance.album.title
+
+    def get_album_id(self, instance):
+        return instance.album.id
+
+
+    def get_next_ep_id(self, instance):
+        return instance.id+1
+
+    def get_previous_ep_id(self, instance):
+        pre = instance.id-1
+        if pre >= 0:
+            return  pre
+        else:
+            return 0
 
     def get_price(self, instance):
         try:
