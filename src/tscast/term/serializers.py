@@ -111,14 +111,15 @@ class OrderSerializer(serializers.ModelSerializer):
         item = v['item']
         if tier.package == 'channel':
             model = PodcastChannel
-        elif iter.package == 'album':
+        elif tier.package == 'album':
             model = PodcastAlbum
-        elif iter.package == 'album':
+        elif tier.package == 'episode':
             model = PodcastEpisode
         if not model.objects.filter(id=item).exists(): 
             raise serializers.ValidationError({'item':_('invalid item')})
         else:
             return v
+
 
     def create(self, validated_data):
         tier = validated_data['tier']
