@@ -82,8 +82,8 @@ class Member(BaseModel):
 
     class Meta:
         app_label = 'member'
-        verbose_name = _('会员管理')
-        verbose_name_plural = _('会员')
+        verbose_name = _(u'会员管理')
+        verbose_name_plural = _(u'会员')
 
     def __unicode__(self):
         return self.username

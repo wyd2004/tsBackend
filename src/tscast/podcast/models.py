@@ -228,8 +228,8 @@ class PodcastAlbum(BaseModel):
 
     class Meta:
         app_label = 'podcast'
-        verbose_name = _('podcast album')
-        verbose_name_plural = _('podcast albums')
+        verbose_name = _(u'栏目')
+        verbose_name_plural = _(u'栏目')
         get_latest_by = 'dt_updated'
 
     def __unicode__(self):
