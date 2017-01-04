@@ -8,7 +8,7 @@ from .models import PodcastAlbum
 from .models import PodcastEpisode
 # from .models import PodcastEnclosure
 
-from member.models import Member
+from member.models import Member, PodcastAlbumSubscription
 from term.models import Tier
 
 
@@ -63,7 +63,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     album_id = serializers.SerializerMethodField()
     next_ep_id = serializers.SerializerMethodField()
     previous_ep_id = serializers.SerializerMethodField()
-
+    is_album_sub = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -74,6 +74,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                 'hosts', 'price', 'dt_updated', 'full_url',
                 'full_length', 'preview_url', 'preview_length',
                 'privilege','album_id','next_ep_id','previous_ep_id',
+                'is_album_sub',
                 )
     
     def get_album_title(self, instance):
@@ -81,7 +82,6 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
 
     def get_album_id(self, instance):
         return instance.album.id
-
 
     def get_next_ep_id(self, instance):
         return instance.id+1
@@ -92,6 +92,15 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
             return  pre
         else:
             return 0
+
+    def get_is_album_sub(self, instance):
+        is_sub = PodcastAlbumSubscription.objects.filter(
+            album=PodcastAlbum.objects.filter(id=instance.album.id)).exists()
+        if is_sub:
+            return True
+        else:
+            return False
+
 
     def get_price(self, instance):
         try:
