@@ -95,9 +95,8 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
 
     def get_is_album_sub(self, instance):
         is_sub = PodcastAlbumSubscription.objects.filter(
-            album=PodcastAlbum.objects.filter(
-                id=instance.album.id,
-                member=self.context['request'].user)).exists()
+                album=PodcastAlbum.objects.filter(id=instance.album.id),
+                member=self.context['request'].user ).exists()
         if is_sub:
             return True
         else:
