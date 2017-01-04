@@ -108,6 +108,9 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         return HttpResponseRedirect(url)
 
 
+    def get_serializer_context(self):
+        return {'request': self.request}
+
 
 # class PodcastEnclosureViewSet(viewsets.ModelViewSet):
 #     model = PodcastEnclosure
