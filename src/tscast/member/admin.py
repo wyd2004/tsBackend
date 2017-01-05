@@ -139,4 +139,5 @@ class MemberPrivilegeModelAdmin(BaseModelAdmin):
 admin.site.register(Member, MemberModelAdmin)
 # admin.site.register(MemberPrivilege)
 admin.site.register(PodcastAlbumSubscription, PodcastAlbumSubscriptionModelAdmin)
-admin.site.register(MemberInvitation, MemberInvitationModelAdmin)
+# admin.site.register(MemberInvitation, MemberInvitationModelAdmin)
+

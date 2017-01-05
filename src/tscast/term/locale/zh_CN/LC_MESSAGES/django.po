@@ -24,7 +24,7 @@ msgstr "内容 ID"
 
 #: term/apps.py:9
 msgid "term"
-msgstr "合约"
+msgstr "订购合约"
 
 #: term/models.py:17
 msgid "is deleted"
@@ -108,11 +108,11 @@ msgstr "是否发布"
 
 #: term/models.py:64 term/models.py:85
 msgid "tier"
-msgstr "合约类别"
+msgstr "订购合约类别"
 
 #: term/models.py:65
 msgid "tiers"
-msgstr "合约类别"
+msgstr "订购合约类别"
 
 #: term/models.py:76 term/models.py:175
 msgid "Wait for Payment"
@@ -152,7 +152,7 @@ msgstr "用户"
 
 #: term/models.py:93
 msgid "payment value"
-msgstr "价值"
+msgstr "订单价格"
 
 #: term/models.py:94 term/models.py:185
 msgid "status"
@@ -164,7 +164,7 @@ msgstr "订单"
 
 #: term/models.py:99
 msgid "orders"
-msgstr "订单"
+msgstr "订单管理"
 
 #: term/models.py:169
 msgid "Wechat"
@@ -176,11 +176,11 @@ msgstr "邀请码"
 
 #: term/models.py:183
 msgid "payment receipt"
-msgstr "凭证"
+msgstr "收据"
 
 #: term/models.py:184
 msgid "payment agent"
-msgstr "代理"
+msgstr "支付方式"
 
 #: term/models.py:189
 msgid "payment"
@@ -188,7 +188,7 @@ msgstr "支付"
 
 #: term/models.py:190
 msgid "payments"
-msgstr "支付"
+msgstr "支付状态"
 
 #: term/models.py:208
 msgid "object id"
@@ -208,11 +208,11 @@ msgstr "永久"
 
 #: term/models.py:218
 msgid "ticket"
-msgstr "票据"
+msgstr "已支付订单"
 
 #: term/models.py:219
 msgid "tickets"
-msgstr "票据"
+msgstr "已支付订单"
 
 #: term/serializers.py:119
 msgid "invalid item"

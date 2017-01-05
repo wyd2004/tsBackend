@@ -38,8 +38,8 @@ class WeChatMenuButtonModelAdmin(admin.ModelAdmin):
     has_add_permission = lambda *args: False
     has_delete_permission = lambda *args: False
 
-
-admin.site.register(WeChatMemberGroup, WeChatMemberGroupModelAdmin)
-admin.site.register(WeChatMember, WeChatMemberModelAdmin)
-admin.site.register(WeChatMenuMatchRule, WeChatMenuMatchRuleModelAdmin)
-admin.site.register(WeChatMenuButton, WeChatMenuButtonModelAdmin)
+#
+# admin.site.register(WeChatMemberGroup, WeChatMemberGroupModelAdmin)
+# admin.site.register(WeChatMember, WeChatMemberModelAdmin)
+# admin.site.register(WeChatMenuMatchRule, WeChatMenuMatchRuleModelAdmin)
+# admin.site.register(WeChatMenuButton, WeChatMenuButtonModelAdmin)
