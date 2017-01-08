@@ -372,7 +372,7 @@ class PodcastEpisode(BaseModel):
     def save(self, *args, **kwargs):
         if self.image:
             pil_image_obj = Image.open(self.image)
-            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+            new_image = resizeimage.resize_thumbnail(pil_image_obj, [350, 350])
 
             # new_image_io = BytesIO()
             output = StringIO.StringIO()
