@@ -9,7 +9,7 @@ from django.conf import settings
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
-from imageresize import imageresize
+from resizeimage import resizeimage
 from .managers import BaseManager
 
 def path_join(args):
@@ -87,7 +87,7 @@ class BaseModel(models.Model):
     def save(self, *args, **kwargs):
         if self.image:
             pil_image_obj = Image.open(self.image)
-            new_image = imageresize.resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
 
             new_image_io = BytesIO()
             new_image.save(new_image_io, format='JPEG')
@@ -101,6 +101,7 @@ class BaseModel(models.Model):
                 save=False
             )
         super(BaseModel, self).save(*args, **kwargs)
+
 
 
 # class PodcastOrganization(BaseModel):
