@@ -177,7 +177,7 @@ class PodcastChannel(BaseModel):
             self.image.save(
                 temp_name,
                 content=ContentFile(new_image_io.getvalue()),
-                save=False
+                save=True
             )
         super(PodcastChannel, self).save(*args, **kwargs)
 
