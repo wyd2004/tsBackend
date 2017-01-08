@@ -6,8 +6,10 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import get_storage_class
 from django.conf import settings
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+from imageresize import imageresize
 from .managers import BaseManager
 
 def path_join(args):
@@ -82,6 +84,24 @@ class BaseModel(models.Model):
         self.is_deleted = True
         self.save()
 
+    def save(self, *args, **kwargs):
+        if self.image:
+            pil_image_obj = Image.open(self.image)
+            new_image = imageresize.resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+
+            new_image_io = BytesIO()
+            new_image.save(new_image_io, format='JPEG')
+
+            temp_name = self.image.name
+            self.image.delete(save=False)
+
+            self.image.save(
+                temp_name,
+                content=ContentFile(new_image_io.getvalue()),
+                save=False
+            )
+        super(BaseModel, self).save(*args, **kwargs)
+
 
 # class PodcastOrganization(BaseModel):
 #     '''
@@ -100,7 +120,7 @@ class BaseModel(models.Model):
 
 
 def podcast_channel_image_upload_to(instance, filename):
-    sha1_hash = sha1(instance.image.url.read()).hexdigest()
+    sha1_hash = sha1(instance.image.file.read()).hexdigest()
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -118,12 +138,7 @@ class PodcastChannel(BaseModel):
     '''
     name = models.CharField(max_length=128, verbose_name=_('channel name'))
     slug = models.SlugField(unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
-    # image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
-    image = ProcessedImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE,
-                                       verbose_name=_('image'),
-                                       processors=[ResizeToFill(120, 120)],
-                                       format='JPEG',
-                                       options={'quality': 60})
+    image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
 
     class Meta:
         app_label = 'podcast'
