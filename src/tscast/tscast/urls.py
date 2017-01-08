@@ -41,17 +41,16 @@ urlpatterns = [
 
     url(r'^mp', mp_home, name='mp_home'),
     url(r'^/$', mp_home, name='mp_home'),
-    url(r'^/search', mp_home, name='mp_home'),
-    url(r'^/profile', mp_home, name='mp_home'),
-    url(r'^/people', mp_home, name='mp_home'),
-    url(r'^/play', mp_home, name='mp_home'),
-    url(r'^/special', mp_home, name='mp_home'),
-    url(r'^/buy', mp_home, name='mp_home'),
-    url(r'^/pay', mp_home, name='mp_home'),
-    url(r'^/test/pay', mp_home, name='mp_home'),
-    url(r'^/project', mp_home, name='mp_home'),
-    url(r'^/subscription', mp_home, name='mp_home'),
-    url(r'^/vip', mp_home, name='mp_home'),
-
+    url(r'^search', mp_home, name='mp_home'),
+    url(r'^profile', mp_home, name='mp_home'),
+    url(r'^people', mp_home, name='mp_home'),
+    url(r'^play', mp_home, name='mp_home'),
+    url(r'^special', mp_home, name='mp_home'),
+    url(r'^buy', mp_home, name='mp_home'),
+    url(r'^pay', mp_home, name='mp_home'),
+    url(r'^test/pay', mp_home, name='mp_home'),
+    url(r'^project', mp_home, name='mp_home'),
+    url(r'^subscription', mp_home, name='mp_home'),
+    url(r'^vip', mp_home, name='mp_home'),
 
 ]
