@@ -244,7 +244,7 @@ def get_user_info(access_token, openid):
         }
     response = requests.get(url, params=params)
     if response.ok and 'errcode' not in response.json():
-        response.encoding = 'utf-8'
+        # response.encoding = 'utf-8'
         return response.json()
     else:
         return None
