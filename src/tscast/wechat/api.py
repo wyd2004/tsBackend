@@ -385,6 +385,8 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
     '''
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
+    sandbox_url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder'
+    url=sandbox_url
     # assigned app id
     appid = settings.WECHAT_APPID
     # assigned merchant id
