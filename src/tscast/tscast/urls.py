@@ -39,6 +39,6 @@ urlpatterns = [
     url(r'^api/', include('podcast.urls')),
     url(r'^api/', include('term.urls')),
 
-    url(r'^mp(?P<code>\w+)', mp_home, name='mp_home'),
+    url(r'^mp?(?P<code>\w+)', mp_home, name='mp_home'),
 
 ]
