@@ -78,7 +78,7 @@ ROOT_URLCONF = 'tscast.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'tscast/static/') ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,7 +134,7 @@ MEDIA_URL = 'http://vip.tangsuanradio.com/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'tscast/media/')
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'tscast/static/'), )
+# TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'tscast/static/'), )
 
 
 LOGGING = {
