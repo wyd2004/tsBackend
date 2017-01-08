@@ -84,23 +84,23 @@ class BaseModel(models.Model):
         self.is_deleted = True
         self.save()
 
-    def save(self, *args, **kwargs):
-        if self.image:
-            pil_image_obj = Image.open(self.image)
-            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
-
-            new_image_io = BytesIO()
-            new_image.save(new_image_io, format='JPEG')
-
-            temp_name = self.image.name
-            self.image.delete(save=False)
-
-            self.image.save(
-                temp_name,
-                content=ContentFile(new_image_io.getvalue()),
-                save=False
-            )
-        super(BaseModel, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.image:
+    #         pil_image_obj = Image.open(self.image)
+    #         new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+    #
+    #         new_image_io = BytesIO()
+    #         new_image.save(new_image_io, format='JPEG')
+    #
+    #         temp_name = self.image.name
+    #         self.image.delete(save=False)
+    #
+    #         self.image.save(
+    #             temp_name,
+    #             content=ContentFile(new_image_io.getvalue()),
+    #             save=False
+    #         )
+    #     super(BaseModel, self).save(*args, **kwargs)
 
 
 
@@ -161,6 +161,25 @@ class PodcastChannel(BaseModel):
             except Exception as error:
                 pass
         return PodcastChannel._DEFAULT_CHANNEL
+
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            pil_image_obj = Image.open(self.image)
+            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+
+            new_image_io = BytesIO()
+            new_image.save(new_image_io, format='JPEG')
+
+            temp_name = self.image.name
+            self.image.delete(save=False)
+
+            self.image.save(
+                temp_name,
+                content=ContentFile(new_image_io.getvalue()),
+                save=False
+            )
+        super(PodcastChannel, self).save(*args, **kwargs)
 
 
 def podcast_people_image_upload_to(instance, filename):
