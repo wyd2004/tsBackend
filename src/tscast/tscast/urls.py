@@ -42,5 +42,4 @@ urlpatterns = [
     url(r'^mp', mp_home, name='mp_home'),
     url(r'^/$', mp_home, name='mp_home'),
 
-
 ]

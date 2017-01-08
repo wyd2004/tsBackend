@@ -16,14 +16,6 @@ def admin_bulk_add_member_invitation(request):
     url = reverse('admin:member_memberinvitation_changelist')
     messages.add_message(request, messages.INFO, ugettext_lazy('success created'))
     return HttpResponseRedirect(url)
-#
-#
-# @api_view(('GET',))
-# @renderer_classes((TemplateHTMLRenderer,))
-# def articles(request, format=None):
-#     data= {'articles': Article.objects.all() }
-#     return Response(data, template_name='articles.html')
-
 
 
 def mp_home(request):
