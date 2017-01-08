@@ -9,7 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import get_storage_class
 from django.conf import settings
 from PIL import Image
-from io import BytesIO, StringIO
+from io import BytesIO
+import StringIO
+
 from django.core.files.base import ContentFile
 from resizeimage import resizeimage
 from .managers import BaseManager
