@@ -1,13 +1,15 @@
 from __future__ import unicode_literals
 
 from hashlib import sha1
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import get_storage_class
 from django.conf import settings
 from PIL import Image
-from io import BytesIO
+from io import BytesIO, StringIO
 from django.core.files.base import ContentFile
 from resizeimage import resizeimage
 from .managers import BaseManager
@@ -169,17 +171,23 @@ class PodcastChannel(BaseModel):
             new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
 
             new_image_io = BytesIO()
-            new_image.save(new_image_io, format='JPEG')
-
-            temp_name = self.image.name
-            self.image.delete(save=False)
-
-            self.image.save(
-                temp_name,
-                content=ContentFile(new_image_io.getvalue()),
-                save=True
-            )
+            # new_image.save(new_image_io, format='JPEG')
+            #
+            # temp_name = self.image.name
+            # self.image.delete(save=True)
+            #
+            # self.image.save(
+            #     temp_name,
+            #     content=ContentFile(new_image_io.getvalue()),
+            #     save=True
+            # )
+            output = StringIO.StringIO()
+            new_image.save(output, format='JPEG', quality=70)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                                              'image/jpeg', output.len, None)
         super(PodcastChannel, self).save(*args, **kwargs)
+
 
 
 def podcast_people_image_upload_to(instance, filename):
