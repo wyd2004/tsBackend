@@ -384,8 +384,10 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     '''
     https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
     '''
-    url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     sandbox_url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder'
+    sandbox_sign = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456'
+
+    url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     url=sandbox_url
     # assigned app id
     appid = settings.WECHAT_APPID
@@ -461,6 +463,8 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     }
     kwargs = {k:v for k, v in kwargs.items() if v}
     sign_type, sign = generate_wxpay_sign_md5(kwargs)
+    sign = sandbox_sign
+
     kwargs['sign'] = sign
     xml_data = cat_xml(kwargs)
     response = requests.post(url, data=xml_data)
