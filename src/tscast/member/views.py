@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy
 from member.models import MemberInvitation
+from rest_framework.decorators import api_view, renderer_classes
+from django.shortcuts import render_to_response
 
 
 def admin_bulk_add_member_invitation(request):
@@ -14,3 +16,15 @@ def admin_bulk_add_member_invitation(request):
     url = reverse('admin:member_memberinvitation_changelist')
     messages.add_message(request, messages.INFO, ugettext_lazy('success created'))
     return HttpResponseRedirect(url)
+#
+#
+# @api_view(('GET',))
+# @renderer_classes((TemplateHTMLRenderer,))
+# def articles(request, format=None):
+#     data= {'articles': Article.objects.all() }
+#     return Response(data, template_name='articles.html')
+
+
+def mp_home(request):
+    data = None
+    return render_to_response('index.html', data)

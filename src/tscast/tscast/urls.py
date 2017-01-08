@@ -25,7 +25,7 @@ admin.site.site_header = 'Podcast Data Console'
 admin.site.index_title = 'Podcast Data Console'
 
 
-from member.views import admin_bulk_add_member_invitation
+from member.views import admin_bulk_add_member_invitation, mp_home
 
 
 urlpatterns = [
@@ -38,4 +38,7 @@ urlpatterns = [
     url(r'^api/', include('member.urls')),
     url(r'^api/', include('podcast.urls')),
     url(r'^api/', include('term.urls')),
+
+    url(r'^mp/(?P<code>\w+)', mp_home, name='mp_home'),
+
 ]

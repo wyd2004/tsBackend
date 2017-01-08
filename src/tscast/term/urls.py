@@ -13,7 +13,7 @@ router = routers.DefaultRouter()
 router.register('tier', TierViewSet, base_name='TierViewSet')
 router.register('order', OrderViewSet, base_name='OrderViewSet')
 router.register('order/(?P<order__uuid>\d+)', OrderViewSet, base_name='SingleOrderViewSet')
-router.register('order/(?P<order__uuid>\w+/purchase)', PaymentViewSet, base_name='CreatePaymentViewSet')
+router.register('order/(?P<order__uuid>\w+)/purchase', PaymentViewSet, base_name='CreatePaymentViewSet')
 
 
 # view_urls = [
