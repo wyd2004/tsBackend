@@ -100,7 +100,7 @@ class BaseModel(models.Model):
 
 
 def podcast_channel_image_upload_to(instance, filename):
-    sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash = sha1(instance.image.url.read()).hexdigest()
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
