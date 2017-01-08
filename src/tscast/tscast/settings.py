@@ -134,7 +134,7 @@ MEDIA_URL = 'http://vip.tangsuanradio.com/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'tscast/media/')
 
-TEMPLATE_DIRS  = os.path.join(BASE_DIR, 'tscast/static/')
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'tscast/static/'), )
 
 
 LOGGING = {
