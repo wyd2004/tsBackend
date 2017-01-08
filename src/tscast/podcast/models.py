@@ -88,25 +88,6 @@ class BaseModel(models.Model):
         self.is_deleted = True
         self.save()
 
-    # def save(self, *args, **kwargs):
-    #     if self.image:
-    #         pil_image_obj = Image.open(self.image)
-    #         new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
-    #
-    #         new_image_io = BytesIO()
-    #         new_image.save(new_image_io, format='JPEG')
-    #
-    #         temp_name = self.image.name
-    #         self.image.delete(save=False)
-    #
-    #         self.image.save(
-    #             temp_name,
-    #             content=ContentFile(new_image_io.getvalue()),
-    #             save=False
-    #         )
-    #     super(BaseModel, self).save(*args, **kwargs)
-
-
 
 # class PodcastOrganization(BaseModel):
 #     '''
@@ -172,24 +153,13 @@ class PodcastChannel(BaseModel):
             pil_image_obj = Image.open(self.image)
             new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
 
-            new_image_io = BytesIO()
-            # new_image.save(new_image_io, format='JPEG')
-            #
-            # temp_name = self.image.name
-            # self.image.delete(save=True)
-            #
-            # self.image.save(
-            #     temp_name,
-            #     content=ContentFile(new_image_io.getvalue()),
-            #     save=True
-            # )
+            # new_image_io = BytesIO()
             output = StringIO.StringIO()
-            new_image.save(output, format='JPEG', quality=70)
+            new_image.save(output, format='JPEG', quality=80)
             output.seek(0)
             self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
                                               'image/jpeg', output.len, None)
         super(PodcastChannel, self).save(*args, **kwargs)
-
 
 
 def podcast_people_image_upload_to(instance, filename):
@@ -222,6 +192,20 @@ class PodcastPeople(BaseModel):
     
     def __unicode__(self):
         return self.name
+
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            pil_image_obj = Image.open(self.image)
+            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+
+            # new_image_io = BytesIO()
+            output = StringIO.StringIO()
+            new_image.save(output, format='JPEG', quality=80)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                                              'image/jpeg', output.len, None)
+        super(PodcastPeople, self).save(*args, **kwargs)
 
 
 class PodcastHost(PodcastPeople):
@@ -260,6 +244,7 @@ def podcast_album_image_upload_to(instance, filename):
         )
     return path_join(args)
 
+
 class PodcastAlbum(BaseModel):
     '''
     Podcast Album
@@ -285,6 +270,20 @@ class PodcastAlbum(BaseModel):
 
     def __unicode__(self):
         return self.title
+
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            pil_image_obj = Image.open(self.image)
+            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+
+            # new_image_io = BytesIO()
+            output = StringIO.StringIO()
+            new_image.save(output, format='JPEG', quality=80)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                                              'image/jpeg', output.len, None)
+        super(PodcastAlbum, self).save(*args, **kwargs)
 
 
 def podcast_episode_image_upload_to(instance, filename):
@@ -368,6 +367,20 @@ class PodcastEpisode(BaseModel):
 
     def __unicode__(self):
         return self.title
+
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            pil_image_obj = Image.open(self.image)
+            new_image = resizeimage.resize_thumbnail(pil_image_obj, [120, 120])
+
+            # new_image_io = BytesIO()
+            output = StringIO.StringIO()
+            new_image.save(output, format='JPEG', quality=80)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                                              'image/jpeg', output.len, None)
+        super(PodcastEpisode, self).save(*args, **kwargs)
 
 
 # class PodcastEnclosure(BaseModel):
