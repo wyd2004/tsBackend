@@ -26,6 +26,6 @@ def admin_bulk_add_member_invitation(request):
 
 
 
-def mp_home(request, code):
+def mp_home(request):
     data = None
     return render_to_response('index.html', data)
