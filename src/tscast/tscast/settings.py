@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'member',
     'term',
     'wechat',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

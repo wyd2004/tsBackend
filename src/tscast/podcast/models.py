@@ -6,7 +6,8 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import get_storage_class
 from django.conf import settings
-
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 from .managers import BaseManager
 
 def path_join(args):
@@ -117,7 +118,13 @@ class PodcastChannel(BaseModel):
     '''
     name = models.CharField(max_length=128, verbose_name=_('channel name'))
     slug = models.SlugField(unique=True, help_text=_('a URL-friendly name. For example, a slug for "Games & Hobbies" is "games-hobbies".'))
-    image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
+    # image = models.ImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE, verbose_name=_('image'))
+    image = models.ProcessedImageField(blank=True, upload_to=podcast_channel_image_upload_to, storage=PODCAST_IMAGE_STORAGE,
+                                       verbose_name=_('image'),
+                                       processors=[ResizeToFill(120, 120)],
+                                       format='JPEG',
+                                       options={'quality': 60})
+
 
     class Meta:
         app_label = 'podcast'
