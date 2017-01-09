@@ -253,7 +253,7 @@ def is_user_info_access_token_valid(access_token):
     url = 'https://api.weixin.qq.com/sns/auth'
     params = {
         'access_token': access_token,
-        'openid': openid,
+        'openid': '',
         }
     response = requests.get(url, params=params)
     if response.ok:
