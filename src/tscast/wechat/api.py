@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding=utf-8 -*-
 
 import json
 import xmltodict
@@ -240,7 +240,7 @@ def get_user_info(access_token, openid):
         }
     response = requests.get(url, params=params)
     if response.ok and 'errcode' not in response.json():
-        res = response.content.decode('ISO-8859-1').encode('utf8')
+        res = response.content.decode('utf8').encode('utf8')
         r = complexjson.loads(res)
         return r
     else:
