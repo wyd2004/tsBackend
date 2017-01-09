@@ -16,18 +16,14 @@ from django.core.cache import cache
 from django.core.cache import caches
 from django.conf import settings
 import time
+from requests.compat import json as complexjson
 
 logger = logging.getLogger('wechat')
-
-
 
 WECHAT_TOKEN = settings.WECHAT_TOKEN
 WECHAT_APPID = settings.WECHAT_APPID
 WECHAT_APPSECRET = settings.WECHAT_APPSECRET
 # WECHAT_ENCODING_AES_KEY = settings.WECHAT_ENCODING_AES_KEY
-
-
-logger = logging.getLogger('wechat')
 
 
 def cat_xml(kwargs):
@@ -244,7 +240,9 @@ def get_user_info(access_token, openid):
         }
     response = requests.get(url, params=params)
     if response.ok and 'errcode' not in response.json():
-        # response.encoding = 'utf-8'
+        res = response.content.decode('ISO-8859-1').encode('utf8')
+        r = complexjson.loads(res)
+        response.encoding = 'utf-8'
         return response.json()
     else:
         return None
