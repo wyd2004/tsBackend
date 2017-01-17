@@ -53,7 +53,7 @@ class PodcastAlbumSerializer(serializers.ModelSerializer):
 class PodcastEpisodeSerializer(serializers.ModelSerializer):
     hosts = PodcastHostSerializer(many=True)
     # enclosures = serializers.SerializerMethodField()
-    price = serializers.SerializerMethodField()
+    price = serializers.ModelField()
     album_title = serializers.SerializerMethodField()
     full_url = serializers.SerializerMethodField()
     full_length = serializers.SerializerMethodField()
@@ -108,8 +108,18 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         else:
             return False
 
-    #
+
     # def get_price(self, instance):
+    #     try:
+    #        tier = Tier.objects.get(
+    #                 scope='permanent',
+    #                 package='episode',
+    #                 is_published=True,
+    #                 )
+    #         return tier.price
+    #     except Tier.DoesNotExist as error:
+    #         return 0
+
     #     try:
     #         tier = Tier.objects.get(
     #                 scope='permanent',
