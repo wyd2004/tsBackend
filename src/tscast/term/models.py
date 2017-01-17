@@ -9,6 +9,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from podcast.models import PodcastEpisode
+
 import logging
 logger = logging.getLogger('tier')
 
@@ -101,6 +103,15 @@ class Order(BaseModel):
     def __unicode__(self):
         return 'Order %d' % self.id
 
+    def cal_price(self):
+        price = 0.00
+        if self.tier.package == 'episode':
+            episode = PodcastEpisode.objects.get(id=self.item)
+            self.price = episode.price
+        else:
+            self.price = self.tier.price if not self.price else self.price
+        return self.price
+
     def fill_order(self):
         ct_map = {
                 'channel': ContentType.objects.get(model='podcastchannel'),
@@ -110,8 +121,8 @@ class Order(BaseModel):
         self.scope = self.tier.scope if not self.scope else self.scope
         self.package = self.tier.package if not self.package else self.package
         self.content_type = ct_map.get(self.package, None)
-        self.price = self.tier.price if not self.price else self.price
-        self.value = self.tier.price if not self.value else self.value
+        self.price = self.cal_price()
+        self.value = self.price
         self.status = 'wait-for-payment' if not self.status else self.status
 
     def save(self, *args, **kwargs):
