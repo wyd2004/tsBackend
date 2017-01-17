@@ -226,10 +226,6 @@ msgstr "预览长度"
 msgid "podcast episode"
 msgstr "播客节目"
 
-#: podcast/models.py:361
-msgid "single price"
-msgstr "节目单价"
-
 #: podcast/models.py:315
 msgid "podcast episodes"
 msgstr "播客节目"
@@ -269,3 +265,6 @@ msgstr "删除已选条目"
 
 #~ msgid "podcast enclosures"
 #~ msgstr "播客文件"
+
+#~ msgid "single price"
+#~ msgstr "节目单价"
