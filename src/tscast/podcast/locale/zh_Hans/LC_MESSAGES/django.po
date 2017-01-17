@@ -198,6 +198,10 @@ msgstr "节目标题"
 msgid "episode subtitle"
 msgstr "节目子标题"
 
+#: podcast/models.py:299
+msgid "single price"
+msgstr "订购单价"
+
 #: podcast/models.py:305
 msgid "full file"
 msgstr "完整文件"
