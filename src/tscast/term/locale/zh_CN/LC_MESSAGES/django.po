@@ -58,6 +58,10 @@ msgstr "一天 "
 msgid "Permanent"
 msgstr "永久"
 
+#: term/models.py:35
+msgid "Half Year"
+msgstr "半年"
+
 #: term/models.py:46
 msgid "Channel"
 msgstr "频道"
