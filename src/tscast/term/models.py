@@ -33,14 +33,17 @@ TIER_SCOPE_CHOICES = (
         ('one season', _('One Season')),
         ('one month', _('One Month')),
         ('one day', _('One Day')),
+        ('half year', _('Half Year')),
         ('permanent', _('Permanent')),
         )
+
 
 TIER_SCOPE_EXPIRES_MAP = {
         'one year': relativedelta(years=1),
         'one season': relativedelta(months=3),
         'one month': relativedelta(months=1),
         'one day': relativedelta(days=1),
+        'half year': relativedelta(months=6),
         'permanent': timedelta.max,
         }
 
