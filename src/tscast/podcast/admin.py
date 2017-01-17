@@ -126,6 +126,7 @@ class PodcastEpisodeAdmin(BaseModelAdmin):
                 'album',
                 'title',
                 'subtitle',
+                'price',
                 'serial',
                 'image',
                 'hosts', 
