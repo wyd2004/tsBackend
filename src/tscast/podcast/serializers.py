@@ -53,7 +53,7 @@ class PodcastAlbumSerializer(serializers.ModelSerializer):
 class PodcastEpisodeSerializer(serializers.ModelSerializer):
     hosts = PodcastHostSerializer(many=True)
     # enclosures = serializers.SerializerMethodField()
-    price = serializers.ModelField()
+    price = serializers.ModelField(PodcastEpisode.price)
     album_title = serializers.SerializerMethodField()
     full_url = serializers.SerializerMethodField()
     full_length = serializers.SerializerMethodField()
@@ -119,6 +119,7 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
     #         return tier.price
     #     except Tier.DoesNotExist as error:
     #         return 0
+
 
     #     try:
     #         tier = Tier.objects.get(
