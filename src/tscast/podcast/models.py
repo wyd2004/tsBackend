@@ -358,7 +358,7 @@ class PodcastEpisode(BaseModel):
     preview_file = models.FileField(blank=True, upload_to=podcast_preview_file_upload_to, storage=PODCAST_ENCLOSURE_STORAGE, verbose_name=_('preview file'))
     preview_file_url = models.CharField(blank=True, max_length=255, verbose_name=_('alter preview file url'))
     preview_file_length = models.IntegerField(default=0, verbose_name=_('preview file length'))
-    price = models.DecimalField(decimal_places=2, max_digits=9, default=6.0, verbose_name=_('single price'))
+    price = models.DecimalField(decimal_places=2, max_digits=9, default=15.0, verbose_name=_('single price'))
 
     class Meta:
         app_label = 'podcast'
