@@ -540,3 +540,48 @@ def js_api(js_sign_params):
     sign_type, sign = generate_wxpay_sign_md5(js_sign_params)
     return sign, timestamp
 
+
+def wx_order_query(nonce_str, out_trade_no, sign, *args, **kwargs):
+    '''
+    https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
+    '''
+    sandbox_url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder'
+    sandbox_sign = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456'
+    url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
+    # url=sandbox_url
+    # assigned app id
+    appid = settings.WECHAT_APPID
+    # assigned merchant id
+    mch_id = settings.WECHAT_MERCHANT_ID
+
+    kwargs = {
+        'appid': appid,
+        'mch_id': mch_id,
+        'nonce_str': nonce_str,
+        'out_trade_no': out_trade_no,
+        'sign': sign,
+    }
+    kwargs = {k:v for k, v in kwargs.items() if v}
+    xml_data = cat_xml(kwargs)
+    response = requests.post(url, data=xml_data)
+    print response.content
+    if not response.ok:
+        return None
+    res_data = decode_wx_xml(response.content)
+    if res_data.get('return_code') != 'SUCCESS':
+        return None
+    if res_data.get('result_code') != 'SUCCESS':
+        return None
+    # suppose there is a `prepay_id` in the res_data
+    if not res_data.get('prepay_id'):
+        return None
+    res_sign = res_data['sign']
+    del(res_data['sign'])
+    check_f, check_sign = generate_wxpay_sign_md5(res_data)
+    if res_sign == check_sign:
+        pay_sign, timestamp = js_api(res_data)
+        res_data['sign'] = pay_sign
+        res_data['timestamp'] = timestamp
+        return res_data
+    else:
+        return {}
