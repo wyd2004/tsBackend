@@ -467,7 +467,7 @@ def create_wxpay_prepay(title, attach, order_id, fee, client_ip, product_id, ope
     kwargs['sign'] = sign
     xml_data = cat_xml(kwargs)
     response = requests.post(url, data=xml_data)
-    print response.content
+    # print response.content
     if not response.ok:
         return None
     res_data = decode_wx_xml(response.content)
@@ -547,7 +547,7 @@ def wx_order_query(nonce_str, out_trade_no, sign, *args, **kwargs):
     '''
     sandbox_url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder'
     sandbox_sign = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456'
-    url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
+    url = 'https://api.mch.weixin.qq.com/pay/orderquery'
     # url=sandbox_url
     # assigned app id
     appid = settings.WECHAT_APPID
@@ -564,24 +564,19 @@ def wx_order_query(nonce_str, out_trade_no, sign, *args, **kwargs):
     kwargs = {k:v for k, v in kwargs.items() if v}
     xml_data = cat_xml(kwargs)
     response = requests.post(url, data=xml_data)
-    print response.content
+    # print response.content
     if not response.ok:
         return None
     res_data = decode_wx_xml(response.content)
     if res_data.get('return_code') != 'SUCCESS':
         return None
-    if res_data.get('result_code') != 'SUCCESS':
+    if not res_data.get('out_trade_no'):
         return None
-    # suppose there is a `prepay_id` in the res_data
-    if not res_data.get('prepay_id'):
+    if res_data.get('out_trade_no') != out_trade_no:
         return None
-    res_sign = res_data['sign']
-    del(res_data['sign'])
-    check_f, check_sign = generate_wxpay_sign_md5(res_data)
-    if res_sign == check_sign:
-        pay_sign, timestamp = js_api(res_data)
-        res_data['sign'] = pay_sign
-        res_data['timestamp'] = timestamp
-        return res_data
+
+    if res_data.get('trade_state') == 'SUCCESS':
+        return True
     else:
-        return {}
+        return False
+
