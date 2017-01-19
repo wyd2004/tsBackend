@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
 
-
+from term.views import test_order_query_crontab
 from wechat.views import wechat_message
 
 admin.site.site_url = None
@@ -52,5 +52,6 @@ urlpatterns = [
     url(r'^project', mp_home, name='mp_home'),
     url(r'^subscription', mp_home, name='mp_home'),
     url(r'^vip', mp_home, name='mp_home'),
+    url(r'^test_order_query_crontab', test_order_query_crontab, name='mp_home'),
 
 ]
