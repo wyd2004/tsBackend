@@ -27,3 +27,4 @@ xmltodict==0.10.2
 wechat-sdk==0.6.4
 django-imagekit
 python-resize-image
+django-crontab

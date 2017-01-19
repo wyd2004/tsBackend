@@ -23,5 +23,3 @@ def payment_status_update():
             status=wait_pay.status
         )
 
-
-

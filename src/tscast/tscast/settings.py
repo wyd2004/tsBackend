@@ -33,6 +33,10 @@ else:
 DEBUG = True
 
 
+CRONJOBS = [
+    ('*/2 * * * *', 'term.crontask.payment_status_update')
+]
+
 # WECHAT
 from .conf.wechat import *
 # ALIYUN
