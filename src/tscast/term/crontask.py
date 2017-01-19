@@ -11,7 +11,7 @@ def payment_status_update():
             continue
         pay_receipt = json.loads(wait_pay.receipt)
         nonce_str = pay_receipt['prepay']['nonce_str']
-        out_trade_no = wait_pay.uuid.get_hex()
+        out_trade_no = wait_pay.order.uuid.get_hex()
         sign = pay_receipt['prepay']['sign']
         state = wx_order_query(nonce_str, out_trade_no, sign)
         if state:
@@ -22,5 +22,6 @@ def payment_status_update():
         Order.objects.filter(uuid=wait_pay.uuid).update(
             status=wait_pay.status
         )
+
 
 
