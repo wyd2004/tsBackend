@@ -7,6 +7,8 @@ from wechat.api import wx_order_query
 def payment_status_update():
     unchecked_payments = Payment.objects.filter(status='wait-for-payment')
     for wait_pay in unchecked_payments:
+        if not wait_pay.receipt:
+            continue
         pay_receipt = json.loads(wait_pay.receipt)[0]
         nonce_str = pay_receipt['prepay']['nonce_str']
         out_trade_no = pay_receipt['prepay']['out_trade_no']
