@@ -124,11 +124,23 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         uri = '/podcast/episode/%d/full_file/' % instance.id
         url = '%s%s' % (host, uri)
 
-        if instance.full_file:
-            url = instance.full_file.url
+        if self.context.get('request'):
+            request = self.context['request']
+            if type(request.user) is Member:
+                privilege = request.user.privilege
+                if any((
+                        (instance.id in privilege.episode_ids),
+                        (instance.album.id in privilege.album_ids),
+                        (instance.album.channel.id in privilege.channel_ids),
+                        )):
+                    if instance.full_file:
+                        url = instance.full_file.url
+                    else:
+                        url = instance.full_file_url
+                    return url
         else:
-            url = instance.full_file_url
-        return url
+            pass
+        return ''
 
     def get_full_length(self, instance):
         return instance.full_file_length
