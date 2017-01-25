@@ -564,7 +564,7 @@ def wx_order_query(nonce_str, out_trade_no, sign, *args, **kwargs):
     kwargs = {k:v for k, v in kwargs.items() if v}
     xml_data = cat_xml(kwargs)
     response = requests.post(url, data=xml_data)
-    # print response.content
+    print 'wx_order_query  :%s' % response.content
     if not response.ok:
         return None
     res_data = decode_wx_xml(response.content)
