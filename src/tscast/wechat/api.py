@@ -559,9 +559,10 @@ def wx_order_query(nonce_str, out_trade_no, sign, *args, **kwargs):
         'mch_id': mch_id,
         'nonce_str': nonce_str,
         'out_trade_no': out_trade_no,
-        'sign': sign,
     }
     kwargs = {k:v for k, v in kwargs.items() if v}
+    sign_type, sign = generate_wxpay_sign_md5(kwargs)
+    kwargs['sign'] = sign
     xml_data = cat_xml(kwargs)
     response = requests.post(url, data=xml_data)
     print 'wx_order_query  :%s' % response.content
