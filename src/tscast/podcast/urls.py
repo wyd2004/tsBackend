@@ -14,7 +14,7 @@ router.register('people', PodcastHostViewSet, base_name='PodcastPeopleViewSet')
 router.register('people/(?P<hosts__id>\d+)/album', PodcastAlbumViewSet, base_name='PeoplePodcastAlbumViewSet')
 router.register('people/(?P<hosts__id>\d+)/episode', PodcastEpisodeViewSet, base_name='PeoplePodcastEpisodeViewSet')
 router.register('album', PodcastAlbumViewSet, base_name='PodcastAlbumViewSet')
-router.register('album/(?P<album>\d+)/episode', PodcastEpisodeViewSet, base_name='AlbumPodcastEpisodeViewSet')
+router.register('album/(?P<album__id>\d+)/episode', PodcastEpisodeViewSet, base_name='AlbumPodcastEpisodeViewSet')
 router.register('episode', PodcastEpisodeViewSet, base_name='PodcastEpisodeViewSet')
 
 

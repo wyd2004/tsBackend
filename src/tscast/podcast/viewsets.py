@@ -62,6 +62,8 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
                 )
         if 'hosts__id' in self.kwargs:
             queryset = queryset.filter(hosts__id=self.kwargs['hosts__id'])
+        if 'album__id' in self.kwargs:
+            queryset = queryset.filter(album__id=self.kwargs['album__id'])
         return queryset
 
     def get_next(self, request, *args, **kwargs):
