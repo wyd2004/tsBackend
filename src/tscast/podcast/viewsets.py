@@ -51,7 +51,7 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
     model = PodcastEpisode
     serializer_class = PodcastEpisodeSerializer
     permission_classes = (ReadOnly, OnlyMemberAccess)
-    search_fields = ('title',)
+    search_fields = ('title','keywords',)
     ordering_fields = ('dt_updated', 'id')
     ordering = ('-dt_updated',)
 
