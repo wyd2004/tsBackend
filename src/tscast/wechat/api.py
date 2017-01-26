@@ -349,7 +349,7 @@ def bulk_update_user_group(openid_list, to_groupid):
     '''
     url = 'https://api.weixin.qq.com/cgi-bin/groups/getid'
     params = {'access_token': get_access_token()}
-    data = {'openid_list': openid, 'to_groupid': to_groupid}
+    data = {'openid_list': openid_list, 'to_groupid': to_groupid}
     data = json.dumps(data)
     response = requests.post(url, params=params, data=data)
     if response.ok:
@@ -565,7 +565,7 @@ def wx_order_query(nonce_str, out_trade_no, sign, *args, **kwargs):
     kwargs['sign'] = sign
     xml_data = cat_xml(kwargs)
     response = requests.post(url, data=xml_data)
-    print 'wx_order_query  :%s' % response.content
+    logger.info('wx_order_query response xml  %s' % (response.content))
     if not response.ok:
         return None
     res_data = decode_wx_xml(response.content)
