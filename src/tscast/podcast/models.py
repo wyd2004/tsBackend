@@ -15,6 +15,7 @@ import StringIO
 from django.core.files.base import ContentFile
 from resizeimage import resizeimage
 from .managers import BaseManager
+from mutagen.mp3 import MP3
 
 def path_join(args):
     return '/'.join(args)
@@ -333,6 +334,9 @@ def podcast_preview_file_upload_to(instance, filename):
         'enclosure',
         filename,
         )
+    audio = MP3("/root/tsBackend/src/tscast/tscast/media/"+settings.UPLOAD_BASE_DIR+
+                path_join(args))
+    alen = audio.info.length
     return path_join(args)
 
 class PodcastEpisode(BaseModel):
