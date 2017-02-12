@@ -376,18 +376,16 @@ class PodcastEpisode(BaseModel):
         if self.image:
             pil_image_obj = Image.open(self.image)
             new_image = resizeimage.resize_thumbnail(pil_image_obj, [350, 350])
-
-            # new_image_io = BytesIO()
             output = StringIO.StringIO()
             new_image.save(output, format='JPEG', quality=80)
             output.seek(0)
             self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
                                               'image/jpeg', output.len, None)
 
-            full_audio = MP3(self.full_file.url)
-            self.full_file_length = full_audio.info.length
-            prev_audio = MP3(self.preview_file.url)
-            self.full_file_length = prev_audio.info.length
+            # full_audio = MP3(self.full_file.url)
+            # self.full_file_length = full_audio.info.length
+            # prev_audio = MP3(self.preview_file.url)
+            # self.full_file_length = prev_audio.info.length
         super(PodcastEpisode, self).save(*args, **kwargs)
 
 
@@ -419,4 +417,3 @@ class PodcastEpisode(BaseModel):
 # 
 #     def __unicode__(self):
 #         return '%s - %s' % (self.expression, self.title)
-
