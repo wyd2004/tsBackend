@@ -85,8 +85,8 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
 
     def get_next_ep_id(self, instance):
         next_id = instance.id+1
-        # count = PodcastEpisode.objects.count()
-        all_esp = PodcastEpisode.objects.all().order_by(id)
+        # count =sf112ds PodcastEpisode.objects.count()
+        all_esp = PodcastEpisode.objects.all().order_by('id')
         ids = []
         for e in all_esp:
             ids.append(e.id)
