@@ -85,11 +85,16 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
 
     def get_next_ep_id(self, instance):
         next_id = instance.id+1
-        count = PodcastEpisode.objects.count()
-        if next_id <= count:
-            return next_id
+        # count = PodcastEpisode.objects.count()
+        all_esp = PodcastEpisode.objects.all().order_by(id)
+        ids = []
+        for e in all_esp:
+            ids.append(e.id)
+        cur_index = ids.index(instance.id, 0, len(ids))
+        if cur_index >= len(ids) -1:
+            return ids[cur_index]
         else:
-            return count
+            return cur_index+1
 
     def get_previous_ep_id(self, instance):
         pre = instance.id-1
