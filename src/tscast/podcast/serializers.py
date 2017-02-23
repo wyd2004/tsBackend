@@ -84,8 +84,6 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         return instance.album.id
 
     def get_next_ep_id(self, instance):
-        next_id = instance.id+1
-        # count =sf2xxs PodcastEpisode.objects.count()
         all_esp = PodcastEpisode.objects.all().order_by('id')
         ids = []
         for e in all_esp:
@@ -97,11 +95,15 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
             return ids[cur_index+1]
 
     def get_previous_ep_id(self, instance):
-        pre = instance.id-1
-        if pre >= 0:
-            return  pre
+        all_esp = PodcastEpisode.objects.all().order_by('id')
+        ids = []
+        for e in all_esp:
+            ids.append(e.id)
+        cur_index = ids.index(instance.id, 0, len(ids))
+        if cur_index <= 0:
+            return ids[cur_index]
         else:
-            return 0
+            return ids[cur_index - 1]
 
     def get_is_album_sub(self, instance):
         is_sub = PodcastAlbumSubscription.objects.filter(
