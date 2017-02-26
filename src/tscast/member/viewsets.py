@@ -237,7 +237,7 @@ class PodcastEpisodeSubscriptionViewSet(viewsets.ModelViewSet):
                     episode = e
                 )
             # then filter, then remove
-            queryset = PodcastEpisodeSubscription.objects.filter( member_id=self.kwargs['member_id'])
+            queryset = PodcastEpisodeSubscription.objects.filter(member_id=self.kwargs['member_id'])
             PodcastEpisodeSubscription.objects.filter(member_id=self.kwargs['member_id']).delete()
         return queryset
 
