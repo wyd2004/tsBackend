@@ -1,10 +1,10 @@
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'podcast',
-        'USER': 'podcast',
-        'PASSWORD': 'Bklm2017',
-        'HOST': 'rm-m5eg5n565ztzus129.mysql.rds.aliyuncs.com',
+        'NAME': 'tscast',
+        'USER': 'dbuser',
+        'PASSWORD': '123456abc',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
