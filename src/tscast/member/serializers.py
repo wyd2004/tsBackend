@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from .models import PodcastAlbumSubscription, PodcastEpisodeSubscription
 from .models import Member
 
-from podcast.models  import PodcastAlbum
+from podcast.models  import PodcastAlbum, PodcastEpisode
 
 from podcast.serializers import PodcastAlbumSerializer, PodcastEpisodeSerializer
 
@@ -67,6 +67,21 @@ class CurrentAlbum(object):
         return self.album
 
 
+class CurrentEpisode(object):
+    def set_context(self, serializer_field):
+        episode_id = serializer_field.context['view'].kwargs.get('episode_id', 0)
+        try:
+            self.episode = PodcastEpisode.objects.get(
+                    id=episode_id,
+                    status='publish',
+                    )
+        except PodcastEpisode.DoesNotExist as error:
+            raise NotFound
+
+    def __call__(self):
+        return self.episode
+
+
 class PodcastAlbumSubscribeSerializer(serializers.ModelSerializer):
     member = serializers.PrimaryKeyRelatedField(
             read_only=True,
@@ -79,6 +94,20 @@ class PodcastAlbumSubscribeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PodcastAlbumSubscription
         fields = ('member', 'album')
+
+
+class PodcastEpisodeSubscribeSerializer(serializers.ModelSerializer):
+    member = serializers.PrimaryKeyRelatedField(
+            read_only=True,
+            default=CurrentMember()
+            )
+    album = serializers.PrimaryKeyRelatedField(
+            read_only=True,
+            default=CurrentEpisode()
+            )
+    class Meta:
+        model = PodcastEpisodeSubscription
+        fields = ('member', 'episode')
 
 
 class MemberSerializer(serializers.ModelSerializer):

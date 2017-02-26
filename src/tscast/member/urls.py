@@ -3,9 +3,8 @@ from django.conf.urls import include
 
 from rest_framework import routers
 
-from .viewsets import PodcastAlbumSubscriptionViewSet
+from .viewsets import PodcastAlbumSubscriptionViewSet, PodcastEpisodeSubscribeViewSet
 from .viewsets import PodcastAlbumSubscribeViewSet
-from .viewsets import PodcastEpisodeSubscriptionViewSet
 from .viewsets import PodcastEpisodeSubscriptionViewSet
 from .viewsets import MemberPurchasedAlbumViewSet 
 from .viewsets import MemberViewSet 
@@ -17,8 +16,8 @@ router = routers.DefaultRouter()
 
 router.register('member', MemberViewSet, base_name='MemberViewSet')
 router.register('member/(?P<member_id>\d+)/subscription/album',PodcastAlbumSubscriptionViewSet, base_name='PodcastAlbumSubscriptionViewSet')
-router.register('member/(?P<member_id>\d+)/purchase/album', MemberPurchasedAlbumViewSet, base_name='PodcastAlbumSubscriptionViewSet')
-
+router.register('member/(?P<member_id>\d+)/subscription/episode',PodcastEpisodeSubscriptionViewSet, base_name='PodcastEpisodeSubscriptionViewSet')
+router.register('member/(?P<member_id>\d+)/purchase/album', MemberPurchasedAlbumViewSet, base_name='MemberPurchasedAlbumViewSet')
 
 
 view_urls = [

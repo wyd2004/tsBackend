@@ -34,7 +34,8 @@ from .models import SocialNetwork
 from .models import MemberToken
 from .models import MemberInvitation
 
-from .serializers import PodcastAlbumSubscriptionSerializer, PodcastEpisodeSubscriptionSerializer
+from .serializers import PodcastAlbumSubscriptionSerializer, PodcastEpisodeSubscriptionSerializer, \
+    PodcastEpisodeSubscribeSerializer
 from .serializers import PodcastAlbumSubscribeSerializer
 from .serializers import MemberSerializer
 
@@ -265,6 +266,40 @@ class PodcastAlbumSubscribeViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         queryset = self.model.objects.filter(
                 album_id=kwargs.get('album_id', 0),
+                member=request.user,
+                )
+        for q in queryset:
+            q.is_deleted = True
+            q.save()
+        return Response(status=204)
+
+
+class PodcastEpisodeSubscribeViewSet(viewsets.ModelViewSet):
+    model = PodcastEpisodeSubscription
+    serializer_class = PodcastEpisodeSubscribeSerializer
+    permission_classes = (PodcastAlbumSubscribePermission,)
+
+
+    def get_queryset(self):
+        queryset = PodcastEpisodeSubscription.objects.filter(is_deleted=False)
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        obj = self.model.objects.filter(
+                album_id=kwargs.get('episode_id', 0),
+                member=request.user,
+                is_deleted=False
+                ).last()
+        if obj:
+            data = self.serializer_class(instance=obj).data
+            return Response(data)
+        else:
+            return super(PodcastEpisodeSubscribeViewSet, self).create(request, *args, **kwargs)
+
+
+    def destroy(self, request, *args, **kwargs):
+        queryset = self.model.objects.filter(
+                album_id=kwargs.get('episode_id', 0),
                 member=request.user,
                 )
         for q in queryset:
