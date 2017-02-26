@@ -222,12 +222,23 @@ class PodcastEpisodeSubscriptionViewSet(viewsets.ModelViewSet):
     serializer_class = PodcastEpisodeSubscriptionSerializer
     filter_fields = ('member_id',)
 
+    @property
     def get_queryset(self):
         queryset = PodcastEpisodeSubscription.objects.filter(is_deleted=False)
         if self.kwargs.has_key('member_id'):
             queryset = queryset.filter(member_id=self.kwargs['member_id'])
         if not queryset:
-            queryset = PodcastEpisode.objects.filter(is_deleted=False).order_by('-id')[:8]
+            querysetEsp = PodcastEpisode.objects.filter(is_deleted=False).order_by('-id')[:8]
+            mem = Member.objects.get(id=self.kwargs['member_id'])
+            for e in querysetEsp:
+                # obj = PodcastEpisodeSubscription(fds)
+                PodcastEpisodeSubscription.objects.create(
+                    member = mem,
+                    episode = e
+                )
+            # then filter, then remove
+            queryset = queryset.filter(member_id=self.kwargs['member_id'])
+            PodcastEpisodeSubscription.objects.filter(member_id=self.kwargs['member_id']).delete()
         return queryset
 
 
