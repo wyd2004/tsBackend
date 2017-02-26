@@ -15,7 +15,7 @@ import StringIO
 from django.core.files.base import ContentFile
 from resizeimage import resizeimage
 from .managers import BaseManager
-from mutagen.mp3 import MP3
+# from mutagen.mp3 import MP3
 
 def path_join(args):
     return '/'.join(args)
