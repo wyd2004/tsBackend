@@ -3,12 +3,12 @@ from rest_framework.exceptions import NotFound
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 
-from .models import PodcastAlbumSubscription
+from .models import PodcastAlbumSubscription, PodcastEpisodeSubscription
 from .models import Member
 
 from podcast.models  import PodcastAlbum
 
-from podcast.serializers import PodcastAlbumSerializer
+from podcast.serializers import PodcastAlbumSerializer, PodcastEpisodeSerializer
 
 
 class PodcastAlbumSubscriptionSerializer(serializers.ModelSerializer):
@@ -24,6 +24,23 @@ class PodcastAlbumSubscriptionSerializer(serializers.ModelSerializer):
             'id': instance.album.id,
             'title': instance.album.title,
             'image': instance.album.image if instance.album.image else None,
+            }
+        return data
+
+
+class PodcastEpisodeSubscriptionSerializer(serializers.ModelSerializer):
+    # album = serializers.SerializerMethodField()
+    episode = PodcastEpisodeSerializer()
+
+    class Meta:
+        model = PodcastEpisodeSubscription
+        fields = ('episode', 'dt_created')
+
+    def get_episode(self, instance):
+        data = {
+            'id': instance.episode.id,
+            'title': instance.episode.title,
+            'image': instance.episode.image if instance.episode.image else None,
             }
         return data
 

@@ -27,14 +27,14 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import BasePermission
 
 
-from .models import PodcastAlbumSubscription
+from .models import PodcastAlbumSubscription, PodcastEpisodeSubscription
 from .models import Member
 from .models import MemberToken
 from .models import SocialNetwork
 from .models import MemberToken
 from .models import MemberInvitation
 
-from .serializers import PodcastAlbumSubscriptionSerializer
+from .serializers import PodcastAlbumSubscriptionSerializer, PodcastEpisodeSubscriptionSerializer
 from .serializers import PodcastAlbumSubscribeSerializer
 from .serializers import MemberSerializer
 
@@ -211,6 +211,18 @@ class PodcastAlbumSubscriptionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = PodcastAlbumSubscription.objects.filter(is_deleted=False)
+        if self.kwargs.has_key('member_id'):
+            queryset = queryset.filter(member_id=self.kwargs['member_id'])
+        return queryset
+
+
+class PodcastEpisodeSubscriptionViewSet(viewsets.ModelViewSet):
+    model = PodcastEpisodeSubscription
+    serializer_class = PodcastEpisodeSubscriptionSerializer
+    filter_fields = ('member_id',)
+
+    def get_queryset(self):
+        queryset = PodcastEpisodeSubscription.objects.filter(is_deleted=False)
         if self.kwargs.has_key('member_id'):
             queryset = queryset.filter(member_id=self.kwargs['member_id'])
         return queryset

@@ -135,6 +135,20 @@ class PodcastAlbumSubscription(BaseModel):
         return uname
 
 
+class PodcastEpisodeSubscription(BaseModel):
+    member = models.ForeignKey('Member', related_name='episode_subscriptions', verbose_name=_('member'))
+    episode = models.ForeignKey('podcast.PodcastEpisode', related_name='member_subscriptions', verbose_name=_('episode'))
+
+    class Meta:
+        app_label = 'member'
+        verbose_name = _('podcast episode subscription')
+        verbose_name_plural = _('podcast episode subscriptions')
+
+    def __unicode__(self):
+        uname = '%s: %s' % (self.member.username, self.episode.title)
+        return uname
+
+
 class MemberPrivilege(BaseModel):
     member = models.OneToOneField(Member, related_name='member_privilege', verbose_name=_('member'))
     payload = models.TextField(blank=True, verbose_name=_('payload'))

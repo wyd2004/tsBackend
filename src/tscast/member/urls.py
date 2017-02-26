@@ -5,6 +5,8 @@ from rest_framework import routers
 
 from .viewsets import PodcastAlbumSubscriptionViewSet
 from .viewsets import PodcastAlbumSubscribeViewSet
+from .viewsets import PodcastEpisodeSubscriptionViewSet
+from .viewsets import PodcastEpisodeSubscriptionViewSet
 from .viewsets import MemberPurchasedAlbumViewSet 
 from .viewsets import MemberViewSet 
 from .viewsets import oauth
@@ -25,6 +27,12 @@ view_urls = [
                 {'post': 'create', 'delete': 'destroy'}
                 ),
             name='PodcastAlbumSubscribeViewSet',
+            ),
+        url('podcast/episode/(?P<album_id>\d+)/subscribe/',
+            PodcastEpisodeSubscribeViewSet.as_view(
+                {'post': 'create', 'delete': 'destroy'}
+                ),
+            name='PodcastEpisodeSubscribeViewSet',
             ),
         url('member/oauth/', oauth, name='member-oauth'),
         url('^api-token-auth/', views.obtain_auth_token),
