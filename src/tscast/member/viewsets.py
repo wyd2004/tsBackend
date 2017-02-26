@@ -26,7 +26,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import BasePermission
 
-
+from podcast.models import PodcastEpisode
 from .models import PodcastAlbumSubscription, PodcastEpisodeSubscription
 from .models import Member
 from .models import MemberToken
@@ -226,6 +226,8 @@ class PodcastEpisodeSubscriptionViewSet(viewsets.ModelViewSet):
         queryset = PodcastEpisodeSubscription.objects.filter(is_deleted=False)
         if self.kwargs.has_key('member_id'):
             queryset = queryset.filter(member_id=self.kwargs['member_id'])
+        if not queryset:
+            queryset = PodcastEpisode.objects.filter(is_deleted=False).order_by('-id')[:8]
         return queryset
 
 
