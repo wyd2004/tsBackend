@@ -300,7 +300,7 @@ class PodcastEpisodeSubscribeViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         obj = self.model.objects.filter(
-                album_id=kwargs.get('episode_id', 0),
+                episode_id=kwargs.get('episode_id', 0),
                 member=request.user,
                 is_deleted=False
                 ).last()
@@ -313,7 +313,7 @@ class PodcastEpisodeSubscribeViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         queryset = self.model.objects.filter(
-                album_id=kwargs.get('episode_id', 0),
+                episode_id=kwargs.get('episode_id', 0),
                 member=request.user,
                 )
         for q in queryset:
