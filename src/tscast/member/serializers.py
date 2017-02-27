@@ -101,7 +101,7 @@ class PodcastEpisodeSubscribeSerializer(serializers.ModelSerializer):
             read_only=True,
             default=CurrentMember()
             )
-    album = serializers.PrimaryKeyRelatedField(
+    episode = serializers.PrimaryKeyRelatedField(
             read_only=True,
             default=CurrentEpisode()
             )
