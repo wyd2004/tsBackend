@@ -27,7 +27,7 @@ view_urls = [
                 ),
             name='PodcastAlbumSubscribeViewSet',
             ),
-        url('podcast/episode/(?P<album_id>\d+)/subscribe/',
+        url('podcast/episode/(?P<episode_id>\d+)/subscribe/',
             PodcastEpisodeSubscribeViewSet.as_view(
                 {'post': 'create', 'delete': 'destroy'}
                 ),
