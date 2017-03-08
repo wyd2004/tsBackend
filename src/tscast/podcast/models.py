@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 from hashlib import sha1
+
+import datetime
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from django.db import models
@@ -108,6 +110,7 @@ class BaseModel(models.Model):
 
 def podcast_channel_image_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -165,6 +168,7 @@ class PodcastChannel(BaseModel):
 
 def podcast_people_image_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -234,6 +238,7 @@ class PodcastHost(PodcastPeople):
 
 def podcast_album_image_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -289,6 +294,7 @@ class PodcastAlbum(BaseModel):
 
 def podcast_episode_image_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -302,6 +308,7 @@ def podcast_episode_image_upload_to(instance, filename):
 
 def podcast_enclosure_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -314,6 +321,7 @@ def podcast_enclosure_upload_to(instance, filename):
 
 def podcast_full_file_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
@@ -326,6 +334,7 @@ def podcast_full_file_upload_to(instance, filename):
 
 def podcast_preview_file_upload_to(instance, filename):
     sha1_hash = sha1(instance.image.file.read()).hexdigest()
+    sha1_hash += datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     suffix = filename.split('.')[-1]
     filename = '%s.%s' % (sha1_hash, suffix)
     args = (
