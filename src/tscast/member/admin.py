@@ -45,7 +45,7 @@ class MemberPrivilegeInline(CompactInline):
 
 class MemberModelAdmin(BaseModelAdmin):
     list_display = ('id', 'username', 'nickname', 'avatar', 'dt_updated', )
-    search_fields = ('nickname')
+    search_fields = ('nickname',)
     fields = ('username', 'nickname', 'avatar')
     readonly_fields = ('username', 'nickname', 'avatar')
     inlines = (
