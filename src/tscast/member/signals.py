@@ -7,7 +7,7 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
     from .models import MemberPrivilege
     from .models import Privilege
 
-    purchases = sender.objects.filter(
+    purchases = sender.objects.get(
             member=instance.member,
             is_expired=False,
             is_deleted=False,
