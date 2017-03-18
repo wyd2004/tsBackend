@@ -7,7 +7,7 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
     from .models import MemberPrivilege
     from .models import Privilege
 
-    purchases = sender.objects.get(
+    purchases = sender.objects.filter(
             member=instance.member,
             is_expired=False,
             is_deleted=False,
@@ -16,7 +16,7 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
     memp = MemberPrivilege.objects.filter( member=instance.member)
     if memp.exists():
         # after pay money,update priv data before
-        exp_time = purchases.dt_expired
+        exp_time = purchases[0].dt_expired
         priv.expires_datetime = exp_time
     payload = priv.dumps()
     # terms = Privilege().loads(payload)
