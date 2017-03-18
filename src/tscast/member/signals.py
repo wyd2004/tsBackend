@@ -1,3 +1,4 @@
+utf
 from django.db.models.signals import post_save
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -16,7 +17,7 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
     priv = Privilege(purchases)
     memp = MemberPrivilege.objects.filter( member=instance.member)
     if memp.exists():
-        # 当会员付款成功后，更新之前已经创建的空的权利数据
+        # after pay money，update priv data before
         exp_time = purchases.dt_expired
         priv.expires_datetime = exp_time
     payload = priv.dumps()
