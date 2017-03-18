@@ -13,8 +13,14 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
             is_expired=False,
             is_deleted=False,
             )
-    payload = Privilege(purchases).dumps()
-    terms = Privilege().loads(payload)
+    priv = Privilege(purchases)
+    memp = MemberPrivilege.objects.filter( member=instance.member)
+    if memp.exists():
+        # 当会员付款成功后，更新之前已经创建的空的权利数据
+        exp_time = purchases.dt_expired
+        priv.expires_datetime = exp_time
+    payload = priv.dumps()
+    # terms = Privilege().loads(payload)
     MemberPrivilege.objects.update_or_create(
             member=instance.member,
             defaults={
