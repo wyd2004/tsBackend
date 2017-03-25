@@ -147,8 +147,9 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                         (instance.album.id in privilege.album_ids),
                         (instance.album.channel.id in privilege.channel_ids),
                         )):
-                    tdiff = privilege.expires_datetime - dt
-                    if True:
+                    FMT = "%Y-%m-%dT%H:%M:%S.%fZ"
+                    tdelta = datetime.strptime(privilege.expires_datetime, FMT) - datetime.strptime(dt, FMT)
+                    if (tdelta.days > 0) or ((tdelta.days == 0) and (tdelta.hours > 0)):
                         if instance.full_file:
                             url = instance.full_file.url
                         else:
