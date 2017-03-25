@@ -133,8 +133,6 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         else:
             host = ''
         uri = '/podcast/episode/%d/full_file/' % instance.id
-        url = '%s%s' % (host, uri)
-
 
         if self.context.get('request'):
             request = self.context['request']
