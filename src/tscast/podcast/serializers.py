@@ -145,9 +145,8 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                 )):
                     tz = pytz.timezone(settings.TIME_ZONE)
                     dt = datetime.datetime.now(tz=tz)
-                    FMT = "%Y-%m-%dT%H:%M:%S.%fZ"
                     tdelta = privilege.expires_datetime - dt
-                    if (tdelta.days > 0) or ((tdelta.days == 0) and (tdelta.hours > 0)):
+                    if (tdelta.days > 0):
                         if instance.full_file:
                             url = instance.full_file.url
                         else:
