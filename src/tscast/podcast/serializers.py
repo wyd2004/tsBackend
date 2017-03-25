@@ -1,8 +1,12 @@
+import datetime
+
+import pytz
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound 
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 
+from tscast import settings
 from .models import PodcastHost
 from .models import PodcastAlbum
 from .models import PodcastEpisode
@@ -131,6 +135,9 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         uri = '/podcast/episode/%d/full_file/' % instance.id
         url = '%s%s' % (host, uri)
 
+        tz = pytz.timezone(settings.TIME_ZONE)
+        dt = lambda stamp: datetime.fromtimestamp(stamp, tz)
+
         if self.context.get('request'):
             request = self.context['request']
             if type(request.user) is Member:
@@ -140,11 +147,13 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                         (instance.album.id in privilege.album_ids),
                         (instance.album.channel.id in privilege.channel_ids),
                         )):
-                    if instance.full_file:
-                        url = instance.full_file.url
-                    else:
-                        url = instance.full_file_url
-                    return url
+                    tdiff = privilege.expires_datetime - dt
+                    if True:
+                        if instance.full_file:
+                            url = instance.full_file.url
+                        else:
+                            url = instance.full_file_url
+                        return url
         else:
             pass
         return ''
