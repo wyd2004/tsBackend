@@ -135,8 +135,6 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         uri = '/podcast/episode/%d/full_file/' % instance.id
         url = '%s%s' % (host, uri)
 
-        tz = pytz.timezone(settings.TIME_ZONE)
-        dt = datetime.datetime.now(tz=tz)
 
         if self.context.get('request'):
             request = self.context['request']
@@ -146,7 +144,9 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
                         (instance.id in privilege.episode_ids),
                         (instance.album.id in privilege.album_ids),
                         (instance.album.channel.id in privilege.channel_ids),
-                        )):
+                )):
+                    tz = pytz.timezone(settings.TIME_ZONE)
+                    dt = datetime.datetime.now(tz=tz)
                     FMT = "%Y-%m-%dT%H:%M:%S.%fZ"
                     tdelta = privilege.expires_datetime - dt
                     if (tdelta.days > 0) or ((tdelta.days == 0) and (tdelta.hours > 0)):
