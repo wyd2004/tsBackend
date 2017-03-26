@@ -218,6 +218,7 @@ class Privilege(object):
                 payload['album'] = ''
                 payload['episode'] = purchase_object.id
                 self.episode_ids.add(payload['episode'])
+                self.channel_ids = []
             yield purchase.package, payload
 
     def dumps(self):
