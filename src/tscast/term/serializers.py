@@ -13,7 +13,7 @@ from .models import Order
 from .models import Payment
 from .models import Purchase
 
-from member.models import Member
+from member.models import Member, MemberPrivilege
 from podcast.models import PodcastChannel
 from podcast.models import PodcastAlbum
 from podcast.models import PodcastEpisode
@@ -53,6 +53,10 @@ class PaymentSerializer(serializers.ModelSerializer):
             request = self.context['request']
             ip = request.META.get('REMOTE_ADDR')
         member = obj.order.member
+        memp = MemberPrivilege.objects.filter(member=member)
+        if memp.exists():
+        # truncate previous mem priv.
+           MemberPrivilege.objects.filter(member=member).delete()
         # DIRTY
         wechat = member.social_networks.filter(site='wechat').first()
         if wechat:
