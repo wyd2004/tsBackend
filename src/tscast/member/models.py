@@ -5,6 +5,7 @@ import uuid
 import os
 import binascii
 
+from .signals import update_member_privilege
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
