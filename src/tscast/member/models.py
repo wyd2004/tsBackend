@@ -212,14 +212,11 @@ class Privilege(object):
                 payload['channel'] = ''
                 payload['album'] = purchase_object.id
                 payload['episode'] = '__all__'
-                # self.channel_ids.add(payload['channel'])
                 self.album_ids.add(payload['album'])
             elif purchase.content_type.model == 'podcastepisode':
                 payload['channel'] = ''
                 payload['album'] = ''
                 payload['episode'] = purchase_object.id
-                # self.channel_ids.add(payload['channel'])
-                # self.album_ids.add(payload['album'])
                 self.episode_ids.add(payload['episode'])
             yield purchase.package, payload
 
