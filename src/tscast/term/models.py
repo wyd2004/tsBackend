@@ -154,7 +154,6 @@ class Order(BaseModel):
                 agent=agent,
                 )
         logger.info('Create payment %s' % payment.uuid)
-
         return payment
 
     def make_purchase(self):
