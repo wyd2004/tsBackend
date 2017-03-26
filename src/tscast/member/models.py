@@ -209,14 +209,14 @@ class Privilege(object):
                 payload['episode'] = '__all__'
                 self.channel_ids.add(payload['channel'])
             elif purchase.content_type.model == 'podcastalbum':
-                payload['channel'] = purchase_object.channel_id
+                # payload['channel'] = purchase_object.channel_id
                 payload['album'] = purchase_object.id
                 payload['episode'] = '__all__'
                 # self.channel_ids.add(payload['channel'])
                 self.album_ids.add(payload['album'])
             elif purchase.content_type.model == 'podcastepisode':
-                payload['channel'] = purchase_object.album.channel_id
-                payload['album'] = purchase_object.album_id
+                # payload['channel'] = purchase_object.album.channel_id
+                # payload['album'] = purchase_object.album_id
                 payload['episode'] = purchase_object.id
                 # self.channel_ids.add(payload['channel'])
                 # self.album_ids.add(payload['album'])
