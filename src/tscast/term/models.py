@@ -8,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from member.models import MemberPrivilege
 from podcast.models import PodcastEpisode
 
 import logging
@@ -155,10 +154,7 @@ class Order(BaseModel):
                 agent=agent,
                 )
         logger.info('Create payment %s' % payment.uuid)
-        memp = MemberPrivilege.objects.filter(member=payment.order.member)
-        if memp.exists():
-            # truncate previous mem priv.
-            MemberPrivilege.objects.filter(member=payment.order.member).delete()
+
         return payment
 
     def make_purchase(self):

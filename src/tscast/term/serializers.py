@@ -53,10 +53,6 @@ class PaymentSerializer(serializers.ModelSerializer):
             request = self.context['request']
             ip = request.META.get('REMOTE_ADDR')
         member = obj.order.member
-        # memp = MemberPrivilege.objects.filter(member=member)
-        # if memp.exists():
-        # # truncate previous mem priv.
-        #    MemberPrivilege.objects.filter(member=member).delete()
         # # DIRTY
         wechat = member.social_networks.filter(site='wechat').first()
         if wechat:
@@ -139,4 +135,9 @@ class OrderSerializer(serializers.ModelSerializer):
         for p in ps:
             agent = p['agent']
             payment = order.make_empty_payment(agent=agent)
+        #x.
+        memp = MemberPrivilege.objects.filter(member=member)
+        if memp.exists():
+            # truncate previous mem priv.
+            MemberPrivilege.objects.filter(member=member).delete()
         return order
