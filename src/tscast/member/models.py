@@ -21,7 +21,6 @@ from term.models import Tier
 from term.models import Order
 from podcast.models import PodcastChannel
 
-from .signals import update_member_privilege
 
 def path_join(args):
     return '/'.join(args)
