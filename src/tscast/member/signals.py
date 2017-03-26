@@ -10,10 +10,6 @@ from term.models import TIER_SCOPE_EXPIRES_MAP
 
 @receiver(post_save, sender='term.Purchase')
 def update_member_privilege(sender, instance, created, *args, **kwargs):
-    # if not created:
-    #     ## check does create purchase
-    #     return
-
     purchases = sender.objects.filter(
             member=instance.member,
             is_expired=False,
