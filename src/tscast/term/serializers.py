@@ -136,7 +136,8 @@ class OrderSerializer(serializers.ModelSerializer):
             agent = p['agent']
             payment = order.make_empty_payment(agent=agent)
         #x..clean prev expired purchase init data.
-        Purchase.objects.filter(member=member).update(is_expired=True)
+        Purchase.objects.filter(member=member,
+                                order=order).update(is_expired=True)
         memp = MemberPrivilege.objects.filter(member=member)
         if memp.exists():
             # truncate previous mem priv.

@@ -9,6 +9,7 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
 
     purchases = sender.objects.filter(
         member=instance.member,
+        order = instance.order,
         is_expired=False,
         is_deleted=False,
     )
