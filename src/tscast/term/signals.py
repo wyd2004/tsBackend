@@ -14,12 +14,12 @@ def change_order_status(sender, instance, created, *args, **kwargs):
         instance.order.status = 'succeeded'
         instance.order.make_purchase()
 
-        from member.models import Member, MemberPrivilege
-
-        memp = MemberPrivilege.objects.filter(member=instance.order.member)
-        if memp.exists():
-            # truncate previous mem priv
-            MemberPrivilege.objects.filter(member=instance.order.member).delete()
+        # from member.models import Member, MemberPrivilege
+        #
+        # memp = MemberPrivilege.objects.filter(member=instance.order.member)
+        # if memp.exists():
+        #     # truncate previous mem priv
+        #     MemberPrivilege.objects.filter(member=instance.order.member).delete()
         instance.order.save()
 
 @receiver(post_save, sender='wechat.WeChatWxpayNotifyContent')

@@ -16,10 +16,18 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
     priv = Privilege(purchases)
     priv.expires_datetime = instance.dt_expired
     payload = priv.dumps()
-    MemberPrivilege.objects.update_or_create(
-        member=instance.member,
-        defaults={
-            'payload':payload,
-        },
-    )
+
+    memp = MemberPrivilege.objects.filter(member=instance.order.member)
+    if memp.exists():
+        # update previous mem priv...
+        MemberPrivilege.objects.filter(member=instance.order.member).update(
+            payload=payload
+        )
+    else:
+        MemberPrivilege.objects.update_or_create(
+            member=instance.member,
+            defaults={
+                'payload':payload,
+            },
+        )
 
