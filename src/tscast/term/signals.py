@@ -4,7 +4,6 @@ import logging
 from django.db.models.signals import post_save
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from member.models import Member, MemberPrivilege
 
 logger = logging.getLogger('tscast.term')
 
@@ -14,6 +13,9 @@ def change_order_status(sender, instance, created, *args, **kwargs):
     if instance.status == 'succeeded' and instance.order.status=='wait-for-payment':
         instance.order.status = 'succeeded'
         instance.order.make_purchase()
+
+        from member.models import Member, MemberPrivilege
+
         memp = MemberPrivilege.objects.filter(member=instance.order.member)
         if memp.exists():
             # truncate previous mem priv
