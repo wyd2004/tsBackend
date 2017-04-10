@@ -19,6 +19,12 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
 
     memp = MemberPrivilege.objects.filter(member=instance.order.member)
     if memp.exists():
+        old_priv = Privilege()
+        old_priv.loads(memp[0].payload)
+        if old_priv.episode_ids:
+            priv.episode_ids = priv.episode_ids + old_priv.episode_ids
+            payload = priv.dumps()
+
         # update previous mem priv...
         MemberPrivilege.objects.filter(member=instance.order.member).update(
             payload=payload
