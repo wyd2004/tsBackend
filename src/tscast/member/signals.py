@@ -22,7 +22,7 @@ def update_member_privilege(sender, instance, created, *args, **kwargs):
         old_priv = Privilege()
         old_priv.loads(memp[0].payload)
         if old_priv.episode_ids:
-            priv.episode_ids = set(priv.episode_ids) + set(old_priv.episode_ids)
+            priv.episode_ids = set(priv.episode_ids).union( set(old_priv.episode_ids) )
             payload = priv.dumps()
 
         # update previous mem priv...
