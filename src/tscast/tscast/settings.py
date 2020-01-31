@@ -43,9 +43,9 @@ from .conf.wechat import *
 from .conf.aliyun import *
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '120.76.159.185', 'vip.tangsuanradio.com', 'ts.asyn.me']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '120.76.159.185', 'vip.xxx.com', 'ts.asyn.me']
 SITE_SCHEME = 'http'
-SITE_HOST = 'vip.tangsuanradio.com'
+SITE_HOST = 'vip.xxx.com'
 
 
 # Application definition
